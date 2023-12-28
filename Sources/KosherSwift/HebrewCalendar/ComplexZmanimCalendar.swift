@@ -177,8 +177,8 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     public func latestShemaGRASunriseToFixedLocalChatzos() -> Date? { getFixedLocalChatzosBasedZmanim(sunrise, getFixedLocalChatzos(), 3) }
     public func latestTefilaGRASunriseToFixedLocalChatzos() -> Date? { getFixedLocalChatzosBasedZmanim(sunrise, getFixedLocalChatzos(), 4) }
     public func minchaGedolaGRAFixedLocalChatzos30Minutes() -> Date? { AstronomicalCalendar.getTimeOffset(time: getFixedLocalChatzos(), offset: AstronomicalCalendar.minuteMillis * 30) }
-    public func minchaKetanaGRAFixedLocalChatzosToSunset() -> Date? { getFixedLocalChatzosBasedZmanim(getFixedLocalChatzos(), sunset, 3.5) }
-    public func plagHaminchaGRAFixedLocalChatzosToSunset() -> Date? { getFixedLocalChatzosBasedZmanim(getFixedLocalChatzos(), sunset, 4.75) }
+    public func minchaKetanaGRAFixedLocalChatzosToSunset() -> Date? { getHalfDayBasedZman(startOfHalfDay: getFixedLocalChatzos(), endOfHalfDay: sunset, hours: 3.5) }
+    public func plagHaminchaGRAFixedLocalChatzosToSunset() -> Date? { getHalfDayBasedZman(startOfHalfDay: getFixedLocalChatzos(), endOfHalfDay: sunset, hours: 4.75) }
     public func tzeis50() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 50 * AstronomicalCalendar.minuteMillis) }
     public func midday() -> Date? { getSolarMidnight()?.withAdded(hours: -12) }
 
