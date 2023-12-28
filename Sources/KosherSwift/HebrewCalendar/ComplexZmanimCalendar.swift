@@ -244,7 +244,7 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     public func getShabbosExitTime() -> Date? {
         let delta = 7 - date.weekday % 7
         let tempCal = copy(withDate: date.withAdded(days: delta)!)
-        let ret = tempCal.bainHashmashosRT13Point5MinutesBefore7Point083Degrees()
+        let ret = tempCal.beinHashmashosRT13Point5MinutesBefore7Point083Degrees()
         return ret?.withAdded(minutes: 22)
     }
     
@@ -294,7 +294,7 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
         
         let tempCal = copy(withDate: jewishCalendar.gregDate)
         
-        return tempCal.bainHashmashosRT13Point5MinutesBefore7Point083Degrees()?.withAdded(minutes: isAshkenaz ? 20 : 0)
+        return tempCal.beinHashmashosRT13Point5MinutesBefore7Point083Degrees()?.withAdded(minutes: isAshkenaz ? 20 : 0)
     }
     
     public func getTallisAndTefillin(isInIsrael: Bool = false, isAshkenaz: Bool = false) -> Date? {
