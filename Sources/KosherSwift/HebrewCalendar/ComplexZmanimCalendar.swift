@@ -69,16 +69,16 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     public func latestShmaMGA120Minutes() -> Date? { calculateLatestZmanShema(alos120(), tzeis120()) }
     public func latestShmaAlos16Point1ToSunset() -> Date? { calculateLatestZmanShema(alos16Point1Degrees(), elevationAdjustedSunset) }
     public func latestShmaAlos16Point1TotzeisGeonim7Point083Degrees() -> Date? { calculateLatestZmanShema(alos16Point1Degrees(), tzeisGeonim7Point083Degrees()) }
-    public func latestTfilaMGA19Point8Degrees() -> Date? { calculateLatestTefila(alos19Point8Degrees(), tzeis19Point8Degrees()) }
-    public func latestTfilaMGA16Point1Degrees() -> Date? { calculateLatestTefila(alos16Point1Degrees(), tzeis16Point1Degrees()) }
-    public func latestTfilaMGA18Degrees() -> Date? { calculateLatestTefila(alos18Degrees(), tzeis18Degrees()) }
-    public func latestTfilaMGA72Minutes() -> Date? { latestTefilaMga() }
-    public func latestTfilaMGA72MinutesZmanis() -> Date? { calculateLatestTefila(alos72Zmanis(), tzeis72Zmanis()) }
-    public func latestTfilaMGA90Minutes() -> Date? { calculateLatestTefila(alos90(), tzeis90()) }
-    public func latestTfilaMGA90MinutesZmanis() -> Date? { calculateLatestTefila(alos90Zmanis(), tzeis90Zmanis()) }
-    public func latestTfilaMGA96Minutes() -> Date? { calculateLatestTefila(alos96(), tzeis96()) }
-    public func latestTfilaMGA96MinutesZmanis() -> Date? { calculateLatestTefila(alos96Zmanis(), tzeis96Zmanis()) }
-    public func latestTfilaMGA120Minutes() -> Date? { calculateLatestTefila(alos120(), tzeis120()) }
+    public func latestTefilaMGA19Point8Degrees() -> Date? { calculateLatestTefila(alos19Point8Degrees(), tzeis19Point8Degrees()) }
+    public func latestTefilaMGA16Point1Degrees() -> Date? { calculateLatestTefila(alos16Point1Degrees(), tzeis16Point1Degrees()) }
+    public func latestTefilaMGA18Degrees() -> Date? { calculateLatestTefila(alos18Degrees(), tzeis18Degrees()) }
+    public func latestTefilaMGA72Minutes() -> Date? { latestTefilaMga() }
+    public func latestTefilaMGA72MinutesZmanis() -> Date? { calculateLatestTefila(alos72Zmanis(), tzeis72Zmanis()) }
+    public func latestTefilaMGA90Minutes() -> Date? { calculateLatestTefila(alos90(), tzeis90()) }
+    public func latestTefilaMGA90MinutesZmanis() -> Date? { calculateLatestTefila(alos90Zmanis(), tzeis90Zmanis()) }
+    public func latestTefilaMGA96Minutes() -> Date? { calculateLatestTefila(alos96(), tzeis96()) }
+    public func latestTefilaMGA96MinutesZmanis() -> Date? { calculateLatestTefila(alos96Zmanis(), tzeis96Zmanis()) }
+    public func latestTefilaMGA120Minutes() -> Date? { calculateLatestTefila(alos120(), tzeis120()) }
     public func minchaGedola16Point1Degrees() -> Date? { calculateMinchaGedolah(alos16Point1Degrees(), tzeis16Point1Degrees()) }
     public func minchaGedola72Minutes() -> Date? { calculateMinchaGedolah(alos72(), tzeis72()) }
     public func minchaKetana16Point1Degrees() -> Date? { calculateMinchaKetana(alos16Point1Degrees(), tzeis16Point1Degrees()) }
@@ -111,7 +111,7 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     public func tzeisGeonim9Point3Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z9_3) }
     public func tzeisGeonim9Point75Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z9_75) }
     public func latestShmaAteretTorah() -> Date? { calculateLatestZmanShema(alos72Zmanis(), tzeisAteretTorah()) }
-    public func latestTfilahAteretTorah() -> Date? { calculateLatestTefila(alos72Zmanis(), tzeisAteretTorah()) }
+    public func latestTefilahAteretTorah() -> Date? { calculateLatestTefila(alos72Zmanis(), tzeisAteretTorah()) }
     public func minchaGedolaAteretTorah() -> Date? { calculateMinchaGedolah(alos72Zmanis(), tzeisAteretTorah()) }
     public func minchaKetanaAteretTorah() -> Date? { calculateMinchaKetana(alos72Zmanis(), tzeisAteretTorah()) }
     public func plagHaminchaAteretTorah() -> Date? { calculatePlagHamincha(alos72Zmanis(), tzeisAteretTorah()) }
@@ -124,7 +124,7 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     public func tzeis16Point1Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z16_1) }
     public func tzeis26Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z26Deg) }
     public func tzeis18Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .astronomical) }
-    public func latestTfila2HoursBeforeChatzos() -> Date? { AstronomicalCalendar.getTimeOffset(time: chatzos(), offset: -120 * AstronomicalCalendar.minuteMillis) }
+    public func latestTefila2HoursBeforeChatzos() -> Date? { AstronomicalCalendar.getTimeOffset(time: chatzos(), offset: -120 * AstronomicalCalendar.minuteMillis) }
     public func minchaGedola30Minutes() -> Date? { AstronomicalCalendar.getTimeOffset(time: chatzos(), offset: 30 * AstronomicalCalendar.minuteMillis) }
     public func plagAlos16Point1ToTzeisGeonim7Point083Degrees()  -> Date? { calculatePlagHamincha(alos16Point1Degrees(), tzeisGeonim7Point083Degrees()) }
     public func bainHashmashosRT13Point24Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z13_24) }
@@ -149,8 +149,8 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     public func tzeis19Point8Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z19_8) }
     public func tzeis96()  -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 96 * AstronomicalCalendar.minuteMillis) }
     public func latestAchilasChametzGRA()  -> Date? { latestTefilaGra() }
-    public func latestAchilasChametzMGA72Minutes() -> Date? { latestTfilaMGA72Minutes() }
-    public func latestAchilasChametzMGA16Point1Degrees() -> Date? { latestTfilaMGA16Point1Degrees() }
+    public func latestAchilasChametzMGA72Minutes() -> Date? { latestTefilaMGA72Minutes() }
+    public func latestAchilasChametzMGA16Point1Degrees() -> Date? { latestTefilaMGA16Point1Degrees() }
     public func latestBiurChametzGRA()  -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunrise, offset: shaahZmanisGra() != nil ? shaahZmanisGra()! * 5 : nil) }
     public func latestBiurChametzMGA72Minutes()  -> Date? { AstronomicalCalendar.getTimeOffset(time: alos72(), offset: shaahZmanisMga() != nil ? shaahZmanisMga()! * 5 : nil) }
     public func latestBiurChametzMGA16Point1Degrees()  -> Date? { AstronomicalCalendar.getTimeOffset(time: alos16Point1Degrees(), offset: shaahZmanis16Point1Degrees() != nil ? shaahZmanis16Point1Degrees()! * 5 : nil) }
@@ -159,8 +159,8 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     public func shaahZmanisBaalHatanya() -> Double? { getTemporalHour(dayStart: sunriseBaalHatanya(), dayEnd: sunsetBaalHatanya()) }
     public func alosBaalHatanya() -> Date? { getSunriseOffsetByDegrees(offsetZenith: .z16_9) }
     public func latestShmaBaalHatanya() -> Date? { calculateLatestZmanShema(sunriseBaalHatanya(), sunsetBaalHatanya()) }
-    public func latestTfilaBaalHatanya() -> Date? { calculateLatestTefila(sunriseBaalHatanya(), sunsetBaalHatanya()) }
-    public func latestAchilasChametzBaalHatanya() -> Date? { latestTfilaBaalHatanya() }
+    public func latestTefilaBaalHatanya() -> Date? { calculateLatestTefila(sunriseBaalHatanya(), sunsetBaalHatanya()) }
+    public func latestAchilasChametzBaalHatanya() -> Date? { latestTefilaBaalHatanya() }
     public func latestBiurChametzBaalHatanya()  -> Date? { AstronomicalCalendar.getTimeOffset(time: sunriseBaalHatanya(), offset: shaahZmanisBaalHatanya() != nil ?  shaahZmanisBaalHatanya()! * 5 : nil) }
     public func minchaGedolaBaalHatanya() -> Date? { calculateMinchaGedolah(sunriseBaalHatanya(), sunsetBaalHatanya()) }
     public func minchaGedolaBaalHatanyaGreaterThan30() -> Date? {
@@ -175,7 +175,7 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     public func latestShmaMGA90MinutesToFixedLocalChatzos() -> Date? { getFixedLocalChatzosBasedZmanim(alos90(), getFixedLocalChatzos(), 3)}
     public func latestShmaMGA72MinutesToFixedLocalChatzos() -> Date? { getFixedLocalChatzosBasedZmanim(alos72(), getFixedLocalChatzos(), 3)}
     public func latestShmaGRASunriseToFixedLocalChatzos() -> Date? { getFixedLocalChatzosBasedZmanim(sunrise, getFixedLocalChatzos(), 3) }
-    public func latestTfilaGRASunriseToFixedLocalChatzos() -> Date? { getFixedLocalChatzosBasedZmanim(sunrise, getFixedLocalChatzos(), 4) }
+    public func latestTefilaGRASunriseToFixedLocalChatzos() -> Date? { getFixedLocalChatzosBasedZmanim(sunrise, getFixedLocalChatzos(), 4) }
     public func minchaGedolaGRAFixedLocalChatzos30Minutes() -> Date? { AstronomicalCalendar.getTimeOffset(time: getFixedLocalChatzos(), offset: AstronomicalCalendar.minuteMillis * 30) }
     public func minchaKetanaGRAFixedLocalChatzosToSunset() -> Date? { getFixedLocalChatzosBasedZmanim(getFixedLocalChatzos(), sunset, 3.5) }
     public func plagHaminchaGRAFixedLocalChatzosToSunset() -> Date? { getFixedLocalChatzosBasedZmanim(getFixedLocalChatzos(), sunset, 4.75) }
