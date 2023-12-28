@@ -126,7 +126,7 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     public func tzeis18Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .astronomical) }
     public func latestTfila2HoursBeforeChatzos() -> Date? { AstronomicalCalendar.getTimeOffset(time: chatzos(), offset: -120 * AstronomicalCalendar.minuteMillis) }
     public func minchaGedola30Minutes() -> Date? { AstronomicalCalendar.getTimeOffset(time: chatzos(), offset: 30 * AstronomicalCalendar.minuteMillis) }
-    public func plagAlos16Point1TotzeisGeonim7Point083Degrees()  -> Date? { calculatePlagHamincha(alos16Point1Degrees(), tzeisGeonim7Point083Degrees()) }
+    public func plagAlos16Point1ToTzeisGeonim7Point083Degrees()  -> Date? { calculatePlagHamincha(alos16Point1Degrees(), tzeisGeonim7Point083Degrees()) }
     public func bainHashmashosRT13Point24Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z13_24) }
     public func bainHashmashosRT58Point5Minutes()  -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 58.5 * AstronomicalCalendar.minuteMillis) }
     public func bainHashmashosRT13Point5MinutesBefore7Point083Degrees()  -> Date? { AstronomicalCalendar.getTimeOffset(time: getSunsetOffsetByDegrees(offsetZenith: .z7_083), offset: -13.5 * AstronomicalCalendar.minuteMillis) }
