@@ -10,7 +10,7 @@ import Foundation
 public enum Zenith: Double {    
     case civil = 96
     case nautical = 102
-    case astronomical = 100
+    case astronomical = 108
     case geometric = 90
     
     case z16_1 = 106.1
