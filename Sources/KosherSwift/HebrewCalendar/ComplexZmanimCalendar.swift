@@ -199,10 +199,12 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     }
     
     public func getFixedLocalChatzosBasedZmanim(_ startOfHalfDay: Date?, _ endOfHalfDay: Date?, _ hours: Double) -> Date? {
-        guard let startOfHalfDay = startOfHalfDay, let endOfHalfDay = endOfHalfDay else { return nil }
-        
-        let shaahZmanis = (endOfHalfDay.millisecondsSince1970 - startOfHalfDay.millisecondsSince1970) / 6
-        return Date(milliseconds: startOfHalfDay.millisecondsSince1970 + shaahZmanis * Int64(hours))
+//        guard let startOfHalfDay = startOfHalfDay, let endOfHalfDay = endOfHalfDay else { return nil }
+//        
+//        let shaahZmanis = (endOfHalfDay.millisecondsSince1970 - startOfHalfDay.millisecondsSince1970) / 6
+//        return Date(milliseconds: startOfHalfDay.millisecondsSince1970 + shaahZmanis * Int64(hours))
+        getHalfDayBasedZman(startOfHalfDay: startOfHalfDay, endOfHalfDay: endOfHalfDay, hours: hours)
+
     }
     
     public func getFixedLocalChatzos()  -> Date? {

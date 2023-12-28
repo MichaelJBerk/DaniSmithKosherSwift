@@ -135,9 +135,8 @@ final class KosherSwiftTests: XCTestCase {
     
     func testCalculatorSunrise() throws {
         var gregorianCalendar = Calendar(identifier: .gregorian)
-        gregorianCalendar.timeZone = TimeZone(identifier: "America/New_York")!
         
-        let geoLocation = GeoLocation(lat: 40.08213, lng: -74.20970, timezone: TimeZone(identifier: "America/New_York")!)
+        let geoLocation = GeoLocation(lat: 40.08213, lng: -74.20970, timezone: TimeZone.current)
         let lakewoodCalculator = NOAACalculator()
         
         var januaryFirst = DateComponents()
@@ -153,8 +152,8 @@ final class KosherSwiftTests: XCTestCase {
         januaryFirst.minute = 18
         januaryFirst.second = 57
         
-        
-        checkDateEquals(sunrise, gregorianCalendar.date(from: januaryFirst))
+        var testComp = gregorianCalendar.date(from: januaryFirst)!
+        checkDateEquals(sunrise, testComp)
         
         var mayFirst = DateComponents()
         mayFirst.year = 2023
@@ -169,7 +168,8 @@ final class KosherSwiftTests: XCTestCase {
         mayFirst.minute = 56
         mayFirst.second = 59
         
-        checkDateEquals(sunrise, gregorianCalendar.date(from: mayFirst))
+        testComp = gregorianCalendar.date(from: mayFirst)!
+        checkDateEquals(sunrise, testComp)
         
         var augustFirst = DateComponents()
         augustFirst.year = 2023
@@ -184,7 +184,8 @@ final class KosherSwiftTests: XCTestCase {
         augustFirst.minute = 54
         augustFirst.second = 51
         
-        checkDateEquals(sunrise, gregorianCalendar.date(from: augustFirst))
+        testComp = gregorianCalendar.date(from: augustFirst)!
+        checkDateEquals(sunrise, testComp)
         
         var decFirst = DateComponents()
         decFirst.year = 2023
@@ -208,10 +209,15 @@ final class KosherSwiftTests: XCTestCase {
         let geoLocation = GeoLocation(lat: 40.08213, lng: -74.20970, timezone: TimeZone(identifier: "America/New_York")!)
         let lakewoodCalculator = NOAACalculator()
         
+
+        
         var januaryFirst = DateComponents()
         januaryFirst.year = 2023
         januaryFirst.month = 1
         januaryFirst.day = 1
+        
+        let zmanCal = ComplexZmanimCalendar(location: geoLocation, date: gregorianCalendar.date(from: januaryFirst)!)
+
         
         var calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: januaryFirst)!, astronomicalCalculator: lakewoodCalculator)
         var sunset = calendar.sunset
@@ -221,6 +227,8 @@ final class KosherSwiftTests: XCTestCase {
         januaryFirst.second = 56
         
         checkDateEquals(sunset, gregorianCalendar.date(from: januaryFirst))
+        checkDateEquals(zmanCal.sunset, gregorianCalendar.date(from: januaryFirst))
+
         
         var mayFirst = DateComponents()
         mayFirst.year = 2023

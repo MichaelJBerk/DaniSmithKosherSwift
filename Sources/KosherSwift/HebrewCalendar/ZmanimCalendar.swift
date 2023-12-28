@@ -83,4 +83,28 @@ public class ZmanimCalendar: AstronomicalCalendar {
         }
         return AstronomicalCalendar.getTimeOffset(time: startOfDay, offset: shaahZmanis * hours)
     }
+    
+    public func getHalfDayBasedZman(startOfHalfDay:Date?, endOfHalfDay:Date?, hours:Double) -> Date? {
+        if (startOfHalfDay == nil || endOfHalfDay == nil) {
+            return nil;
+        }
+        
+        let shaahZmanis = getHalfDayBasedShaahZmanis(startOfHalfDay: startOfHalfDay, endOfHalfDay: endOfHalfDay)
+        if (shaahZmanis == Int64.min) { //defensive, should not be needed
+            return nil;
+        }
+        
+        if hours >= 0 { // forward from start a day
+            return ZmanimCalendar.getTimeOffset(time: startOfHalfDay, offset: (Double(shaahZmanis) * hours) * 1000)
+        } else { // subtract from end of day
+            return ZmanimCalendar.getTimeOffset(time: endOfHalfDay, offset: (Double(shaahZmanis) * hours) * 1000)
+        }
+    }
+    
+    public func getHalfDayBasedShaahZmanis(startOfHalfDay:Date?, endOfHalfDay:Date?) -> Int64 {
+        if (startOfHalfDay == nil || endOfHalfDay == nil) {
+            return Int64.min;
+        }
+        return Int64((endOfHalfDay!.timeIntervalSince1970 - startOfHalfDay!.timeIntervalSince1970) / 6);
+    }
 }

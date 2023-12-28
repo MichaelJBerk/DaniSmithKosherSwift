@@ -36,9 +36,9 @@ public extension Date {
         Calendar.current.component(component, from: self)
     }
     
-    init(year: Int, month: Int, day: Int) {
+    init(year: Int, month: Int, day: Int, timezone: TimeZone? = nil) {
         var cal = Calendar(identifier: .gregorian)
-        cal.timeZone = Calendar.current.timeZone
+        cal.timeZone = timezone ?? TimeZone.current
         let ret = cal.date(from: DateComponents(year: year, month: month, day: day))!
         self = ret
     }
@@ -54,13 +54,15 @@ public extension Date {
     var timeZone: TimeZone? { Calendar.current.dateComponents([.timeZone], from: self).timeZone }
     var weekOfMonth: Int { getComponent(.weekOfMonth) }
     
-    func withAdded(days: Int = 0, hours: Int = 0, minutes: Int = 0, seconds: Int = 0, milliseconds: Int = 0) -> Date? {
+    func withAdded(days: Int = 0, hours: Int = 0, minutes: Int = 0, seconds: Int = 0, milliseconds: Int = 0, nanoseconds: Int = 0) -> Date? {
         guard var temp = Calendar.current.date(byAdding: .day, value: days, to: self) else { return nil }
         temp = Calendar.current.date(byAdding: .hour, value: hours, to: temp)!
         temp = Calendar.current.date(byAdding: .minute, value: minutes, to: temp)!
         temp = Calendar.current.date(byAdding: .second, value: seconds, to: temp)!
         temp = Calendar.current.date(byAdding: .nanosecond, value: milliseconds * 1000000, to: temp)!
-        
+        temp = Calendar.current.date(byAdding: .nanosecond, value: nanoseconds, to: temp)!
+        temp = Calendar.current.date(byAdding: .nanosecond, value: nanoseconds, to: temp)!
+
         return temp
     }
     
@@ -80,49 +82,6 @@ public extension Date {
         return date!
     }
 }
-//
-//public extension Date {
-//    func next(_ weekday: DayOfWeek, considerToday: Bool = false) -> Date {
-//        return get(.next,
-//                   weekday,
-//                   considerToday: considerToday)
-//      }
-//
-//      func previous(_ weekday: DayOfWeek, considerToday: Bool = false) -> Date {
-//        return get(.previous,
-//                   weekday,
-//                   considerToday: considerToday)
-//      }
-//
-//      func get(_ direction: SearchDirection,
-//               _ weekDay: DayOfWeek,
-//               considerToday consider: Bool = false) -> Date {
-//
-//        let dayName = weekDay.rawValue
-//
-//        let weekdaysName = getWeekDaysInEnglish().map { $0.lowercased() }
-//
-//        assert(weekdaysName.contains(dayName), "weekday symbol should be in form \(weekdaysName)")
-//
-//        let searchWeekdayIndex = weekdaysName.firstIndex(of: dayName)! + 1
-//
-//        let calendar = Calendar(identifier: .gregorian)
-//
-//        if consider && calendar.component(.weekday, from: self) == searchWeekdayIndex {
-//          return self
-//        }
-//
-//        var nextDateComponent = calendar.dateComponents([.hour, .minute, .second], from: self)
-//        nextDateComponent.weekday = searchWeekdayIndex
-//
-//        let date = calendar.nextDate(after: self,
-//                                     matching: nextDateComponent,
-//                                     matchingPolicy: .nextTime,
-//                                     direction: direction.calendarSearchDirection)
-//
-//        return date!
-//      }
-//}
 
 public extension TimeInterval {
     var inMilliseconds: Double { self * 1000 }
