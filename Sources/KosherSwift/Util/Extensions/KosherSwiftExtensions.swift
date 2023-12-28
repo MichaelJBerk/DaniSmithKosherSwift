@@ -67,7 +67,62 @@ public extension Date {
     static func - (lhs: Date, rhs: Date) -> TimeInterval {
         return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
     }
+    
+    func next(_ weekday: DayOfWeek) -> Date {
+        let calendar = Calendar(identifier: .gregorian)
+        var nextDateComponent = calendar.dateComponents([.hour, .minute, .second], from: self)
+        nextDateComponent.weekday = weekday.rawValue
+        let date = calendar.nextDate(after: self,
+                                     matching: nextDateComponent,
+                                     matchingPolicy: .nextTime,
+                                     direction: .forward)
+        
+        return date!
+    }
 }
+//
+//public extension Date {
+//    func next(_ weekday: DayOfWeek, considerToday: Bool = false) -> Date {
+//        return get(.next,
+//                   weekday,
+//                   considerToday: considerToday)
+//      }
+//
+//      func previous(_ weekday: DayOfWeek, considerToday: Bool = false) -> Date {
+//        return get(.previous,
+//                   weekday,
+//                   considerToday: considerToday)
+//      }
+//
+//      func get(_ direction: SearchDirection,
+//               _ weekDay: DayOfWeek,
+//               considerToday consider: Bool = false) -> Date {
+//
+//        let dayName = weekDay.rawValue
+//
+//        let weekdaysName = getWeekDaysInEnglish().map { $0.lowercased() }
+//
+//        assert(weekdaysName.contains(dayName), "weekday symbol should be in form \(weekdaysName)")
+//
+//        let searchWeekdayIndex = weekdaysName.firstIndex(of: dayName)! + 1
+//
+//        let calendar = Calendar(identifier: .gregorian)
+//
+//        if consider && calendar.component(.weekday, from: self) == searchWeekdayIndex {
+//          return self
+//        }
+//
+//        var nextDateComponent = calendar.dateComponents([.hour, .minute, .second], from: self)
+//        nextDateComponent.weekday = searchWeekdayIndex
+//
+//        let date = calendar.nextDate(after: self,
+//                                     matching: nextDateComponent,
+//                                     matchingPolicy: .nextTime,
+//                                     direction: direction.calendarSearchDirection)
+//
+//        return date!
+//      }
+//}
 
 public extension TimeInterval {
     var inMilliseconds: Double { self * 1000 }

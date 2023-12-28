@@ -28,12 +28,6 @@ public class JewishCalendar: JewishDate {
         super.init(date: date)
     }
     
-    //    convenience init(gregYear year: Int, month: Int, day: Int, isInIsrael: Bool = false) {
-    ////        let jewishDate = JewishDate.absDateToJewishDate(absDate: JewishDate.gregorianDateToAbsDate(year: year, month: month, day: day))
-    //
-    //        self.init(withJewishYear: jewishDate.year, andMonth: jewishDate.month, andDay: jewishDate.day, isInIsrael: isInIsrael)
-    //    }
-    
     public func copy(year: Int? = nil, month: JewishMonth? = nil, day: Int? = nil, isInIsrael: Bool? = nil) -> JewishCalendar {
         JewishCalendar(withJewishYear: year ?? self.year, andMonth: month ?? self.month, andDay: day ?? self.day, isInIsrael: isInIsrael ?? self.isInIsrael)
     }
@@ -124,6 +118,14 @@ public class JewishCalendar: JewishDate {
         let day = rhDow + daysSinceStartOfJewishYear
         
         return Parsha.parshalist[yearType][Int(day / 7)]
+    }
+    
+    public func getWeeklyParsha() -> Parsha {
+        if dow == .saturday {
+            return getParsha()
+        }
+        
+        return JewishCalendar(date: gregDate.next(.saturday), isInIsrael: isInIsrael).getParsha()
     }
     
     public func getSpecialShabbos() -> Parsha {

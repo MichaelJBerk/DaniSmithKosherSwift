@@ -21,14 +21,14 @@ final class KosherSwiftTests: XCTestCase {
             XCTAssertEqual(false, true)
             return
         }
-
+        
         XCTAssertEqual(a.year, b.year)
         XCTAssertEqual(a.month, b.month)
         XCTAssertEqual(a.day, b.day)
         XCTAssertEqual(a.hour, b.hour)
         XCTAssertEqual(a.minute, b.minute)
         XCTAssertEqual(a.second, b.second)
-//        XCTAssertEqual(a.nanosecond, b.nanosecond)
+        //        XCTAssertEqual(a.nanosecond, b.nanosecond)
     }
     
     func testGregorianDateReflectsHebrew() {
@@ -78,30 +78,7 @@ final class KosherSwiftTests: XCTestCase {
         XCTAssertEqual(jewishCalendar.getCurrentChag(), .pesach)
         XCTAssertEqual(jewishCalendar.isPesach, true)
     }
-    //
-    //        func testInternalHebrewCalendarMonths() {
-    //            let arrayOfHebrewMonthsLeapYear = [8,9,10,11,12,13,1,2,3,4,5,6,7]
-    //            var jewishCalendar = JewishCalendar(withJewishYear: 5784, andMonth: .nissan, andDay: 1)
-    //            while jewishCalendar.year == 5784 {
-    //                XCTAssertEqual(arrayOfHebrewMonthsLeapYear.contains(jewishCalendar.month.rawValue), true)
-    //                jewishCalendar = JewishCalendar(withJewishYear: 5784, andMonth: JewishMonth(rawValue: jewishCalendar.month.rawValue + 1)!, andDay: 1)
-    //            }
-    //
-    //            let arrayOfHebrewMonths = [8,9,10,11,12,13,1,2,3,4,5,7]//ADAR is skipped on non leap years
-    //            jewishCalendar.setJewishDate(year: 5783, month: JewishCalendar.TISHREI, dayOfMonth: 1)
-    //            while jewishCalendar.year == 5783 {
-    //                XCTAssertEqual(arrayOfHebrewMonths.contains(jewishCalendar.month), true)
-    //                jewishCalendar.forward()
-    //            }
-    //        }
-    //
-    //        func testAdarInNonLeapYears() {
-    //            let jewishCalendar = JewishCalendar(withJewishYear: 5783, andMonth: .adar, andDay: 1)
-    //
-    //            XCTAssertEqual(jewishCalendar.month, .adar2)
-    //            //Test will return 7 even though adar is 6 since adar II is used instead on non leap years
-    //        }
-    //
+    
     func testMolad() {
         let jewishCalendar = JewishCalendar(date: Date(year: 2023, month: 12, day: 20))
         XCTAssertEqual(jewishCalendar.moladDate.molad.hours, 20)
@@ -112,7 +89,7 @@ final class KosherSwiftTests: XCTestCase {
         XCTAssertEqual(jewishCalendar.moladDate.gregDate, moladFromKosherJava)
     }
     
-
+    
     func testParasha() {
         var jewishCalendar = JewishCalendar(date: Date(year: 2023, month: 12, day: 20))
         XCTAssertEqual(jewishCalendar.getParsha(), .none)
@@ -140,222 +117,237 @@ final class KosherSwiftTests: XCTestCase {
     
     func testYomTovString() {
         let jewishCalendar = JewishCalendar(withJewishYear: 5784, andMonth: .nissan, andDay: 15)
-
+        
         let hebrewDateFormatter = HebrewDateFormatter()
         XCTAssertEqual(try! hebrewDateFormatter.formatYomTov(jewishCalendar: jewishCalendar), "Pesach")
     }
     
-            func testDafYomis() {
-                let jewishCalendar = JewishCalendar(date: Date(year: 2023, month: 12, day: 21))
-
-                let dafYomi = jewishCalendar.dafYomiBavli
-//                let dafYomiYeru = jewishCalendar.getDafYomiYerushalmi()
-                XCTAssertEqual(dafYomi?.masechta, "בבא קמא")
-                XCTAssertEqual(dafYomi?.daf, 49)
-//                XCTAssertEqual(dafYomiYeru?.getYerushalmiMasechta(), "שבת")
-//                XCTAssertEqual(dafYomiYeru?.getDaf(), 8)
-            }
+    func testDafYomis() {
+        let jewishCalendar = JewishCalendar(date: Date(year: 2023, month: 12, day: 21))
+        
+        let dafYomi = jewishCalendar.dafYomiBavli
+        //                let dafYomiYeru = jewishCalendar.getDafYomiYerushalmi()
+        XCTAssertEqual(dafYomi?.masechta, "בבא קמא")
+        XCTAssertEqual(dafYomi?.daf, 49)
+        //                XCTAssertEqual(dafYomiYeru?.getYerushalmiMasechta(), "שבת")
+        //                XCTAssertEqual(dafYomiYeru?.getDaf(), 8)
+    }
     
-            func testCalculatorSunrise() throws {
-                var gregorianCalendar = Calendar(identifier: .gregorian)
-                gregorianCalendar.timeZone = TimeZone(identifier: "America/New_York")!
+    func testCalculatorSunrise() throws {
+        var gregorianCalendar = Calendar(identifier: .gregorian)
+        gregorianCalendar.timeZone = TimeZone(identifier: "America/New_York")!
+        
+        let geoLocation = GeoLocation(lat: 40.08213, lng: -74.20970, timezone: TimeZone(identifier: "America/New_York")!)
+        let lakewoodCalculator = NOAACalculator()
+        
+        var januaryFirst = DateComponents()
+        januaryFirst.year = 2023
+        januaryFirst.month = 1
+        januaryFirst.day = 1
+        
+        var calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: januaryFirst)!, astronomicalCalculator: lakewoodCalculator)
+        
+        var sunrise = calendar.sunrise
+        
+        januaryFirst.hour = 7
+        januaryFirst.minute = 18
+        januaryFirst.second = 57
+        
+        
+        checkDateEquals(sunrise, gregorianCalendar.date(from: januaryFirst))
+        
+        var mayFirst = DateComponents()
+        mayFirst.year = 2023
+        mayFirst.month = 5
+        mayFirst.day = 1
+        
+        calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: mayFirst)!, astronomicalCalculator: lakewoodCalculator)
+        
+        sunrise = calendar.sunrise
+        
+        mayFirst.hour = 5
+        mayFirst.minute = 56
+        mayFirst.second = 59
+        
+        checkDateEquals(sunrise, gregorianCalendar.date(from: mayFirst))
+        
+        var augustFirst = DateComponents()
+        augustFirst.year = 2023
+        augustFirst.month = 8
+        augustFirst.day = 1
+        
+        calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: augustFirst)!, astronomicalCalculator: lakewoodCalculator)
+        
+        sunrise = calendar.sunrise
+        
+        augustFirst.hour = 5
+        augustFirst.minute = 54
+        augustFirst.second = 51
+        
+        checkDateEquals(sunrise, gregorianCalendar.date(from: augustFirst))
+        
+        var decFirst = DateComponents()
+        decFirst.year = 2023
+        decFirst.month = 12
+        decFirst.day = 1
+        
+        calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: decFirst)!, astronomicalCalculator: lakewoodCalculator)
+        sunrise = calendar.sunrise
+        
+        decFirst.hour = 6
+        decFirst.minute = 59
+        decFirst.second = 29
+        
+        checkDateEquals(sunrise, gregorianCalendar.date(from: decFirst))
+    }
     
-                let geoLocation = GeoLocation(lat: 40.08213, lng: -74.20970, timezone: TimeZone(identifier: "America/New_York")!)
-                let lakewoodCalculator = NOAACalculator()
+    func testCalculatorSunset() throws {
+        var gregorianCalendar = Calendar(identifier: .gregorian)
+        gregorianCalendar.timeZone = TimeZone(identifier: "America/New_York")!
+        
+        let geoLocation = GeoLocation(lat: 40.08213, lng: -74.20970, timezone: TimeZone(identifier: "America/New_York")!)
+        let lakewoodCalculator = NOAACalculator()
+        
+        var januaryFirst = DateComponents()
+        januaryFirst.year = 2023
+        januaryFirst.month = 1
+        januaryFirst.day = 1
+        
+        var calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: januaryFirst)!, astronomicalCalculator: lakewoodCalculator)
+        var sunset = calendar.sunset
+        
+        januaryFirst.hour = 16
+        januaryFirst.minute = 41
+        januaryFirst.second = 56
+        
+        checkDateEquals(sunset, gregorianCalendar.date(from: januaryFirst))
+        
+        var mayFirst = DateComponents()
+        mayFirst.year = 2023
+        mayFirst.month = 5
+        mayFirst.day = 1
+        
+        calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: mayFirst)!, astronomicalCalculator: lakewoodCalculator)
+        
+        sunset = calendar.sunset
+        
+        mayFirst.hour = 19
+        mayFirst.minute = 51
+        mayFirst.second = 33
+        
+        checkDateEquals(sunset, gregorianCalendar.date(from: mayFirst))
+        
+        var augustFirst = DateComponents()
+        augustFirst.year = 2023
+        augustFirst.month = 8
+        augustFirst.day = 1
+        
+        calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: augustFirst)!, astronomicalCalculator: lakewoodCalculator)
+        
+        sunset = calendar.sunset
+        
+        augustFirst.hour = 20
+        augustFirst.minute = 10
+        augustFirst.second = 57
+        
+        checkDateEquals(sunset, gregorianCalendar.date(from: augustFirst))
+        
+        var decFirst = DateComponents()
+        decFirst.year = 2023
+        decFirst.month = 12
+        decFirst.day = 1
+        
+        calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: decFirst)!, astronomicalCalculator: lakewoodCalculator)
+        sunset = calendar.sunset
+        
+        decFirst.hour = 16
+        decFirst.minute = 31
+        decFirst.second = 56
+        
+        checkDateEquals(sunset, gregorianCalendar.date(from: decFirst))
+    }
     
-                var januaryFirst = DateComponents()
-                januaryFirst.year = 2023
-                januaryFirst.month = 1
-                januaryFirst.day = 1
-    
-                var calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: januaryFirst)!, astronomicalCalculator: lakewoodCalculator)
-
-                var sunrise = calendar.sunrise
-    
-                januaryFirst.hour = 7
-                januaryFirst.minute = 18
-                januaryFirst.second = 57
-                
-    
-                checkDateEquals(sunrise, gregorianCalendar.date(from: januaryFirst))
-    
-                var mayFirst = DateComponents()
-                mayFirst.year = 2023
-                mayFirst.month = 5
-                mayFirst.day = 1
-    
-                calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: mayFirst)!, astronomicalCalculator: lakewoodCalculator)
-
-                sunrise = calendar.sunrise
-    
-                mayFirst.hour = 5
-                mayFirst.minute = 56
-                mayFirst.second = 59
-    
-                checkDateEquals(sunrise, gregorianCalendar.date(from: mayFirst))
-    
-                var augustFirst = DateComponents()
-                augustFirst.year = 2023
-                augustFirst.month = 8
-                augustFirst.day = 1
-    
-                calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: augustFirst)!, astronomicalCalculator: lakewoodCalculator)
-
-                sunrise = calendar.sunrise
-    
-                augustFirst.hour = 5
-                augustFirst.minute = 54
-                augustFirst.second = 51
-    
-                checkDateEquals(sunrise, gregorianCalendar.date(from: augustFirst))
-    
-                var decFirst = DateComponents()
-                decFirst.year = 2023
-                decFirst.month = 12
-                decFirst.day = 1
-    
-                calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: decFirst)!, astronomicalCalculator: lakewoodCalculator)
-                sunrise = calendar.sunrise
-    
-                decFirst.hour = 6
-                decFirst.minute = 59
-                decFirst.second = 29
-    
-                checkDateEquals(sunrise, gregorianCalendar.date(from: decFirst))
-            }
-    
-            func testCalculatorSunset() throws {
-                var gregorianCalendar = Calendar(identifier: .gregorian)
-                gregorianCalendar.timeZone = TimeZone(identifier: "America/New_York")!
-    
-                let geoLocation = GeoLocation(lat: 40.08213, lng: -74.20970, timezone: TimeZone(identifier: "America/New_York")!)
-                let lakewoodCalculator = NOAACalculator()
-    
-                var januaryFirst = DateComponents()
-                januaryFirst.year = 2023
-                januaryFirst.month = 1
-                januaryFirst.day = 1
-    
-                var calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: januaryFirst)!, astronomicalCalculator: lakewoodCalculator)
-                var sunset = calendar.sunset
-    
-                januaryFirst.hour = 16
-                januaryFirst.minute = 41
-                januaryFirst.second = 56
-    
-                checkDateEquals(sunset, gregorianCalendar.date(from: januaryFirst))
-    
-                var mayFirst = DateComponents()
-                mayFirst.year = 2023
-                mayFirst.month = 5
-                mayFirst.day = 1
-    
-                calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: mayFirst)!, astronomicalCalculator: lakewoodCalculator)
-
-                sunset = calendar.sunset
-    
-                mayFirst.hour = 19
-                mayFirst.minute = 51
-                mayFirst.second = 33
-    
-                checkDateEquals(sunset, gregorianCalendar.date(from: mayFirst))
-    
-                var augustFirst = DateComponents()
-                augustFirst.year = 2023
-                augustFirst.month = 8
-                augustFirst.day = 1
-    
-                calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: augustFirst)!, astronomicalCalculator: lakewoodCalculator)
-
-                sunset = calendar.sunset
-
-                augustFirst.hour = 20
-                augustFirst.minute = 10
-                augustFirst.second = 57
-    
-                checkDateEquals(sunset, gregorianCalendar.date(from: augustFirst))
-    
-                var decFirst = DateComponents()
-                decFirst.year = 2023
-                decFirst.month = 12
-                decFirst.day = 1
-    
-                calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: decFirst)!, astronomicalCalculator: lakewoodCalculator)
-                sunset = calendar.sunset
-    
-                decFirst.hour = 16
-                decFirst.minute = 31
-                decFirst.second = 56
-    
-                checkDateEquals(sunset, gregorianCalendar.date(from: decFirst))
-            }
-    
-            func testZmanimCalendar() {
-                var gregorianCalendar = Calendar(identifier: .gregorian)
-                gregorianCalendar.timeZone = TimeZone(identifier: "America/New_York")!
-    
-                let geoLocation = GeoLocation(lat: 40.08213, lng: -74.20970, timezone: TimeZone(identifier: "America/New_York")!)
-    
-                var januaryFirst = DateComponents()
-                januaryFirst.year = 2023
-                januaryFirst.month = 12
-                januaryFirst.day = 24
-                var lakewoodCalculator = ZmanimCalendar(location: geoLocation, date: gregorianCalendar.date(from: januaryFirst)!)
-
-    
-                var alot = lakewoodCalculator.alos72()
-                let format = DateFormatter()
-                format.timeZone = gregorianCalendar.timeZone
-                format.timeStyle = .full
-    
-                januaryFirst.hour = 6
-                januaryFirst.minute = 04
-                januaryFirst.second = 42
-    
-                checkDateEquals(alot, gregorianCalendar.date(from: januaryFirst))
-    
-                var mayFirst = DateComponents()
-                mayFirst.year = 2023
-                mayFirst.month = 5
-                mayFirst.day = 1
-    
-                lakewoodCalculator = ZmanimCalendar(location: geoLocation, date: gregorianCalendar.date(from: mayFirst)!)
-                alot = lakewoodCalculator.alos72()
-    
-                mayFirst.hour = 4
-                mayFirst.minute = 44
-                mayFirst.second = 59
-    
-                checkDateEquals(alot, gregorianCalendar.date(from: mayFirst))
-    
-                var augustFirst = DateComponents()
-                augustFirst.year = 2024
-                augustFirst.month = 8
-                augustFirst.day = 1
-    
-                lakewoodCalculator = ZmanimCalendar(location: geoLocation, date: gregorianCalendar.date(from: augustFirst)!)
-                alot = lakewoodCalculator.alos72()
-    
-                augustFirst.hour = 4
-                augustFirst.minute = 43
-                augustFirst.second = 33
-    
-                checkDateEquals(alot, gregorianCalendar.date(from: augustFirst))
-    
-                var decFirst = DateComponents()
-                decFirst.year = 2024
-                decFirst.month = 12
-                decFirst.day = 1
-    
-                lakewoodCalculator = ZmanimCalendar(location: geoLocation, date: gregorianCalendar.date(from: decFirst)!)
-                alot = lakewoodCalculator.alos72()
-    
-                decFirst.hour = 5
-                decFirst.minute = 48
-                decFirst.second = 14
-    
-                checkDateEquals(alot, gregorianCalendar.date(from: decFirst))
-            }
+    func testZmanimCalendar() {
+        var gregorianCalendar = Calendar(identifier: .gregorian)
+        gregorianCalendar.timeZone = TimeZone(identifier: "America/New_York")!
+        
+        let geoLocation = GeoLocation(lat: 40.08213, lng: -74.20970, timezone: TimeZone(identifier: "America/New_York")!)
+        
+        var januaryFirst = DateComponents()
+        januaryFirst.year = 2023
+        januaryFirst.month = 12
+        januaryFirst.day = 24
+        var lakewoodCalculator = ZmanimCalendar(location: geoLocation, date: gregorianCalendar.date(from: januaryFirst)!)
+        
+        
+        var alot = lakewoodCalculator.alos72()
+        let format = DateFormatter()
+        format.timeZone = gregorianCalendar.timeZone
+        format.timeStyle = .full
+        
+        januaryFirst.hour = 6
+        januaryFirst.minute = 04
+        januaryFirst.second = 42
+        
+        checkDateEquals(alot, gregorianCalendar.date(from: januaryFirst))
+        
+        var mayFirst = DateComponents()
+        mayFirst.year = 2023
+        mayFirst.month = 5
+        mayFirst.day = 1
+        
+        lakewoodCalculator = ZmanimCalendar(location: geoLocation, date: gregorianCalendar.date(from: mayFirst)!)
+        alot = lakewoodCalculator.alos72()
+        
+        mayFirst.hour = 4
+        mayFirst.minute = 44
+        mayFirst.second = 59
+        
+        checkDateEquals(alot, gregorianCalendar.date(from: mayFirst))
+        
+        var augustFirst = DateComponents()
+        augustFirst.year = 2024
+        augustFirst.month = 8
+        augustFirst.day = 1
+        
+        lakewoodCalculator = ZmanimCalendar(location: geoLocation, date: gregorianCalendar.date(from: augustFirst)!)
+        alot = lakewoodCalculator.alos72()
+        
+        augustFirst.hour = 4
+        augustFirst.minute = 43
+        augustFirst.second = 33
+        
+        checkDateEquals(alot, gregorianCalendar.date(from: augustFirst))
+        
+        var decFirst = DateComponents()
+        decFirst.year = 2024
+        decFirst.month = 12
+        decFirst.day = 1
+        
+        lakewoodCalculator = ZmanimCalendar(location: geoLocation, date: gregorianCalendar.date(from: decFirst)!)
+        alot = lakewoodCalculator.alos72()
+        
+        decFirst.hour = 5
+        decFirst.minute = 48
+        decFirst.second = 14
+        
+        checkDateEquals(alot, gregorianCalendar.date(from: decFirst))
+    }
     
     
+    func testNextWeekday() {
+        let startYear = 2023
+        let startMonth = 12
+        let startDay = 1
+        
+        let start = Date(year: startYear, month: startMonth, day: startDay) // DOW = friday
+        
+        checkDateEquals(start.next(.saturday), Date(year: startYear, month: startMonth, day: startDay + 1))
+        checkDateEquals(start.next(.sunday), Date(year: startYear, month: startMonth, day: startDay + 2))
+        checkDateEquals(start.next(.monday), Date(year: startYear, month: startMonth, day: startDay + 3))
+        checkDateEquals(start.next(.tuesday), Date(year: startYear, month: startMonth, day: startDay + 4))
+        checkDateEquals(start.next(.wednesday), Date(year: startYear, month: startMonth, day: startDay + 5))
+        checkDateEquals(start.next(.thursday), Date(year: startYear, month: startMonth, day: startDay + 6))
+        checkDateEquals(start.next(.friday), Date(year: startYear, month: startMonth, day: startDay + 7))
+    }
 }
