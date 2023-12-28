@@ -43,12 +43,12 @@ public class AstronomicalCalendar {
     
     public var sunset: Date? {
         let ret = getUtcSunset(zenith: Zenith.geometric.rawValue)
-        return getDateFromTime(time: ret, isSunrise: true)
+        return getDateFromTime(time: ret, isSunrise: false)
     }
     
     public var seaLevelSunset: Date? {
         let ret = getUtcSeaLevelSunset(zenith: .geometric)
-        return getDateFromTime(time: ret, isSunrise: true)
+        return getDateFromTime(time: ret, isSunrise: false)
     }
     
     public var civilTwilightEnd: Date? {

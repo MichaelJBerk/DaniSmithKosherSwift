@@ -112,7 +112,7 @@ final class KosherSwiftTests: XCTestCase {
     func testParshahString() {
         let jewishCalendar = JewishCalendar(date: Date(year: 2023, month: 12, day: 23))
         let hebrewDateFormatter = HebrewDateFormatter()
-        XCTAssertEqual(hebrewDateFormatter.formatParsha(jewishCalendar: jewishCalendar), "Vayigash")
+        XCTAssertEqual(hebrewDateFormatter.formatParsha(sjewishCalendar.getParsha()), "Vayigash")
     }
     
     func testYomTovString() {
