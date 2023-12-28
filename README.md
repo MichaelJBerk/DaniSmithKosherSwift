@@ -5,7 +5,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/KosherSwift.svg?style=flat)](http://cocoapods.org/pods/KosherSwift)
 
 # KosherSwift
-A Swift version of [KosherCocoa](https://github.com/MosheBerman/KosherCocoa)
+A Swift version of [KosherJava](https://github.com/KosherJava/zmanim)
 
 # Documentation
 A "Get Started" guide can be found [here](https://github.com/DanielSmith1239/KosherSwift/blob/master/GetStarted.md).
@@ -23,16 +23,9 @@ it, simply add the following line to your Podfile:
 pod "KosherSwift"
 ```
 
-# To Do:
-- [x] Create documentation
-- [x] Create "Get Started" guide
-- [ ] Finish cleaning up code
-- [ ] Add support for retrieving sefira prayers
-- [ ] Add support for returning nil in ComplexZmanimCalendar
-
 ## Author
 
-Dani Smith, ds1239@hotmail.com
+Dani Smith
 
 ## License
 
