@@ -207,8 +207,9 @@ public class AstronomicalCalendar {
         return degrees
     }
     
-    
-    
+    public func getLocalMeanTime(hours: Double) -> Date? {
+        AstronomicalCalendar.getTimeOffset(time: getDateFromTime(time: hours - Double(location.timezone.secondsFromGMT()) / AstronomicalCalendar.hourMillis, isSunrise: true), offset: -location.localMeanTimeOffset);
+    }
 }
 
 extension AstronomicalCalendar {

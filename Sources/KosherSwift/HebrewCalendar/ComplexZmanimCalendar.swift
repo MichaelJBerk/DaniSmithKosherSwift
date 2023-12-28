@@ -206,9 +206,7 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     }
     
     public func getFixedLocalChatzos()  -> Date? {
-        let time = getDateFromTime(time: 12 - Double(location.timezone.secondsFromGMT() * 1000) / AstronomicalCalendar.hourMillis, isSunrise: true)
-        let offset = -location.localMeanTimeOffset
-        return AstronomicalCalendar.getTimeOffset(time: time, offset: offset)
+        getLocalMeanTime(hours: 12.0);
     }
     
     public func latestShemaKolEliyahu() -> Date? {
