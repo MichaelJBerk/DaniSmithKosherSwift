@@ -224,11 +224,13 @@ extension AstronomicalCalendar {
     static let hourMillis = minuteMillis * 60
     
     static func getTimeOffset(time: Date?, offset: Double?) -> Date? {
-        guard let time = time, let offset = offset, offset != Double.leastNormalMagnitude else {
-            return nil
-        }
-        
-        return time + Double(offset) / 1000
+//        guard let time = time, let offset = offset, offset != Double.leastNormalMagnitude else {
+//            return nil
+//        }
+//        
+//        return time + Double(offset) / 1000
+        guard let time = time, let offset = offset else { return nil }
+        return Date(timeInterval: TimeInterval(offset / 1000), since: time)
     }
     
 }

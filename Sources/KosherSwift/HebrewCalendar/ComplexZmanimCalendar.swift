@@ -208,7 +208,7 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     }
     
     public func getFixedLocalChatzos()  -> Date? {
-        getLocalMeanTime(hours: 12.0);
+        getLocalMeanTime(hours: 12.0)
     }
     
     public func latestShemaKolEliyahu() -> Date? {
