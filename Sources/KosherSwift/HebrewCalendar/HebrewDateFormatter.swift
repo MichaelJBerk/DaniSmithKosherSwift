@@ -740,9 +740,8 @@ public struct HebrewDateFormatter {
         return sb
     }
     
-    public func formatParsha(jewishCalendar: JewishCalendar) -> String {
-        let parsha = jewishCalendar.getParsha()
-        return (hebrewFormat
+    public func formatParsha(_ parsha: Parsha) -> String {
+        (hebrewFormat
                 ? HebrewDateFormatter.hebrewParshaMap[parsha]
                 : HebrewDateFormatter.transliteratedParshaMap[parsha])!
     }
