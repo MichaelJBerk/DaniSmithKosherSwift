@@ -20,8 +20,6 @@ public class JewishCalendar: JewishDate {
     
     
     public init(date: Date, isInIsrael: Bool = false) {
-        //        let abs = JewishDate.gregorianDateToAbsDate(date: date)
-        //        let jewishDate = JewishDate.absDateToJewishDate(absDate: abs)
         self.isInIsrael = isInIsrael
         self.moladDate = MoladDate.calculate(forJewishDate: JewishDate(date: date))
 

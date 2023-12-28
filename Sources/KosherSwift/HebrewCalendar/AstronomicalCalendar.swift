@@ -132,41 +132,47 @@ public class AstronomicalCalendar {
     }
     
     func getDateFromTime(time: Double?, isSunrise: Bool) -> Date? {
-        var calculatedTime = time;
+        guard let time = time else { return nil }
+        
+        var calculatedTime = time
         
         var gregorianCalendar =  Calendar(identifier: .gregorian)
         gregorianCalendar.timeZone = location.timezone
+        
         var components = gregorianCalendar.dateComponents([.era,.year,.month,.weekOfYear,.day,.hour,.minute,.second], from: date)
         
         components.timeZone = TimeZone(identifier: "GMT")
         
-        let hours = Int(calculatedTime!)
-        calculatedTime! -= Double(hours)
+        let hours = Int(calculatedTime)
+        calculatedTime -= Double(hours)
         
-        calculatedTime = calculatedTime! * 60
-        let minutes = Int(calculatedTime!)
-        calculatedTime! -= Double(minutes)
+        calculatedTime = calculatedTime * 60
+        let minutes = Int(calculatedTime)
+        calculatedTime -= Double(minutes)
         
-        calculatedTime = calculatedTime! * 60
-        let seconds = Int(calculatedTime!)
-        calculatedTime! -= Double(seconds)
+        calculatedTime = calculatedTime * 60
+        let seconds = Int(calculatedTime)
+        calculatedTime -= Double(seconds)
         
         components.hour = hours
         components.minute = minutes
         components.second = seconds
-        components.nanosecond = Int(calculatedTime! * 1000 * 1000000)
+        components.nanosecond = Int(calculatedTime * 1000 * 1000000)
         
         var returnDate = gregorianCalendar.date(from: components)
         
-        let offsetFromGMT = Double(location.timezone.secondsFromGMT(for: date)/3600);
+        let offsetFromGMT = Double(location.timezone.secondsFromGMT(for: date)/3600)
         
-        if (time! + offsetFromGMT > 24) {
+        if (time + offsetFromGMT > 24)
+        {
             returnDate = returnDate?.addingTimeInterval(-86400)
-        } else if (time! + offsetFromGMT < 0) {
+        }
+        else if (time + offsetFromGMT < 0)
+        {
             returnDate = returnDate?.addingTimeInterval(86400)
         }
         
-        return returnDate
+        return returnDate;
     }
     
     func getSunriseSolarDipFromOffset(minutes: Double) -> Double {
