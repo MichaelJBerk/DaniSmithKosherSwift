@@ -134,7 +134,7 @@ final class KosherSwiftTests: XCTestCase {
     }
     
     func testCalculatorSunrise() throws {
-        var gregorianCalendar = Calendar(identifier: .gregorian)
+        let gregorianCalendar = Calendar(identifier: .gregorian)
         
         let geoLocation = GeoLocation(lat: 40.08213, lng: -74.20970, timezone: TimeZone.current)
         let lakewoodCalculator = NOAACalculator()

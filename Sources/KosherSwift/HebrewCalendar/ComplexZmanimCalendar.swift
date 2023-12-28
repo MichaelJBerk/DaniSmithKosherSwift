@@ -127,11 +127,11 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     public func latestTefila2HoursBeforeChatzos() -> Date? { AstronomicalCalendar.getTimeOffset(time: chatzos(), offset: -120 * AstronomicalCalendar.minuteMillis) }
     public func minchaGedola30Minutes() -> Date? { AstronomicalCalendar.getTimeOffset(time: chatzos(), offset: 30 * AstronomicalCalendar.minuteMillis) }
     public func plagAlos16Point1ToTzeisGeonim7Point083Degrees()  -> Date? { calculatePlagHamincha(alos16Point1Degrees(), tzeisGeonim7Point083Degrees()) }
-    public func bainHashmashosRT13Point24Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z13_24) }
-    public func bainHashmashosRT58Point5Minutes()  -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 58.5 * AstronomicalCalendar.minuteMillis) }
-    public func bainHashmashosRT13Point5MinutesBefore7Point083Degrees()  -> Date? { AstronomicalCalendar.getTimeOffset(time: getSunsetOffsetByDegrees(offsetZenith: .z7_083), offset: -13.5 * AstronomicalCalendar.minuteMillis) }
+    public func beinHashmashosRT13Point24Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z13_24) }
+    public func beinHashmashosRT58Point5Minutes()  -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 58.5 * AstronomicalCalendar.minuteMillis) }
+    public func beinHashmashosRT13Point5MinutesBefore7Point083Degrees()  -> Date? { AstronomicalCalendar.getTimeOffset(time: getSunsetOffsetByDegrees(offsetZenith: .z7_083), offset: -13.5 * AstronomicalCalendar.minuteMillis) }
     
-    public func bainHashmashosRT2Stars() -> Date? {
+    public func beinHashmashosRT2Stars() -> Date? {
         guard let alos19Point8 = alos19Point8Degrees(), let b = elevationAdjustedSunrise else { return nil }
         let offset = ((b - alos19Point8) * 1000) * (5 / 18)
         return AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: offset)
@@ -139,12 +139,12 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     
     public func tzeisAteretTorah() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: ComplexZmanimCalendar.ateretTorahSunsetOffset * AstronomicalCalendar.minuteMillis) }
     
-    public func bainHashmashosYereim18Minutes() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: -18 * AstronomicalCalendar.minuteMillis) }
-    public func bainHashmashosYereim3Point5Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .zMinus3_05) }
-    public func bainHashmashosYereim16Point875Minutes() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: -16.875 * AstronomicalCalendar.minuteMillis) }
-    public func bainHashmashosYereim2Point8Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .zMinus2_8) }
-    public func bainHashmashosYereim13Point5Minutes() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: -13.5 * AstronomicalCalendar.minuteMillis) }
-    public func bainHashmashosYereim2Point1Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .zMinus2_1)}
+    public func beinHashmashosYereim18Minutes() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: -18 * AstronomicalCalendar.minuteMillis) }
+    public func beinHashmashosYereim3Point5Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .zMinus3_05) }
+    public func beinHashmashosYereim16Point875Minutes() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: -16.875 * AstronomicalCalendar.minuteMillis) }
+    public func beinHashmashosYereim2Point8Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .zMinus2_8) }
+    public func beinHashmashosYereim13Point5Minutes() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: -13.5 * AstronomicalCalendar.minuteMillis) }
+    public func beinHashmashosYereim2Point1Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .zMinus2_1)}
     public func tzeis60()  -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 60 * AstronomicalCalendar.minuteMillis) }
     public func tzeis19Point8Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z19_8) }
     public func tzeis96()  -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 96 * AstronomicalCalendar.minuteMillis) }
