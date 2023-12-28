@@ -7,13 +7,12 @@
 
 import Foundation
 
-class JewishDate: Comparable {
-    var month: JewishMonth { JewishMonth.fromSwiftCalMonth(month: hebCal.component(.month, from: gregDate), jewishDate: self) }
-    
-    var day: Int { hebCal.component(.day, from: gregDate) }
-    var year: Int { hebCal.component(.year, from: gregDate) }
+public class JewishDate: Comparable {
+    public var month: JewishMonth { JewishMonth.fromSwiftCalMonth(month: hebCal.component(.month, from: gregDate), jewishDate: self) }
+    public var day: Int { hebCal.component(.day, from: gregDate) }
+    public var year: Int { hebCal.component(.year, from: gregDate) }
         
-    let gregDate: Date
+    public let gregDate: Date
     
     var hebCal: Calendar
     
@@ -69,11 +68,11 @@ class JewishDate: Comparable {
 //    }
     
     
-    static func == (lhs: JewishDate, rhs: JewishDate) -> Bool {
+    public static func == (lhs: JewishDate, rhs: JewishDate) -> Bool {
         return lhs.gregDate == rhs.gregDate
     }
     
-    static func < (lhs: JewishDate, rhs: JewishDate) -> Bool {
+    public static func < (lhs: JewishDate, rhs: JewishDate) -> Bool {
         return lhs.gregDate < rhs.gregDate
     }
 }

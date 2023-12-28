@@ -9,9 +9,7 @@ import Foundation
 
 infix operator ~/
 
-extension Int {
-//    (a / b).truncate()
-    
+public extension Int {    
     static func ~/ (lhs: Int, rhs: Int) -> Int {
         Int((Double(lhs) / Double(rhs)).rounded(.down))
     }
@@ -25,7 +23,7 @@ extension Int {
     }
 }
 
-extension Date {
+public extension Date {
     var millisecondsSince1970: Int64 {
         Int64((self.timeIntervalSince1970 * 1000.0).rounded())
     }
@@ -71,6 +69,6 @@ extension Date {
     }
 }
 
-extension TimeInterval {
+public extension TimeInterval {
     var inMilliseconds: Double { self * 1000 }
 }

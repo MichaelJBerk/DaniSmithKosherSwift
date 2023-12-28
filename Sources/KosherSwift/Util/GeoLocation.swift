@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct GeoLocation {
-    let lat: Double
-    let lng: Double
-    let timezone: TimeZone
-    let name: String
+public struct GeoLocation {
+    public let lat: Double
+    public let lng: Double
+    public let timezone: TimeZone
+    public let name: String
     
-    let elevation: Double?
+    public let elevation: Double?
     
-    init(lat: Double, lng: Double, timezone: TimeZone = Calendar.current.timeZone, elevation: Double? = nil, name: String = "") {
+    public init(lat: Double, lng: Double, timezone: TimeZone = Calendar.current.timeZone, elevation: Double? = nil, name: String = "") {
         self.lat = lat
         self.lng = lng
         self.timezone = timezone
@@ -38,9 +38,6 @@ struct GeoLocation {
         
         return 0
     }
-    
-    
-    
 }
 extension GeoLocation {
     static let minuteMillis: Double = 60 * 1000

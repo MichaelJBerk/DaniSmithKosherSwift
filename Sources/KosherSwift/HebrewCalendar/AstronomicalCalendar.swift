@@ -7,59 +7,59 @@
 
 import Foundation
 
-class AstronomicalCalendar {
+public class AstronomicalCalendar {
     let location: GeoLocation
     let date: Date
     let astronomicalCalculator: AstronomicalCalculator
     
-    init(location: GeoLocation, date: Date = Date.now, astronomicalCalculator: AstronomicalCalculator = NOAACalculator()) {
+    public init(location: GeoLocation, date: Date = Date.now, astronomicalCalculator: AstronomicalCalculator = NOAACalculator()) {
         self.location = location
         self.date = date
         self.astronomicalCalculator = astronomicalCalculator
     }
     
-    var sunrise: Date? {
+    public var sunrise: Date? {
         let ret = getUtcSunrise(zenith: Zenith.geometric.rawValue)
         
         return getDateFromTime(time: ret, isSunrise: true)
     }
     
-    var seaLevelSunrise: Date? {
+    public var seaLevelSunrise: Date? {
         let ret = getUtcSeaLevelSunrise(zenith: Zenith.geometric)
         return getDateFromTime(time: ret, isSunrise: true)
     }
     
-    var civilTwilightStart: Date? {
+    public var civilTwilightStart: Date? {
         getSunriseOffsetByDegrees(offset: Zenith.civil.rawValue)
     }
     
-    var nauticalTwilightStart: Date? {
+    public var nauticalTwilightStart: Date? {
         getSunriseOffsetByDegrees(offset: Zenith.nautical.rawValue)
     }
     
-    var astronomicalTwilightStart: Date? {
+    public var astronomicalTwilightStart: Date? {
         getSunriseOffsetByDegrees(offset: Zenith.astronomical.rawValue)
     }
     
-    var sunset: Date? {
+    public var sunset: Date? {
         let ret = getUtcSunset(zenith: Zenith.geometric.rawValue)
         return getDateFromTime(time: ret, isSunrise: true)
     }
     
-    var seaLevelSunset: Date? {
+    public var seaLevelSunset: Date? {
         let ret = getUtcSeaLevelSunset(zenith: .geometric)
         return getDateFromTime(time: ret, isSunrise: true)
     }
     
-    var civilTwilightEnd: Date? {
+    public var civilTwilightEnd: Date? {
         getSunsetOffsetByDegrees(offset: Zenith.civil.rawValue)
     }
     
-    var nauticalTwilightEnd: Date? {
+    public var nauticalTwilightEnd: Date? {
         getSunsetOffsetByDegrees(offset: Zenith.nautical.rawValue)
     }
     
-    var astronomicalTwilightEnd: Date? {
+    public var astronomicalTwilightEnd: Date? {
         getSunsetOffsetByDegrees(offset: Zenith.astronomical.rawValue)
     }
     
@@ -81,7 +81,7 @@ class AstronomicalCalendar {
         getSunsetOffsetByDegrees(offset: offsetZenith.rawValue)
     }
     
-    var adjustedDate: Date? {
+    public var adjustedDate: Date? {
         let offset = location.antimeridianAdjustment
         if offset == 0 {
             return date
@@ -208,7 +208,7 @@ class AstronomicalCalendar {
     }
     
     
-
+    
 }
 
 extension AstronomicalCalendar {
@@ -223,5 +223,5 @@ extension AstronomicalCalendar {
         
         return time + Double(offset) / 1000
     }
-
+    
 }

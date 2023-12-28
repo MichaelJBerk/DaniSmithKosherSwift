@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Zenith: Double {    
+public enum Zenith: Double {    
     case civil = 96
     case nautical = 102
     case astronomical = 100

@@ -7,11 +7,13 @@
 
 import Foundation
 
-class NOAACalculator: AstronomicalCalculator {
+public class NOAACalculator: AstronomicalCalculator {
     private static let julianDayJan12000 = 2451545.0
-    private static let julianDaaysPerCentury = 36525.0;
+    private static let julianDaaysPerCentury = 36525.0
+    
+    required public init() { }
         
-    func getUtcSunrise(date: Date, location: GeoLocation, zenith: Double, adjustForElevation: Bool) -> Double {
+    public func getUtcSunrise(date: Date, location: GeoLocation, zenith: Double, adjustForElevation: Bool) -> Double {
         let elevation = adjustForElevation ? (location.elevation ?? 0) : 0
         let adjustedZenith = NOAACalculator.adjustZenith(zenith: zenith, elevation: elevation)
         
@@ -28,7 +30,7 @@ class NOAACalculator: AstronomicalCalculator {
         return sunrise;
     }
     
-    func getUtcSunset(date: Date, location: GeoLocation, zenith: Double, adjustForElevation: Bool) -> Double {
+    public func getUtcSunset(date: Date, location: GeoLocation, zenith: Double, adjustForElevation: Bool) -> Double {
         let elevation = adjustForElevation ? location.elevation ?? 0 : 0
         let adjustedZenith = NOAACalculator.adjustZenith(zenith: zenith, elevation: elevation)
 

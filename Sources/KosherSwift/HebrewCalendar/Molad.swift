@@ -7,10 +7,8 @@
 
 import Foundation
 
-
-
-class MoladDate: JewishDate {
-    let molad: Molad
+public class MoladDate: JewishDate {
+    public let molad: Molad
     
     init(fromMolad molad: Double) {
         self.molad = MoladDate.moladFromChalakim(chalakim: molad)
@@ -95,8 +93,8 @@ class MoladDate: JewishDate {
     }
 }
 
-struct Molad {
-    let hours: Int
-    let minutes: Int
-    let chalakim: Int
+public struct Molad {
+    public let hours: Int
+    public let minutes: Int
+    public let chalakim: Int
 }

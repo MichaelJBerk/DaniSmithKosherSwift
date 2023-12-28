@@ -7,11 +7,11 @@
 
 import Foundation
 
-class JewishCalendar: JewishDate {
-    let isInIsrael: Bool
-    let moladDate: MoladDate
+public class JewishCalendar: JewishDate {
+    public let isInIsrael: Bool
+    public let moladDate: MoladDate
     
-    init(withJewishYear year: Int, andMonth month: JewishMonth, andDay day: Int, isInIsrael: Bool = false) {
+    public init(withJewishYear year: Int, andMonth month: JewishMonth, andDay day: Int, isInIsrael: Bool = false) {
         self.isInIsrael = isInIsrael
         self.moladDate = MoladDate.calculate(forJewishDate: JewishDate(withJewishYear: year, andMonth: month, andDay: day))
 
@@ -19,7 +19,7 @@ class JewishCalendar: JewishDate {
     }
     
     
-    init(date: Date, isInIsrael: Bool = false) {
+    public init(date: Date, isInIsrael: Bool = false) {
         //        let abs = JewishDate.gregorianDateToAbsDate(date: date)
         //        let jewishDate = JewishDate.absDateToJewishDate(absDate: abs)
         self.isInIsrael = isInIsrael
@@ -34,17 +34,17 @@ class JewishCalendar: JewishDate {
     //        self.init(withJewishYear: jewishDate.year, andMonth: jewishDate.month, andDay: jewishDate.day, isInIsrael: isInIsrael)
     //    }
     
-    func copy(year: Int? = nil, month: JewishMonth? = nil, day: Int? = nil, isInIsrael: Bool? = nil) -> JewishCalendar {
+    public func copy(year: Int? = nil, month: JewishMonth? = nil, day: Int? = nil, isInIsrael: Bool? = nil) -> JewishCalendar {
         JewishCalendar(withJewishYear: year ?? self.year, andMonth: month ?? self.month, andDay: day ?? self.day, isInIsrael: isInIsrael ?? self.isInIsrael)
     }
     
-    var isBirkasHachama: Bool {
+    public var isBirkasHachama: Bool {
         let elapsedDays = jewishCalendarElapsedDays + daysSinceStartOfJewishYear
         
         return elapsedDays % Int(28.0 * 365.25) == 172
     }
     
-    var tekufasTishreiElapsedDays: Int {
+    public var tekufasTishreiElapsedDays: Int {
         let days = Double(jewishCalendarElapsedDays + (daysSinceStartOfJewishYear - 1)) + 0.5
         let solar = Double(year - 1) * 365.25
         
@@ -111,7 +111,7 @@ class JewishCalendar: JewishDate {
         return nil
     }
     
-    func getParsha() -> Parsha {
+    public func getParsha() -> Parsha {
         if dow != .saturday {
             return .none
         }
@@ -126,7 +126,7 @@ class JewishCalendar: JewishDate {
         return Parsha.parshalist[yearType][Int(day / 7)]
     }
     
-    func getSpecialShabbos() -> Parsha {
+    public func getSpecialShabbos() -> Parsha {
         if dow != .saturday {
             return .none
         }
@@ -157,42 +157,42 @@ class JewishCalendar: JewishDate {
     }
     
     // Chagim checkers
-    var isErevRoshChodesh: Bool { day == 29 && month != .elul }
-    var isRoshChodesh: Bool { (day == 1 && month != .tishrei) || day == 30 }
-    var isErevPesach: Bool { month == .nissan && day == 14 }
-    var isPesach: Bool { month == .nissan && (day == 15 || day == 21 || (!isInIsrael && (day == 16 || day == 22))) }
-    var isCholHamoedPesach: Bool { month == .nissan && (day >= 17 && day <= 20 || (day == 16 && isInIsrael)) }
-    var isYomHashoah: Bool { month == .nissan && ((day == 26 && dow == .thursday) || (day == 28 && dow == .monday) || (day == 27 && dow != .sunday && dow != .friday))}
-    var isYomHazikaron: Bool { month == .iyar && ((day == 4 && dow == .tuesday) || ((day == 3 || day == 2) && dow == .wednesday) || (day == 6 && dow == .tuesday)) }
-    var isYomHaatzmaut: Bool { month == .iyar && ((day == 5 && dow == .wednesday) || (day == 6 && dow == .tuesday) || ((day == 4 || day == 3) && dow == .thursday)) }
-    var isPesachSheni: Bool { month == .iyar && day == 14 }
-    var isLagBaomer: Bool { month == .iyar && day == 18 }
-    var isYomYerushalaim: Bool { month == .iyar && day == 28 }
-    var isErevShavuos: Bool { month == .sivan && day == 5 }
-    var isShavuos: Bool { month == .sivan && (day == 6 || (!isInIsrael && day == 7)) }
-    var isSeventeenthOfTammuz: Bool { month == .tammuz && ((day == 17 && dow != .friday) || (day == 18 && dow == .sunday)) }
-    var isTishaBeav: Bool { month == .av && ((day == 10 && dow == .sunday) || (day == 9 && dow != .saturday)) }
-    var isTuBeav: Bool { month == .av && day == 15 }
-    var isErevRoshHashana: Bool { month == .elul && day == 29 }
-    var isRoshHashana: Bool { month == .tishrei && (day == 1 || day == 2) }
-    var isFastOfGedalia: Bool { month == .tishrei && ((day == 3 && dow != .saturday) || (day == 4 && dow == .sunday)) }
-    var isErevYomKippur: Bool { month == .tishrei && day == 9 }
-    var isYomKippur: Bool { month == .tishrei && day == 10 }
-    var isErevSuccos: Bool { month == .tishrei && day == 14 }
-    var isSuccos: Bool { month == .tishrei && (day == 15 || (day == 16 && !isInIsrael)) }
-    var isCholHamoedSuccos: Bool { month == .tishrei && ((day >= 17 && day <= 20) || (day == 16 && isInIsrael)) }
-    var isHoshanaRabba: Bool { month == .tishrei && day == 21 }
-    var isSheminiAtzeres: Bool { month == .tishrei && day == 22 }
-    var isSimchasTorah: Bool { month == .tishrei && day == 23 && !isInIsrael }
-    var isErevChanukah: Bool { month == .kislev && day == 24 } // TODO formatting
-    var isChanukah: Bool { (month == .kislev && day >= 25) || (month == .teves && ((day == 1 || day == 2) || (day == 3 && isKislevShort)))}
-    var isTenthOfTeves: Bool { month == .teves && day == 10 }
-    var isTuBeshvat: Bool { month == .shevat && day == 15 }
-    var isFastOfEsther: Bool { (!isJewishLeapYear && month == .adar && ((day == 11 || day == 12) && dow == .thursday) || (day == 13 && !(dow == .friday || dow == .saturday))) || (isJewishLeapYear && month == .adar2 && (((day == 11 || day == 12) && dow == .thursday) || (day == 13 && !(dow == .friday || dow == .saturday)))) }
-    var isPurim: Bool { (!isJewishLeapYear && month == .adar && day == 14) || (isJewishLeapYear && month == .adar2 && day == 14) }
-    var isShushanPurim: Bool { (!isJewishLeapYear && month == .adar && day == 15) || (isJewishLeapYear && month == .adar2 && day == 15) }
-    var isPurimKatan: Bool { isJewishLeapYear && month == .adar && day == 14 }
-    var isShushanPurimKatan: Bool { isJewishLeapYear && month == .adar && day == 15 }
+    public var isErevRoshChodesh: Bool { day == 29 && month != .elul }
+    public var isRoshChodesh: Bool { (day == 1 && month != .tishrei) || day == 30 }
+    public var isErevPesach: Bool { month == .nissan && day == 14 }
+    public var isPesach: Bool { month == .nissan && (day == 15 || day == 21 || (!isInIsrael && (day == 16 || day == 22))) }
+    public var isCholHamoedPesach: Bool { month == .nissan && (day >= 17 && day <= 20 || (day == 16 && isInIsrael)) }
+    public var isYomHashoah: Bool { month == .nissan && ((day == 26 && dow == .thursday) || (day == 28 && dow == .monday) || (day == 27 && dow != .sunday && dow != .friday))}
+    public var isYomHazikaron: Bool { month == .iyar && ((day == 4 && dow == .tuesday) || ((day == 3 || day == 2) && dow == .wednesday) || (day == 6 && dow == .tuesday)) }
+    public var isYomHaatzmaut: Bool { month == .iyar && ((day == 5 && dow == .wednesday) || (day == 6 && dow == .tuesday) || ((day == 4 || day == 3) && dow == .thursday)) }
+    public var isPesachSheni: Bool { month == .iyar && day == 14 }
+    public var isLagBaomer: Bool { month == .iyar && day == 18 }
+    public var isYomYerushalaim: Bool { month == .iyar && day == 28 }
+    public var isErevShavuos: Bool { month == .sivan && day == 5 }
+    public var isShavuos: Bool { month == .sivan && (day == 6 || (!isInIsrael && day == 7)) }
+    public var isSeventeenthOfTammuz: Bool { month == .tammuz && ((day == 17 && dow != .friday) || (day == 18 && dow == .sunday)) }
+    public var isTishaBeav: Bool { month == .av && ((day == 10 && dow == .sunday) || (day == 9 && dow != .saturday)) }
+    public var isTuBeav: Bool { month == .av && day == 15 }
+    public var isErevRoshHashana: Bool { month == .elul && day == 29 }
+    public var isRoshHashana: Bool { month == .tishrei && (day == 1 || day == 2) }
+    public var isFastOfGedalia: Bool { month == .tishrei && ((day == 3 && dow != .saturday) || (day == 4 && dow == .sunday)) }
+    public var isErevYomKippur: Bool { month == .tishrei && day == 9 }
+    public var isYomKippur: Bool { month == .tishrei && day == 10 }
+    public var isErevSuccos: Bool { month == .tishrei && day == 14 }
+    public var isSuccos: Bool { month == .tishrei && (day == 15 || (day == 16 && !isInIsrael)) }
+    public var isCholHamoedSuccos: Bool { month == .tishrei && ((day >= 17 && day <= 20) || (day == 16 && isInIsrael)) }
+    public var isHoshanaRabba: Bool { month == .tishrei && day == 21 }
+    public var isSheminiAtzeres: Bool { month == .tishrei && day == 22 }
+    public var isSimchasTorah: Bool { month == .tishrei && day == 23 && !isInIsrael }
+    public var isErevChanukah: Bool { month == .kislev && day == 24 } // TODO formatting
+    public var isChanukah: Bool { (month == .kislev && day >= 25) || (month == .teves && ((day == 1 || day == 2) || (day == 3 && isKislevShort)))}
+    public var isTenthOfTeves: Bool { month == .teves && day == 10 }
+    public var isTuBeshvat: Bool { month == .shevat && day == 15 }
+    public var isFastOfEsther: Bool { (!isJewishLeapYear && month == .adar && ((day == 11 || day == 12) && dow == .thursday) || (day == 13 && !(dow == .friday || dow == .saturday))) || (isJewishLeapYear && month == .adar2 && (((day == 11 || day == 12) && dow == .thursday) || (day == 13 && !(dow == .friday || dow == .saturday)))) }
+    public var isPurim: Bool { (!isJewishLeapYear && month == .adar && day == 14) || (isJewishLeapYear && month == .adar2 && day == 14) }
+    public var isShushanPurim: Bool { (!isJewishLeapYear && month == .adar && day == 15) || (isJewishLeapYear && month == .adar2 && day == 15) }
+    public var isPurimKatan: Bool { isJewishLeapYear && month == .adar && day == 14 }
+    public var isShushanPurimKatan: Bool { isJewishLeapYear && month == .adar && day == 15 }
     
     private static let chagCheckers: [JewishHoliday: (JewishCalendar) -> Bool] = [
         .erevPesach: { cal in cal.isErevPesach },
@@ -232,7 +232,7 @@ class JewishCalendar: JewishDate {
         .shushanPurimKatan: { cal in cal.isShushanPurimKatan }
     ]
     
-    func getCurrentChag() -> JewishHoliday? {
+    public func getCurrentChag() -> JewishHoliday? {
         for checker in JewishCalendar.chagCheckers {
             if checker.value(self) {
                 return checker.key
@@ -242,7 +242,7 @@ class JewishCalendar: JewishDate {
         return nil
     }
     
-    var isYomTov: Bool {
+    public var isYomTov: Bool {
         guard let _ = getCurrentChag() else {
             return false
         }
@@ -254,13 +254,13 @@ class JewishCalendar: JewishDate {
         return true
     }
     
-    var isYomTovAssurBemelacha: Bool { isPesach || isShavuos || isSuccos || isSheminiAtzeres || isSimchasTorah || isRoshHashana || isYomKippur }
+    public var isYomTovAssurBemelacha: Bool { isPesach || isShavuos || isSuccos || isSheminiAtzeres || isSimchasTorah || isRoshHashana || isYomKippur }
     
-    var isAssurBemelacha: Bool { dow == .saturday || isYomTovAssurBemelacha }
+    public var isAssurBemelacha: Bool { dow == .saturday || isYomTovAssurBemelacha }
     
-    var isTomorrowShabbosOrYomTov: Bool { dow == .friday || isErevYomTov || isErevYomTovSheni }
+    public var isTomorrowShabbosOrYomTov: Bool { dow == .friday || isErevYomTov || isErevYomTovSheni }
     
-    var isErevYomTovSheni: Bool {
+    public var isErevYomTovSheni: Bool {
         if month == .tishrei && day == 1 {
             return true
         }
@@ -278,17 +278,17 @@ class JewishCalendar: JewishDate {
         return false
     }
     
-    var isAseresYemeiTeshuva: Bool { month == .tishrei && day <= 10 }
+    public var isAseresYemeiTeshuva: Bool { month == .tishrei && day <= 10 }
     
-    var isCholHamoed: Bool { isCholHamoedPesach || isCholHamoedSuccos }
+    public var isCholHamoed: Bool { isCholHamoedPesach || isCholHamoedSuccos }
     
-    var isErevYomTov: Bool { isErevPesach || isErevSuccos || isErevRoshHashana || isErevYomKippur || isErevSuccos || isHoshanaRabba || (isCholHamoedPesach && day == 20) }
+    public var isErevYomTov: Bool { isErevPesach || isErevSuccos || isErevRoshHashana || isErevYomKippur || isErevSuccos || isHoshanaRabba || (isCholHamoedPesach && day == 20) }
     
-    var isTaanis: Bool { isSeventeenthOfTammuz || isTishaBeav || isYomKippur || isFastOfEsther || isFastOfGedalia || isTenthOfTeves }
+    public var isTaanis: Bool { isSeventeenthOfTammuz || isTishaBeav || isYomKippur || isFastOfEsther || isFastOfGedalia || isTenthOfTeves }
     
-    var isTaanisBechoros: Bool { month == .nissan && ((day == 14 && dow != .saturday) || (day == 12 && dow == .thursday)) }
+    public var isTaanisBechoros: Bool { month == .nissan && ((day == 14 && dow != .saturday) || (day == 12 && dow == .thursday)) }
     
-    var dayOfChanukah: Int? {
+    public var dayOfChanukah: Int? {
         if !isChanukah { return nil }
         
         if month == .kislev {
@@ -298,11 +298,11 @@ class JewishCalendar: JewishDate {
         }
     }
     
-    var isMacharChodesh: Bool { dow == .saturday && (day == 30 || day == 29) }
+    public var isMacharChodesh: Bool { dow == .saturday && (day == 30 || day == 29) }
     
-    var isShabbosMevorchim: Bool { dow == .saturday && month != .elul && day >= 23 && day <= 29 }
+    public var isShabbosMevorchim: Bool { dow == .saturday && month != .elul && day >= 23 && day <= 29 }
     
-    var dayOfOmer: Int? {
+    public var dayOfOmer: Int? {
         if month == .nissan && day >= 16 {
             return day - 15
         } else if month == .iyar {
@@ -314,24 +314,24 @@ class JewishCalendar: JewishDate {
         return nil
     }
 
-    var earliestKiddushLevana3Days: Date? { moladDate.gregDate.withAdded(days: 3) }
-    var earliestKiddushLevana7Days: Date? { moladDate.gregDate.withAdded(days: 7) }
-    var latestZmanKidushLevanaBetweenMoldos: Date? { moladDate.gregDate.withAdded(days: 14, hours: 18, minutes: 22, seconds: 1, milliseconds: 666) }
-    var latestKiddushLevana15Days: Date? { moladDate.gregDate.withAdded(days: 15) }
+    public var earliestKiddushLevana3Days: Date? { moladDate.gregDate.withAdded(days: 3) }
+    public var earliestKiddushLevana7Days: Date? { moladDate.gregDate.withAdded(days: 7) }
+    public var latestZmanKidushLevanaBetweenMoldos: Date? { moladDate.gregDate.withAdded(days: 14, hours: 18, minutes: 22, seconds: 1, milliseconds: 666) }
+    public var latestKiddushLevana15Days: Date? { moladDate.gregDate.withAdded(days: 15) }
     
     // TODO
     //    var dafYomiYerushalmi: Daf {}
     
-    var dafYomiBavli: Daf? { DafYomiCalculator.getDafYomiBavli(jewishCalendar: self) }
+    public var dafYomiBavli: Daf? { DafYomiCalculator.getDafYomiBavli(jewishCalendar: self) }
     
-    var isMashivHaruachRecited: Bool {
+    public var isMashivHaruachRecited: Bool {
         let start = JewishDate(withJewishYear: year, andMonth: .tishrei, andDay: 22)
         let end = JewishDate(withJewishYear: year, andMonth: .nissan, andDay: 15)
         
         return gregDate > start.gregDate && gregDate < end.gregDate
     }
     
-    var isVeseinTalUmatarRecited: Bool {
+    public var isVeseinTalUmatarRecited: Bool {
         if month == .nissan && day < 15 {
             return true
         } else if month.rawValue < JewishMonth.cheshvan.rawValue {
@@ -343,9 +343,9 @@ class JewishCalendar: JewishDate {
         return tekufasTishreiElapsedDays >= 47
     }
     
-    var isMashivHaruachStartDate: Bool { return month == .tishrei && day == 22 }
-    var isMashivHaruachEndDate: Bool { return month == .nissan && day == 15 }
+    public var isMashivHaruachStartDate: Bool { return month == .tishrei && day == 22 }
+    public var isMashivHaruachEndDate: Bool { return month == .nissan && day == 15 }
     
-    var isVeseinBerachaRecited: Bool { !isVeseinTalUmatarRecited }
-    var isMoridHatalRecited: Bool { !isMashivHaruachRecited || isMashivHaruachStartDate || isMashivHaruachEndDate }
+    public var isVeseinBerachaRecited: Bool { !isVeseinTalUmatarRecited }
+    public var isMoridHatalRecited: Bool { !isMashivHaruachRecited || isMashivHaruachStartDate || isMashivHaruachEndDate }
 }

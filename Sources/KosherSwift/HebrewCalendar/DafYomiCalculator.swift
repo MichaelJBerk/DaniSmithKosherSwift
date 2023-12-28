@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DafYomiCalculator {
+public class DafYomiCalculator {
     private static let dafYomiStart = Calendar.current.date(from: DateComponents(year: 1923, month: 9, day: 11))!
     private static let dafYomiJulianStart = NOAACalculator.getJulianDay(dafYomiStart)
     private static let shekalimChangeDay = Calendar.current.date(from: DateComponents(year: 1975, month: 6, day: 24))!

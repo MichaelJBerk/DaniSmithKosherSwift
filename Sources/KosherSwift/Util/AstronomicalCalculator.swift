@@ -7,9 +7,11 @@
 
 import Foundation
 
-protocol AstronomicalCalculator {
+public protocol AstronomicalCalculator {
     func getUtcSunrise(date: Date, location: GeoLocation, zenith: Double, adjustForElevation: Bool) -> Double
     func getUtcSunset(date: Date, location: GeoLocation, zenith: Double, adjustForElevation: Bool) -> Double
+    
+    init()
 }
 
 extension AstronomicalCalculator {
@@ -31,7 +33,7 @@ extension AstronomicalCalculator {
     }
 }
 
-class AstronomicalCalculatorConstants {
+public class AstronomicalCalculatorConstants {
     static let refraction = 34 / 60.0
     static let solarRadius = 16 / 60.0
     static let earthRadius = 6356.9

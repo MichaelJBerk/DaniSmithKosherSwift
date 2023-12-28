@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import KosherSwift
 
 final class KosherSwiftTests: XCTestCase {
     override func setUpWithError() throws {

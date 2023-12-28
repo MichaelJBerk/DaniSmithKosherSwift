@@ -5,7 +5,7 @@
 //  Created by Daniel Smith on 12/19/23.
 //
 
-enum Parsha {
+public enum Parsha {
     case none
     case bereshis
     case noach
