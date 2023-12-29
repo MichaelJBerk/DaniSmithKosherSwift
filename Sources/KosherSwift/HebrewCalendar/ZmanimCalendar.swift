@@ -105,6 +105,6 @@ public class ZmanimCalendar: AstronomicalCalendar {
         if (startOfHalfDay == nil || endOfHalfDay == nil) {
             return Int64.min;
         }
-        return Int64((endOfHalfDay!.timeIntervalSince1970 - startOfHalfDay!.timeIntervalSince1970) / 6);
+        return Int64((endOfHalfDay!.timeIntervalSince1970 - startOfHalfDay!.timeIntervalSince1970) / 6)
     }
 }

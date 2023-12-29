@@ -28,7 +28,16 @@ final class KosherSwiftTests: XCTestCase {
         XCTAssertEqual(a.hour, b.hour)
         XCTAssertEqual(a.minute, b.minute)
         XCTAssertEqual(a.second, b.second)
-        //        XCTAssertEqual(a.nanosecond, b.nanosecond)
+    }
+    
+    func checkTimeEquals(_ a: Date?, _ hour: Int, _ minute: Int) {
+        guard let a = a else {
+            XCTAssertEqual(false, true, "a is nil")
+            return
+        }
+        
+        XCTAssertEqual(a.hour, hour, "hour")
+        XCTAssertEqual(a.minute, minute, "minute")
     }
     
     func testGregorianDateReflectsHebrew() {
@@ -340,6 +349,12 @@ final class KosherSwiftTests: XCTestCase {
         decFirst.second = 14
         
         checkDateEquals(alot, gregorianCalendar.date(from: decFirst))
+    }
+    
+    func testFixedLocalChatzos() {
+        let loc = GeoLocation(lat: 37.32495943, lng: -122.01973712)
+        let cal = ComplexZmanimCalendar(location: loc, date: Date(year: 2023, month: 12, day: 28))
+        checkTimeEquals(cal.minchaKetanaGRAFixedLocalChatzosToSunset(), 17, 57)
     }
     
     

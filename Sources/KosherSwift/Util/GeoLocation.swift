@@ -24,6 +24,10 @@ public struct GeoLocation {
     }
     
     var localMeanTimeOffset: Double {
+        lng * 4 * GeoLocation.minuteMillis - Double(timezone.secondsFromGMT())
+    }
+    
+    var localMeanTimeOffsetWithMillis: Double {
         lng * 4 * GeoLocation.minuteMillis - Double(timezone.secondsFromGMT() * 1000)
     }
     

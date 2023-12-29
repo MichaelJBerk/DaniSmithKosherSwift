@@ -85,10 +85,10 @@ public class MoladDate: JewishDate {
         let dateTime = dateFormatter.date(from: "\(year)-\(month)-\(day) \(hour):\(minute)")!
         let geo = GeoLocation(lat: latitude, lng: longitude, name: locationName)
         let moladSeconds = Double(molad.chalakim) * 10 / 3
-        //        let moladMillisecond = (1000 * (moladSeconds - moladSeconds))
         var cal = Calendar.current.date(bySettingHour: molad.hours, minute: molad.minutes, second: Int(moladSeconds), of: dateTime)!
+
         // subtract local time difference of 20.94 minutes (20 minutes and 56.496 seconds) to get to Standard time
-        cal.addTimeInterval(-1 * geo.localMeanTimeOffset * 0.001)
+        cal.addTimeInterval(-1 * geo.localMeanTimeOffsetWithMillis * 0.001)
         return cal
     }
 }
