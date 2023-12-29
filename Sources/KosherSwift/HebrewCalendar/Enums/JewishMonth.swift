@@ -40,9 +40,9 @@ public enum JewishMonth: Int {
     
     private static let rMonthMap = monthMap.swapKeyValues()
     
-    static func fromSwiftCalMonth(month: Int, jewishDate: JewishDate) -> JewishMonth {
+    static func fromSwiftCalMonth(month: Int, isLeapYear: Bool) -> JewishMonth {
         if month == 7 || month == 6 {
-            return jewishDate.isJewishLeapYear && month == 7 ? .adar2 : .adar
+            return isLeapYear && month == 7 ? .adar2 : .adar
         }
         
         return monthMap[month]!

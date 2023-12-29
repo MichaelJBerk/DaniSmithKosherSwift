@@ -85,6 +85,10 @@ public extension Date {
     func isBetween(start: Date, end: Date) -> Bool {
         start < self && end > self
     }
+    
+    func dateEquals(_ other: Date) -> Bool {
+        year == other.year && day == other.day && month == other.month
+    }
 }
 
 public extension TimeInterval {

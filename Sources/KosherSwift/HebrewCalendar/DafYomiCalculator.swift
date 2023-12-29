@@ -32,7 +32,6 @@ public class DafYomiCalculator {
         
         let calendar = cal.gregDate
         
-        var dafYomi: Daf? = nil
         let julianDay = Int(NOAACalculator.getJulianDay(calendar))
         var cycleNo = 0
         var dafNo = 0

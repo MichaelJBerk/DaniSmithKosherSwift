@@ -8,65 +8,38 @@
 import Foundation
 
 public class JewishDate: Comparable {
-    public var month: JewishMonth { JewishMonth.fromSwiftCalMonth(month: hebCal.component(.month, from: gregDate), jewishDate: self) }
-    public var day: Int { hebCal.component(.day, from: gregDate) }
-    public var year: Int { hebCal.component(.year, from: gregDate) }
-        
     public let gregDate: Date
+
+    public let month: JewishMonth
+    public let day: Int
+    public let year: Int
+    public let dow: DayOfWeek
+
+    public let isJewishLeapYear: Bool
     
-    var hebCal: Calendar
-    
-    var dow: DayOfWeek { DayOfWeek(rawValue: Calendar.current.dateComponents([.weekday], from: gregDate).weekday!)! }
-    
-    init(date: Date) {
+    init(date: Date, includeTime: Bool = false) {
         var cal = Calendar(identifier: .gregorian)
         cal.timeZone = Calendar.current.timeZone
-        self.gregDate = cal.date(from: DateComponents(year: date.year, month: date.month, day: date.day))!
+        self.gregDate = cal.date(from: DateComponents(year: date.year, month: date.month, day: date.day, hour: includeTime ? date.hour : 0, minute: includeTime ? date.minute : 0, second: includeTime ? date.second : 0))!
                 
-        hebCal = Calendar(identifier: .hebrew)
+        var hebCal = Calendar(identifier: .hebrew)
         hebCal.timeZone = Calendar.current.timeZone
-//        self.init(withJewishYear: jewishDate.year, andMonth: jewishDate.month, andDay: jewishDate.day)
+        
+        self.year = hebCal.component(.year, from: gregDate)
+        self.isJewishLeapYear = JewishDate.isJewishLeapYear(year)
+        self.month = JewishMonth.fromSwiftCalMonth(month: hebCal.component(.month, from: gregDate), isLeapYear: self.isJewishLeapYear)
+        self.day = hebCal.component(.day, from: gregDate)
+        self.dow = DayOfWeek(rawValue: Calendar.current.dateComponents([.weekday], from: gregDate).weekday!)!
     }
     
-    init(dateWithTime date: Date) {
-        var cal = Calendar(identifier: .gregorian)
-        cal.timeZone = Calendar.current.timeZone
-        self.gregDate = cal.date(from: DateComponents(year: date.year, month: date.month, day: date.day, hour: date.hour, minute: date.minute, second: date.second))!
-                
-        hebCal = Calendar(identifier: .hebrew)
-        hebCal.timeZone = Calendar.current.timeZone
-    }
-    
-    init(withJewishYear year: Int, andMonth month: JewishMonth, andDay day: Int) {
-        hebCal = Calendar(identifier: .hebrew)
+    public convenience init(withJewishYear year: Int, andMonth month: JewishMonth, andDay day: Int) {
+        var hebCal = Calendar(identifier: .hebrew)
         hebCal.timeZone = Calendar.current.timeZone
         
         
-        self.gregDate = hebCal.date(from: DateComponents(year: year, month: month.toSwiftCalMonth(JewishDate.isJewishLeapYear(year)), day: day))!
+        let gregDate = hebCal.date(from: DateComponents(year: year, month: month.toSwiftCalMonth(JewishDate.isJewishLeapYear(year)), day: day))!
+        self.init(date: gregDate)
     }
-    
-//    private static func validateJewishDate(year: Int, month: JewishMonth, day: Int, hour: Int, minute: Int, chalakim: Int) -> Bool {
-//        if month.rawValue > JewishDate.getLastMonthOfJewishYear(year).rawValue  {
-//            return false
-//        }
-//        
-//        if day < 1 || day > 30 {
-//            return false
-//        }
-//        
-//        if (year < 3761) ||
-//            (year == 3761 && (month.rawValue >= JewishMonth.tishrei.rawValue && month.rawValue < JewishMonth.teves.rawValue)) ||
-//            (year == 3761 && month == JewishMonth.teves && day < 18) {
-//            return false
-//        }
-//        
-//        if hour < 0 || hour > 23 || minute < 0 || minute > 59 || chalakim < 0 || chalakim > 177 {
-//            return false
-//        }
-//        
-//        return true
-//    }
-    
     
     public static func == (lhs: JewishDate, rhs: JewishDate) -> Bool {
         return lhs.gregDate == rhs.gregDate
@@ -147,11 +120,10 @@ extension JewishDate {
         return Date(year: year, month: month, day: day)
       }
     
-    private static func isJewishLeapYear(_ year: Int) -> Bool {
+    static func isJewishLeapYear(_ year: Int) -> Bool {
         ((7 * year) + 1) % 19 < 7
     }
-    
-    var isJewishLeapYear: Bool { JewishDate.isJewishLeapYear(year) }
+
     
     private static func getLastMonthOfJewishYear(_ year: Int) -> JewishMonth {
         isJewishLeapYear(year) ? .adar2 : .adar

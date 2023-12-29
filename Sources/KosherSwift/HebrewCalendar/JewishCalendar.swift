@@ -11,11 +11,13 @@ public class JewishCalendar: JewishDate {
     public let isInIsrael: Bool
     public let moladDate: MoladDate
     
-    public init(withJewishYear year: Int, andMonth month: JewishMonth, andDay day: Int, isInIsrael: Bool = false) {
-        self.isInIsrael = isInIsrael
-        self.moladDate = MoladDate.calculate(forJewishDate: JewishDate(withJewishYear: year, andMonth: month, andDay: day))
-
-        super.init(withJewishYear: year, andMonth: month, andDay: day)
+    public convenience init(withJewishYear year: Int, andMonth month: JewishMonth, andDay day: Int, isInIsrael: Bool = false) {
+        var hebCal = Calendar(identifier: .hebrew)
+        hebCal.timeZone = Calendar.current.timeZone
+        
+        
+        let gregDate = hebCal.date(from: DateComponents(year: year, month: month.toSwiftCalMonth(JewishDate.isJewishLeapYear(year)), day: day))!
+        self.init(date: gregDate, isInIsrael: isInIsrael)
     }
     
     
@@ -193,6 +195,7 @@ public class JewishCalendar: JewishDate {
     public var isShushanPurim: Bool { (!isJewishLeapYear && month == .adar && day == 15) || (isJewishLeapYear && month == .adar2 && day == 15) }
     public var isPurimKatan: Bool { isJewishLeapYear && month == .adar && day == 14 }
     public var isShushanPurimKatan: Bool { isJewishLeapYear && month == .adar && day == 15 }
+    public var isIsruChag: Bool { month == .sivan && ((day == 7 && isInIsrael) || day == 8 && !isInIsrael) }
     
     private static let chagCheckers: [JewishHoliday: (JewishCalendar) -> Bool] = [
         .erevPesach: { cal in cal.isErevPesach },
@@ -229,7 +232,8 @@ public class JewishCalendar: JewishDate {
         .yomHaatzmaut: { cal in cal.isYomHaatzmaut },
         .yomYerushalaim: { cal in cal.isYomYerushalaim },
         .lagBaomer: { cal in cal.isLagBaomer },
-        .shushanPurimKatan: { cal in cal.isShushanPurimKatan }
+        .shushanPurimKatan: { cal in cal.isShushanPurimKatan },
+        .isruChag: { cal in cal.isIsruChag }
     ]
     
     public func getCurrentChag() -> JewishHoliday? {

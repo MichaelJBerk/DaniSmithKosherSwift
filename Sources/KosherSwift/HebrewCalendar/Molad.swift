@@ -19,7 +19,7 @@ public class MoladDate: JewishDate {
     
     init(chalakim: Double, date: Date) {
         self.molad = MoladDate.moladFromChalakim(chalakim: chalakim)
-        super.init(dateWithTime: date)
+        super.init(date: date, includeTime: true)
     }
     
     convenience init(date: Date, hour: Int, minute: Int, chalakim: Int) {
@@ -29,7 +29,7 @@ public class MoladDate: JewishDate {
     
     init(date: Date, molad: Molad) {
         self.molad = molad
-        super.init(dateWithTime: date)
+        super.init(date: date, includeTime: true)
     }
     
     func withMoladHours(_ hours: Int) -> MoladDate {
