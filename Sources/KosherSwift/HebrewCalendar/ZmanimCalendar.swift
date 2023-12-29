@@ -13,7 +13,7 @@ public class ZmanimCalendar: AstronomicalCalendar {
     let shouldUseElevation: Bool
     let candleLightingOffset: Double
     
-    public init(location: GeoLocation, date: Date = Date.now, astronomicalCalculator: AstronomicalCalculator = NOAACalculator(), shouldUseElevation: Bool = false, candleLightingOffset: Double = 18) {
+    public init(location: GeoLocation, date: Date, astronomicalCalculator: AstronomicalCalculator = NOAACalculator(), shouldUseElevation: Bool = false, candleLightingOffset: Double = 18) {
         self.shouldUseElevation = shouldUseElevation
         self.candleLightingOffset = candleLightingOffset
         super.init(location: location, date: date, astronomicalCalculator: astronomicalCalculator)

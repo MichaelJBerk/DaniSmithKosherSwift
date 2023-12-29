@@ -12,7 +12,7 @@ public class AstronomicalCalendar {
     let date: Date
     let astronomicalCalculator: AstronomicalCalculator
     
-    public init(location: GeoLocation, date: Date = Date.now, astronomicalCalculator: AstronomicalCalculator = NOAACalculator()) {
+    public init(location: GeoLocation, date: Date, astronomicalCalculator: AstronomicalCalculator = NOAACalculator()) {
         self.location = location
         self.date = date
         self.astronomicalCalculator = astronomicalCalculator
