@@ -611,7 +611,7 @@ public struct HebrewDateFormatter {
     /// @param daf the Daf to be formatted.
     /// @return the formatted daf.
     ///
-    public func formatDafYomiBavli(daf: Daf) throws -> String {
+    public func formatDafYomi(daf: Daf) throws -> String {
         if hebrewFormat {
             return try daf.masechta + " " + formatHebrewNumber(daf.daf)
         } else {

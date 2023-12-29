@@ -322,8 +322,9 @@ public class JewishCalendar: JewishDate {
     // TODO
     //    var dafYomiYerushalmi: Daf {}
     
-    public var dafYomiBavli: Daf? { DafYomiCalculator.getDafYomiBavli(jewishCalendar: self) }
-    
+    public var dafYomiBavli: Daf? { DafYomiCalculator.getDafYomiBavli(cal: self) }
+    public var dafYomiYerushalmi: Daf? { DafYomiCalculator.getDafYomiYerushalmi(cal: self) }
+
     public var isMashivHaruachRecited: Bool {
         let start = JewishDate(withJewishYear: year, andMonth: .tishrei, andDay: 22)
         let end = JewishDate(withJewishYear: year, andMonth: .nissan, andDay: 15)

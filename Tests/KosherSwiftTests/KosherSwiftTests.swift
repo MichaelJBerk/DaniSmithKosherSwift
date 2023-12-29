@@ -62,7 +62,6 @@ final class KosherSwiftTests: XCTestCase {
         comp.setValue(12, for: .month)
         comp.setValue(24, for: .day)
         let jewishCalendar = JewishCalendar(date: calendar.date(from: comp)!)
-        //            jewishCalendar.timeZone = TimeZone(identifier: "America/New_York")!
         XCTAssertEqual(jewishCalendar.gregDate.year, 2023)
         XCTAssertEqual(jewishCalendar.gregDate.month, 12)
         XCTAssertEqual(jewishCalendar.gregDate.day, 24)
@@ -135,11 +134,11 @@ final class KosherSwiftTests: XCTestCase {
         let jewishCalendar = JewishCalendar(date: Date(year: 2023, month: 12, day: 21))
         
         let dafYomi = jewishCalendar.dafYomiBavli
-        //                let dafYomiYeru = jewishCalendar.getDafYomiYerushalmi()
+        let dafYomiYeru = jewishCalendar.dafYomiYerushalmi
         XCTAssertEqual(dafYomi?.masechta, "בבא קמא")
         XCTAssertEqual(dafYomi?.daf, 49)
-        //                XCTAssertEqual(dafYomiYeru?.getYerushalmiMasechta(), "שבת")
-        //                XCTAssertEqual(dafYomiYeru?.getDaf(), 8)
+        XCTAssertEqual(dafYomiYeru?.masechta, "שבת")
+        XCTAssertEqual(dafYomiYeru?.daf, 8)
     }
     
     func testCalculatorSunrise() throws {
@@ -218,7 +217,7 @@ final class KosherSwiftTests: XCTestCase {
         let geoLocation = GeoLocation(lat: 40.08213, lng: -74.20970, timezone: TimeZone(identifier: "America/New_York")!)
         let lakewoodCalculator = NOAACalculator()
         
-
+        
         
         var januaryFirst = DateComponents()
         januaryFirst.year = 2023
@@ -226,7 +225,7 @@ final class KosherSwiftTests: XCTestCase {
         januaryFirst.day = 1
         
         let zmanCal = ComplexZmanimCalendar(location: geoLocation, date: gregorianCalendar.date(from: januaryFirst)!)
-
+        
         
         var calendar = AstronomicalCalendar(location: geoLocation, date: gregorianCalendar.date(from: januaryFirst)!, astronomicalCalculator: lakewoodCalculator)
         var sunset = calendar.sunset
@@ -237,7 +236,7 @@ final class KosherSwiftTests: XCTestCase {
         
         checkDateEquals(sunset, gregorianCalendar.date(from: januaryFirst))
         checkDateEquals(zmanCal.sunset, gregorianCalendar.date(from: januaryFirst))
-
+        
         
         var mayFirst = DateComponents()
         mayFirst.year = 2023

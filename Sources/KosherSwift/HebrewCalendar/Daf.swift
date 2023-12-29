@@ -8,6 +8,13 @@
 public struct Daf {
     public let masechtaNumber: Int
     public let daf: Int
+    public let dafType: DafType
+    
+    init(masechta masechtaNumber: Int, daf: Int, dafType: DafType) {
+        self.masechtaNumber = masechtaNumber
+        self.daf = daf
+        self.dafType = dafType
+    }
     
     static private var masechtosBavliTransliterated = [
         "Berachos",
@@ -180,19 +187,31 @@ public struct Daf {
         "\u{05d0}\u{05d9}\u{05df} \u{05d3}\u{05e3} \u{05d4}\u{05d9}\u{05d5}\u{05dd}"
     ]
     
+    public var masechta: String {
+        dafType == .bavli ? bavliMasechta : yerushalmiMasechta
+    }
+    
     public var masechtaTransliterated: String {
+        dafType == .bavli ? bavliMasechtaTransliterated : yerushlmiMasechtaTransliterated
+    }
+    
+    var bavliMasechtaTransliterated: String {
         Daf.masechtosBavliTransliterated[masechtaNumber]
     }
     
-    public var masechta: String {
+    var bavliMasechta: String {
         Daf.masechtosBavli[masechtaNumber]
     }
     
-    public var yerushlmiMasechtaTransliterated: String {
+    var yerushlmiMasechtaTransliterated: String {
         Daf.masechtosYerushalmiTransliterated[masechtaNumber]
     }
     
-    public var yerushalmiMasechta: String {
+    var yerushalmiMasechta: String {
         Daf.masechtosYerushlmi[masechtaNumber]
     }
+}
+
+public enum DafType {
+    case bavli, yerushalmi
 }
