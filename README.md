@@ -1,11 +1,13 @@
 
-[![CI Status](http://img.shields.io/travis/Dani Smith/KosherSwift.svg?style=flat)](https://travis-ci.org/Dani Smith/KosherSwift)
 [![Version](https://img.shields.io/cocoapods/v/KosherSwift.svg?style=flat)](http://cocoapods.org/pods/KosherSwift)
 [![License](https://img.shields.io/cocoapods/l/KosherSwift.svg?style=flat)](http://cocoapods.org/pods/KosherSwift)
 [![Platform](https://img.shields.io/cocoapods/p/KosherSwift.svg?style=flat)](http://cocoapods.org/pods/KosherSwift)
 
 # KosherSwift
-A Swift version of [KosherJava](https://github.com/KosherJava/zmanim)
+A Swift version of [KosherJava](https://github.com/KosherJava/zmanim).
+Heavily referenced [KosherDart](https://github.com/yakir8/kosher_dart), which I also previously contributed to.
+
+Also check out [KosherCocoa](https://github.com/MosheBerman/KosherCocoa) (an Objective C port) and the other [KosherSwift](https://github.com/Elyahu41/KosherSwift) that I didn't know existed when I created this.
 
 # Documentation
 A "Get Started" guide can be found [here](https://github.com/DanielSmith1239/KosherSwift/blob/master/GetStarted.md).
@@ -13,7 +15,7 @@ A "Get Started" guide can be found [here](https://github.com/DanielSmith1239/Kos
 To view documentation, download KosherSwift, navigate to `Example > Pods > docs`, and open `index.html` in a web browser.
 
 # Installation
-Just copy the KosherSwift folder in to your project.
+Can be added with the new xcode package management thingy.
 
 ### Cocoapods
 KosherSwift is available through [CocoaPods](http://cocoapods.org). To install
