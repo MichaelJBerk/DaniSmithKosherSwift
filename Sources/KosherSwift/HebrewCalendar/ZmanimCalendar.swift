@@ -32,7 +32,18 @@ public class ZmanimCalendar: AstronomicalCalendar {
     public func tzeis72() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 72 * AstronomicalCalendar.minuteMillis) }
     
     public func candleLighting() -> Date? {
-        ZmanimCalendar.getTimeOffset(time: seaLevelSunset, offset: -Double(candleLightingOffset) * ZmanimCalendar.minuteMillis)
+        let todayCal = JewishCalendar(date: date)
+        let yesterdayCal = JewishCalendar(date: date.withAdded(days: -1)!)
+        if (todayCal.dow == .saturday && todayCal.isErevYomTov)
+            || (todayCal.isRoshHashana && yesterdayCal.isErevYomTov)
+            || (todayCal.isChanukah && todayCal.dow != .friday) {
+            let offsetDate = getSunsetOffsetByDegrees(offsetZenith: .z7_083)
+            return AstronomicalCalendar.getTimeOffset(time: offsetDate, offset: -13.5 * AstronomicalCalendar.hourMillis)
+        } else if todayCal.dow == .friday || todayCal.isErevYomTov {
+            return AstronomicalCalendar.getTimeOffset(time: seaLevelSunset, offset: -candleLightingOffset * AstronomicalCalendar.minuteMillis)
+        }
+        
+        return nil
     }
     
     public func latestTefilaGra() -> Date? { calculateLatestTefila(elevationAdjustedSunrise, elevationAdjustedSunset) }

@@ -75,7 +75,7 @@ public class MoladDate: JewishDate {
         // The raw molad Date (point in time) must be generated using standard time. Using "Asia/Jerusalem" timezone will result in the time
         // being incorrectly off by an hour in the summer due to DST. Proper adjustment for the actual time in DST will be done by the date
         // formatter class used to display the Date.
-        let year = String(Calendar.current.component(.year, from: Date()))
+        let year = String(Calendar.current.component(.year, from: mdate))
         let month = String(format: "%02d", Calendar.current.component(.month, from: mdate))
         let day = String(format: "%02d", Calendar.current.component(.day, from: mdate))
         let hour = String(format: "%02d", Calendar.current.component(.hour, from: mdate))

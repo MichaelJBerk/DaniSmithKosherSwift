@@ -356,7 +356,6 @@ final class KosherSwiftTests: XCTestCase {
         checkTimeEquals(cal.minchaKetanaGRAFixedLocalChatzosToSunset(), 17, 57)
     }
     
-    
     func testNextWeekday() {
         let startYear = 2023
         let startMonth = 12
@@ -371,5 +370,11 @@ final class KosherSwiftTests: XCTestCase {
         checkDateEquals(start.next(.wednesday), Date(year: startYear, month: startMonth, day: startDay + 5))
         checkDateEquals(start.next(.thursday), Date(year: startYear, month: startMonth, day: startDay + 6))
         checkDateEquals(start.next(.friday), Date(year: startYear, month: startMonth, day: startDay + 7))
+    }
+    
+    func testCandleLighting() {
+        let loc = GeoLocation(lat: 28.035950, lng: -82.389381)
+        let cal = ComplexZmanimCalendar(location: loc, date: Date(year: 2024, month: 1, day: 9).next(.friday))
+        checkTimeEquals(cal.candleLighting(), 17, 35)
     }
 }
