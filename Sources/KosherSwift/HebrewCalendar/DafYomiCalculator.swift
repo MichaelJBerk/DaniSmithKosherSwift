@@ -19,7 +19,6 @@ public class DafYomiCalculator {
     
     private static let blattPerMasechtaBavli = [ 64, 157, 105, 121, 22, 88, 56, 40, 35, 31, 32, 29, 27, 122, 112, 91, 66, 49, 90, 82, 119, 119, 176, 113, 24, 49, 76, 14, 120, 110, 142, 61, 34, 34, 28, 22, 4, 9, 5, 73]
     
-    // TODO daf yomi yerushalmi
     private static let blattPerMasechtaYerushalmi = [ 68, 37, 34, 44, 31, 59, 26, 33, 28, 20, 13, 92, 65, 71, 22, 22, 42, 26, 26, 33, 34, 22, 19, 85, 72, 47, 40, 47, 54, 48, 44, 37, 34, 44, 9, 57, 37, 19, 13 ]
     
     public static func getDafYomiBavli(cal: JewishCalendar) -> Daf? {

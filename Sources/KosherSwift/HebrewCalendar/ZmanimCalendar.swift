@@ -11,7 +11,7 @@ typealias ZmanCalculator = () -> Date?
 
 public class ZmanimCalendar: AstronomicalCalendar {
     let shouldUseElevation: Bool
-    let candleLightingOffset: Double
+    public let candleLightingOffset: Double
     
     public init(location: GeoLocation, date: Date, astronomicalCalculator: AstronomicalCalculator = NOAACalculator(), shouldUseElevation: Bool = false, candleLightingOffset: Double = 18) {
         self.shouldUseElevation = shouldUseElevation
@@ -32,8 +32,7 @@ public class ZmanimCalendar: AstronomicalCalendar {
     public func tzeis72() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 72 * AstronomicalCalendar.minuteMillis) }
     
     public func candleLighting() -> Date? {
-        // TODO
-        return nil
+        ZmanimCalendar.getTimeOffset(time: seaLevelSunset, offset: -Double(candleLightingOffset) * ZmanimCalendar.minuteMillis)
     }
     
     public func latestTefilaGra() -> Date? { calculateLatestTefila(elevationAdjustedSunrise, elevationAdjustedSunset) }

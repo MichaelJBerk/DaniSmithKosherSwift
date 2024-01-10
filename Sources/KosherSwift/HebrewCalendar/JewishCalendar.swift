@@ -186,7 +186,7 @@ public class JewishCalendar: JewishDate {
     public var isHoshanaRabba: Bool { month == .tishrei && day == 21 }
     public var isSheminiAtzeres: Bool { month == .tishrei && day == 22 }
     public var isSimchasTorah: Bool { month == .tishrei && day == 23 && !isInIsrael }
-    public var isErevChanukah: Bool { month == .kislev && day == 24 } // TODO formatting
+    public var isErevChanukah: Bool { month == .kislev && day == 24 } // TODO formatting?
     public var isChanukah: Bool { (month == .kislev && day >= 25) || (month == .teves && ((day == 1 || day == 2) || (day == 3 && isKislevShort)))}
     public var isTenthOfTeves: Bool { month == .teves && day == 10 }
     public var isTuBeshvat: Bool { month == .shevat && day == 15 }
@@ -322,9 +322,6 @@ public class JewishCalendar: JewishDate {
     public var earliestKiddushLevana7Days: Date? { moladDate.gregDate.withAdded(days: 7) }
     public var latestZmanKidushLevanaBetweenMoldos: Date? { moladDate.gregDate.withAdded(days: 14, hours: 18, minutes: 22, seconds: 1, milliseconds: 666) }
     public var latestKiddushLevana15Days: Date? { moladDate.gregDate.withAdded(days: 15) }
-    
-    // TODO
-    //    var dafYomiYerushalmi: Daf {}
     
     public var dafYomiBavli: Daf? { DafYomiCalculator.getDafYomiBavli(cal: self) }
     public var dafYomiYerushalmi: Daf? { DafYomiCalculator.getDafYomiYerushalmi(cal: self) }
