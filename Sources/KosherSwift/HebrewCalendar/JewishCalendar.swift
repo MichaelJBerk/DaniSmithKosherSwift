@@ -218,6 +218,7 @@ public class JewishCalendar: JewishDate {
         .hoshanaRabba: { cal in cal.isHoshanaRabba },
         .sheminiAtzeres: { cal in cal.isSheminiAtzeres },
         .simchasTorah: { cal in cal.isSimchasTorah },
+        .erevChanukah: { cal in cal.isErevChanukah },
         .chanukah: { cal in cal.isChanukah },
         .tenthOfTeves: { cal in cal.isTenthOfTeves },
         .tuBeshvat: { cal in cal.isTuBeshvat },

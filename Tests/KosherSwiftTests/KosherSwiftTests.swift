@@ -127,7 +127,7 @@ final class KosherSwiftTests: XCTestCase {
         let jewishCalendar = JewishCalendar(withJewishYear: 5784, andMonth: .nissan, andDay: 15)
         
         let hebrewDateFormatter = HebrewDateFormatter()
-        XCTAssertEqual(try! hebrewDateFormatter.formatYomTov(jewishCalendar: jewishCalendar), "Pesach")
+        XCTAssertEqual(try! hebrewDateFormatter.formatYomTov(jewishCalendar), "Pesach")
     }
     
     func testDafYomis() {

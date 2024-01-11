@@ -434,14 +434,14 @@ public struct HebrewDateFormatter {
     /// @param jewishCalendar the JewishCalendar
     /// @return the formatted holiday or an empty String if the day is not a holiday.
     /// @see #isHebrewFormat()
-    public func formatYomTov(jewishCalendar: JewishCalendar) throws -> String? {
-        let chag = jewishCalendar.getCurrentChag()
+    public func formatYomTov(_ cal: JewishCalendar) throws -> String? {
+        let chag = cal.getCurrentChag()
         guard let chag = chag else {
             return nil
         }
         
-        if jewishCalendar.isChanukah {
-            let dayOfChanukah = jewishCalendar.dayOfChanukah
+        if cal.isChanukah {
+            let dayOfChanukah = cal.dayOfChanukah
             return hebrewFormat
             ? (try formatHebrewNumber(dayOfChanukah!) + " " + HebrewDateFormatter.hebrewHolidays[chag.rawValue])
             : (HebrewDateFormatter.transliteratedHolidays[chag.rawValue] + " \(dayOfChanukah!)")
@@ -530,21 +530,21 @@ public struct HebrewDateFormatter {
     /// @see #setHebrewFormat(letean)
     /// @see #getTransliteratedMonthList()
     /// @see #setTransliteratedMonthList(String[])
-    public func formatMonth(_ cal: JewishDate) -> String {
-        let month = cal.month
+    public func formatMonth(_ jewishDate: JewishDate) -> String {
+        let month = jewishDate.month
         if hebrewFormat {
-            if cal.isJewishLeapYear && month == JewishMonth.adar {
+            if jewishDate.isJewishLeapYear && month == JewishMonth.adar {
                 return HebrewDateFormatter.hebrewMonths[13] +
                 (useGershGershayim
                  ? HebrewDateFormatter._GERESH
                  : "") // return Adar I, not Adar in a leap year
-            } else if cal.isJewishLeapYear && month == JewishMonth.adar2 {
+            } else if jewishDate.isJewishLeapYear && month == JewishMonth.adar2 {
                 return HebrewDateFormatter.hebrewMonths[12] + (useGershGershayim ? HebrewDateFormatter._GERESH : "")
             } else {
                 return HebrewDateFormatter.hebrewMonths[month.rawValue]
             }
         } else {
-            if cal.isJewishLeapYear && month == JewishMonth.adar {
+            if jewishDate.isJewishLeapYear && month == JewishMonth.adar {
                 return HebrewDateFormatter.transliteratedMonths[
                     13] // return Adar I, not Adar in a leap year
             } else {
