@@ -39,7 +39,7 @@ public class ZmanimCalendar: AstronomicalCalendar {
             || (todayCal.isChanukah && todayCal.dow != .friday) {
             let offsetDate = getSunsetOffsetByDegrees(offsetZenith: .z7_083)
             return AstronomicalCalendar.getTimeOffset(time: offsetDate, offset: -13.5 * AstronomicalCalendar.hourMillis)
-        } else if todayCal.dow == .friday || todayCal.isErevYomTov {
+        } else if todayCal.dow == .friday || todayCal.isErevYomTov || todayCal.tomorrow.isAssurBemelacha {
             return AstronomicalCalendar.getTimeOffset(time: seaLevelSunset, offset: -candleLightingOffset * AstronomicalCalendar.minuteMillis)
         }
         

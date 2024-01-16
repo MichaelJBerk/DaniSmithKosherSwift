@@ -374,7 +374,10 @@ final class KosherSwiftTests: XCTestCase {
     
     func testCandleLighting() {
         let loc = GeoLocation(lat: 28.035950, lng: -82.389381)
-        let cal = ComplexZmanimCalendar(location: loc, date: Date(year: 2024, month: 1, day: 9).next(.friday))
+        var cal = ComplexZmanimCalendar(location: loc, date: Date(year: 2024, month: 1, day: 9).next(.friday))
+        checkTimeEquals(cal.candleLighting(), 17, 35)
+        
+        cal = ComplexZmanimCalendar(location: loc, date: Date(year: 2024, month: 1, day: 16).next(.friday))
         checkTimeEquals(cal.candleLighting(), 17, 35)
     }
 }
