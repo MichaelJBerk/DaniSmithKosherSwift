@@ -27,7 +27,7 @@ public class TefilaRules {
     private let mashivHaruachStart: Date
     private let mashivHaruachEnd: Date
     
-    init(_ cal: JewishCalendar, tachanunRecitedEndOfTishrei: Bool = true, tachanunRecitedWeekAfterShavuos: Bool = false, tachanunRecited13SivanOutOfIsrael: Bool = true, tachanunRecitedPesachSheni: Bool = false, tachanunRecited15IyarOutOfIsrael: Bool = true, tachanunRecitedMinchaErevLagBaomer: Bool = false, tachanunRecitedShivasYemeiHamiluim: Bool = true, tachanunRecitedWeekOfHod: Bool = true, tachanunRecitedWeekOfPurim: Bool = true, tachanunRecitedFridays: Bool = true, tachanunRecitedSundays: Bool = true, tachanunRecitedMinchaAllYear: Bool = true, mizmorLesodaRecitedErevYomKippurAndPesach: Bool = false) {
+    public init(_ cal: JewishCalendar, tachanunRecitedEndOfTishrei: Bool = true, tachanunRecitedWeekAfterShavuos: Bool = false, tachanunRecited13SivanOutOfIsrael: Bool = true, tachanunRecitedPesachSheni: Bool = false, tachanunRecited15IyarOutOfIsrael: Bool = true, tachanunRecitedMinchaErevLagBaomer: Bool = false, tachanunRecitedShivasYemeiHamiluim: Bool = true, tachanunRecitedWeekOfHod: Bool = true, tachanunRecitedWeekOfPurim: Bool = true, tachanunRecitedFridays: Bool = true, tachanunRecitedSundays: Bool = true, tachanunRecitedMinchaAllYear: Bool = true, mizmorLesodaRecitedErevYomKippurAndPesach: Bool = false) {
         self.cal = cal
         
         self.tachanunRecitedEndOfTishrei = tachanunRecitedEndOfTishrei
