@@ -52,6 +52,10 @@ public class TefilaRules {
         TefilaRules.isTachanunRecitedShacharis(cal: cal, rules: self)
     }
     
+    public func copy(withCal cal: JewishCalendar) -> TefilaRules {
+        TefilaRules(cal, tachanunRecitedEndOfTishrei: tachanunRecitedEndOfTishrei, tachanunRecitedWeekAfterShavuos: tachanunRecitedWeekAfterShavuos, tachanunRecited13SivanOutOfIsrael: tachanunRecited13SivanOutOfIsrael, tachanunRecitedPesachSheni: tachanunRecitedPesachSheni, tachanunRecited15IyarOutOfIsrael: tachanunRecited15IyarOutOfIsrael, tachanunRecitedMinchaErevLagBaomer: tachanunRecitedMinchaErevLagBaomer, tachanunRecitedShivasYemeiHamiluim: tachanunRecitedShivasYemeiHamiluim, tachanunRecitedWeekOfHod: tachanunRecitedWeekOfHod, tachanunRecitedWeekOfPurim: tachanunRecitedWeekOfPurim, tachanunRecitedFridays: tachanunRecitedFridays, tachanunRecitedSundays: tachanunRecitedSundays, tachanunRecitedMinchaAllYear: tachanunRecitedMinchaAllYear, mizmorLesodaRecitedErevYomKippurAndPesach: mizmorLesodaRecitedErevYomKippurAndPesach)
+    }
+    
     private static func isTachanunRecitedShacharis(cal: JewishCalendar, rules: TefilaRules) -> Bool {
         let day = cal.day
         let month = cal.month
@@ -155,7 +159,7 @@ public class TefilaRules {
         || (cal.month == .tishrei && (cal.day >= 15 && (cal.day <= 22 || (cal.isInIsrael && cal.day <= 23))))
     }
     
-    public func isHallelShalemRecited(jewishCalendar:JewishCalendar) -> Bool {
+    public func isHallelShalemRecited() -> Bool {
         if !isHallelRecited() {
             return false
         }

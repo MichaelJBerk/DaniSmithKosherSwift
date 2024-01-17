@@ -352,15 +352,15 @@ public class JewishCalendar: JewishDate {
     public var isVeseinBerachaRecited: Bool { !isVeseinTalUmatarRecited }
     public var isMoridHatalRecited: Bool { !isMashivHaruachRecited || isMashivHaruachStartDate || isMashivHaruachEndDate }
     
-    var tomorrow: JewishCalendar {
+    public var tomorrow: JewishCalendar {
         JewishCalendar(date: gregDate.withAdded(days: 1)!, isInIsrael: isInIsrael)
     }
     
-    var yesterday: JewishCalendar {
+    public var yesterday: JewishCalendar {
         JewishCalendar(date: gregDate.withAdded(days: -1)!, isInIsrael: isInIsrael)
     }
     
-    var chagStart: JewishCalendar {
+    public var chagStart: JewishCalendar {
         var temp = JewishCalendar(date: gregDate, isInIsrael: isInIsrael)
         while !temp.isErevYomTov {
             temp = temp.yesterday
@@ -369,12 +369,35 @@ public class JewishCalendar: JewishDate {
         return temp
     }
     
-    var chagHavdallahDate: JewishCalendar {
+    public var chagHavdallahDate: JewishCalendar {
         var temp = chagStart.tomorrow
         while temp.isAssurBemelacha {
             temp = temp.tomorrow
         }
         
         return temp.yesterday
+    }
+    
+    public var cholHamoedDay: Int? {
+        if !isCholHamoed {
+            return nil
+        }
+        
+        var cur = self.copy()
+        var i = 0
+        while cur.isCholHamoed {
+            i += 1
+            cur = cur.yesterday
+        }
+        
+        return i
+    }
+    
+    public var isLedavidSaid: Bool {
+        month == .elul || (month == .tishrei && day < 17)
+    }
+    
+    public func getRules(baseRules: TefilaRules) -> TefilaRules {
+        baseRules.copy(withCal: self)
     }
 }
