@@ -190,7 +190,7 @@ public class JewishCalendar: JewishDate {
     public var isChanukah: Bool { (month == .kislev && day >= 25) || (month == .teves && ((day == 1 || day == 2) || (day == 3 && isKislevShort)))}
     public var isTenthOfTeves: Bool { month == .teves && day == 10 }
     public var isTuBeshvat: Bool { month == .shevat && day == 15 }
-    public var isFastOfEsther: Bool { (!isJewishLeapYear && month == .adar && ((day == 11 || day == 12) && dow == .thursday) || (day == 13 && !(dow == .friday || dow == .saturday))) || (isJewishLeapYear && month == .adar2 && (((day == 11 || day == 12) && dow == .thursday) || (day == 13 && !(dow == .friday || dow == .saturday)))) }
+    public var isFastOfEsther: Bool { (month == .adar && (((day == 11 || day == 12) && dow == .thursday) || (day == 13 && !(dow == .friday || dow == .saturday)))) || (isJewishLeapYear && month == .adar2 && (((day == 11 || day == 12) && dow == .thursday) || (day == 13 && !(dow == .friday || dow == .saturday)))) }
     public var isPurim: Bool { (!isJewishLeapYear && month == .adar && day == 14) || (isJewishLeapYear && month == .adar2 && day == 14) }
     public var isShushanPurim: Bool { (!isJewishLeapYear && month == .adar && day == 15) || (isJewishLeapYear && month == .adar2 && day == 15) }
     public var isPurimKatan: Bool { isJewishLeapYear && month == .adar && day == 14 }

@@ -378,6 +378,11 @@ final class KosherSwiftTests: XCTestCase {
         checkTimeEquals(cal.candleLighting(), 17, 35)
         
         cal = ComplexZmanimCalendar(location: loc, date: Date(year: 2024, month: 1, day: 16).next(.friday))
-        checkTimeEquals(cal.candleLighting(), 17, 35)
+        checkTimeEquals(cal.candleLighting(), 17, 40)
+    }
+    
+    func testFastOfEsther() {
+        let cal = JewishCalendar(date: Date(year: 2024, month: 1, day: 23), isInIsrael: false)
+        XCTAssert(!cal.isFastOfEsther)
     }
 }
