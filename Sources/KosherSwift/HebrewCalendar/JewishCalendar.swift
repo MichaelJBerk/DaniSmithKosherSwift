@@ -400,4 +400,8 @@ public class JewishCalendar: JewishDate {
     public func getRules(baseRules: TefilaRules) -> TefilaRules {
         baseRules.copy(withCal: self)
     }
+    
+    public var daysInJewishMonth: Int {
+        getDaysInJewishMonth(month: month)
+    }
 }

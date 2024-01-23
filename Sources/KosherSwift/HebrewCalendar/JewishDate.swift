@@ -231,5 +231,5 @@ extension JewishDate {
         return is29 ? 29 : 30
       }
     
-    func getDaysInJewishMonth(month: JewishMonth) -> Int { JewishDate.getDaysInJewishMonth(month: month, year: year) }
+    public func getDaysInJewishMonth(month: JewishMonth) -> Int { JewishDate.getDaysInJewishMonth(month: month, year: year) }
 }
