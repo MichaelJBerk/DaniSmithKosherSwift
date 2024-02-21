@@ -356,6 +356,15 @@ final class KosherSwiftTests: XCTestCase {
         checkTimeEquals(cal.minchaKetanaGRAFixedLocalChatzosToSunset(), 17, 57)
     }
     
+    func testTaanisEsther() {
+        let cal = JewishCalendar(date: Date(year: 2024, month: 2, day: 22), isInIsrael: false)
+        XCTAssertFalse(cal.isFastOfEsther)
+        
+        let cal2 = JewishCalendar(date: Date(year: 2024, month: 3, day: 21), isInIsrael: false)
+        XCTAssertTrue(cal2.isFastOfEsther)
+    }
+    
+    
     func testNextWeekday() {
         let startYear = 2023
         let startMonth = 12
