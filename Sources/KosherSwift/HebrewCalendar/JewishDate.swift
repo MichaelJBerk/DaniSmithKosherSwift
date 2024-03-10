@@ -20,7 +20,8 @@ public class JewishDate: Comparable {
     init(date: Date, includeTime: Bool = false) {
         var cal = Calendar(identifier: .gregorian)
         cal.timeZone = Calendar.current.timeZone
-        self.gregDate = cal.date(from: DateComponents(year: date.year, month: date.month, day: date.day, hour: includeTime ? date.hour : 0, minute: includeTime ? date.minute : 0, second: includeTime ? date.second : 0))!
+        let components = DateComponents(year: date.year, month: date.month, day: date.day, hour: includeTime ? date.hour : 0, minute: includeTime ? date.minute : 0, second: includeTime ? date.second : 0)
+        self.gregDate = cal.date(from: components)!
                 
         var hebCal = Calendar(identifier: .hebrew)
         hebCal.timeZone = Calendar.current.timeZone
@@ -28,6 +29,7 @@ public class JewishDate: Comparable {
         self.year = hebCal.component(.year, from: gregDate)
         self.isJewishLeapYear = JewishDate.isJewishLeapYear(year)
         self.month = JewishMonth.fromSwiftCalMonth(month: hebCal.component(.month, from: gregDate), isLeapYear: self.isJewishLeapYear)
+
         self.day = hebCal.component(.day, from: gregDate)
         self.dow = DayOfWeek(rawValue: Calendar.current.dateComponents([.weekday], from: gregDate).weekday!)!
     }
@@ -35,7 +37,6 @@ public class JewishDate: Comparable {
     public convenience init(withJewishYear year: Int, andMonth month: JewishMonth, andDay day: Int) {
         var hebCal = Calendar(identifier: .hebrew)
         hebCal.timeZone = Calendar.current.timeZone
-        
         
         let gregDate = hebCal.date(from: DateComponents(year: year, month: month.toSwiftCalMonth(JewishDate.isJewishLeapYear(year)), day: day))!
         self.init(date: gregDate)

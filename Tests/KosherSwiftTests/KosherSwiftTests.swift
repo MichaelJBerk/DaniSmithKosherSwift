@@ -93,8 +93,9 @@ final class KosherSwiftTests: XCTestCase {
         XCTAssertEqual(jewishCalendar.moladDate.molad.minutes, 1)
         XCTAssertEqual(jewishCalendar.moladDate.molad.chalakim, 3)
         
-        let moladFromKosherJava = Date(timeIntervalSince1970: 1702402813.0)//had to go up or down a few intervals to make it work
-        XCTAssertEqual(jewishCalendar.moladDate.gregDate, moladFromKosherJava)
+        let moladFromKosherJava = Date(timeIntervalSince1970: 1702402813.0) //had to go up or down a few intervals to make it work
+        let g = jewishCalendar.moladDate.gregDate
+        XCTAssertEqual(g.withAdded(hours: !Calendar.current.timeZone.isDaylightSavingTime(for: g) ? -1 : 0)!, moladFromKosherJava)
     }
     
     
@@ -388,6 +389,17 @@ final class KosherSwiftTests: XCTestCase {
         
         cal = ComplexZmanimCalendar(location: loc, date: Date(year: 2024, month: 1, day: 16).next(.friday))
         checkTimeEquals(cal.candleLighting(), 17, 40)
+    }
+    
+    func testRoshChodeshAdar() {
+        let cal = JewishCalendar(date: Date(year: 2024, month: 3, day: 10))
+        let roshChodeshFormatter = HebrewDateFormatter()
+//        XCTAssertEqual(.adar, cal.month)
+        XCTAssertEqual("Rosh Chodesh Adar II", roshChodeshFormatter.formatRoshChodesh(cal))
+        
+//        let cal2 = JewishCalendar(date: Date(year: 2024, month: 3, day: 11))
+//        XCTAssertEqual(.adar2, cal2.month)
+//        XCTAssertEqual("Adar II", roshChodeshFormatter.formatMonth(cal2))
     }
     
     func testFastOfEsther() {

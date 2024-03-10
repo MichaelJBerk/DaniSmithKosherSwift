@@ -475,7 +475,7 @@ public struct HebrewDateFormatter {
             }
         }
         
-        let tempCal = jewishCalendar.copy(month: month)
+        let tempCal = jewishCalendar.copy(month: month, day: 1)
         formattedRoshChodesh = hebrewFormat
         ? (useShortHolidayFormat
            ? HebrewDateFormatter.hebrewShortHolidays[JewishHoliday.roshChodesh.rawValue]
@@ -510,7 +510,7 @@ public struct HebrewDateFormatter {
         }
         
         // This method is only about formatting, so we shouldn"t make any changes to the params passed in...
-        let tempCal = cal.copy(month: month)
+        let tempCal = cal.copy(month: month, day: 1)
         formattedErevRoshChodesh = hebrewFormat
         ? (useShortHolidayFormat
            ? HebrewDateFormatter.hebrewShortHolidays[JewishHoliday.erevRoshChodesh.rawValue]

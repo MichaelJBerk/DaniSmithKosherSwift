@@ -15,8 +15,8 @@ public class JewishCalendar: JewishDate {
         var hebCal = Calendar(identifier: .hebrew)
         hebCal.timeZone = Calendar.current.timeZone
         
-        
-        let gregDate = hebCal.date(from: DateComponents(year: year, month: month.toSwiftCalMonth(JewishDate.isJewishLeapYear(year)), day: day))!
+        let newMonth = month.toSwiftCalMonth(JewishDate.isJewishLeapYear(year))
+        let gregDate = hebCal.date(from: DateComponents(year: year, month: newMonth, day: day))!
         self.init(date: gregDate, isInIsrael: isInIsrael)
     }
     
@@ -29,7 +29,7 @@ public class JewishCalendar: JewishDate {
     }
     
     public func copy(year: Int? = nil, month: JewishMonth? = nil, day: Int? = nil, isInIsrael: Bool? = nil) -> JewishCalendar {
-        JewishCalendar(withJewishYear: year ?? self.year, andMonth: month ?? self.month, andDay: day ?? self.day, isInIsrael: isInIsrael ?? self.isInIsrael)
+        JewishCalendar(withJewishYear: year ?? self.year, andMonth: (month ?? self.month), andDay: day ?? self.day, isInIsrael: isInIsrael ?? self.isInIsrael)
     }
     
     public var isBirkasHachama: Bool {
