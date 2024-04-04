@@ -9,7 +9,7 @@ import Foundation
 
 public class JewishCalendar: JewishDate {
     public let isInIsrael: Bool
-    public let moladDate: MoladDate
+    public let moladDate: MoladDate?
     
     public convenience init(withJewishYear year: Int, andMonth month: JewishMonth, andDay day: Int, isInIsrael: Bool = false) {
         var hebCal = Calendar(identifier: .hebrew)
@@ -319,10 +319,10 @@ public class JewishCalendar: JewishDate {
         return nil
     }
 
-    public var earliestKiddushLevana3Days: Date? { moladDate.gregDate.withAdded(days: 3) }
-    public var earliestKiddushLevana7Days: Date? { moladDate.gregDate.withAdded(days: 7) }
-    public var latestZmanKidushLevanaBetweenMoldos: Date? { moladDate.gregDate.withAdded(days: 14, hours: 18, minutes: 22, seconds: 1, milliseconds: 666) }
-    public var latestKiddushLevana15Days: Date? { moladDate.gregDate.withAdded(days: 15) }
+    public var earliestKiddushLevana3Days: Date? { moladDate?.gregDate.withAdded(days: 3) }
+    public var earliestKiddushLevana7Days: Date? { moladDate?.gregDate.withAdded(days: 7) }
+    public var latestZmanKidushLevanaBetweenMoldos: Date? { moladDate?.gregDate.withAdded(days: 14, hours: 18, minutes: 22, seconds: 1, milliseconds: 666) }
+    public var latestKiddushLevana15Days: Date? { moladDate?.gregDate.withAdded(days: 15) }
     
     public var dafYomiBavli: Daf? { DafYomiCalculator.getDafYomiBavli(cal: self) }
     public var dafYomiYerushalmi: Daf? { DafYomiCalculator.getDafYomiYerushalmi(cal: self) }

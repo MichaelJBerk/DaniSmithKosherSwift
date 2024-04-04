@@ -89,13 +89,13 @@ final class KosherSwiftTests: XCTestCase {
     
     func testMolad() {
         let jewishCalendar = JewishCalendar(date: Date(year: 2023, month: 12, day: 20))
-        XCTAssertEqual(jewishCalendar.moladDate.molad.hours, 20)
-        XCTAssertEqual(jewishCalendar.moladDate.molad.minutes, 1)
-        XCTAssertEqual(jewishCalendar.moladDate.molad.chalakim, 3)
+        XCTAssertEqual(jewishCalendar.moladDate?.molad.hours, 20)
+        XCTAssertEqual(jewishCalendar.moladDate?.molad.minutes, 1)
+        XCTAssertEqual(jewishCalendar.moladDate?.molad.chalakim, 3)
         
         let moladFromKosherJava = Date(timeIntervalSince1970: 1702402813.0) //had to go up or down a few intervals to make it work
-        let g = jewishCalendar.moladDate.gregDate
-        XCTAssertEqual(g.withAdded(hours: !Calendar.current.timeZone.isDaylightSavingTime(for: g) ? -1 : 0)!, moladFromKosherJava)
+        let g = jewishCalendar.moladDate?.gregDate
+        XCTAssertEqual(g!.withAdded(hours: !Calendar.current.timeZone.isDaylightSavingTime(for: g!) ? -1 : 0)!, moladFromKosherJava)
     }
     
     

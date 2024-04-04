@@ -36,7 +36,7 @@ public class MoladDate: JewishDate {
         MoladDate(date: gregDate, hour: hours, minute: molad.minutes, chalakim: molad.chalakim)
     }
     
-    static func calculate(forJewishDate jewishDate: JewishDate) -> MoladDate {
+    static func calculate(forJewishDate jewishDate: JewishDate) -> MoladDate? {
         let m = getChalakimSinceMoladTohu(year: jewishDate.year, month: jewishDate.month)
         
         let absM = moladToAbsDate(chalakim: m)
@@ -46,7 +46,7 @@ public class MoladDate: JewishDate {
         let hours = (temp.hours + 18) % 24
         let retMolad = Molad(hours: hours, minutes: temp.minutes, chalakim: temp.chalakim)
         
-        var dt = getMoladAsDate(retMolad, gdate)
+        guard var dt = getMoladAsDate(retMolad, gdate) else { return nil }
         
         if temp.hours >= 6 {
             dt = dt.withAdded(days: 1)!
@@ -68,28 +68,16 @@ public class MoladDate: JewishDate {
     }
     
     
-    static func getMoladAsDate(_ molad: Molad, _ mdate: Date) -> Date {
-        let locationName = "Jerusalem, Israel"
-        let latitude = 31.778 // Har Habayis latitude
-        let longitude = 35.2354 // Har Habayis longitude
-        // The raw molad Date (point in time) must be generated using standard time. Using "Asia/Jerusalem" timezone will result in the time
-        // being incorrectly off by an hour in the summer due to DST. Proper adjustment for the actual time in DST will be done by the date
-        // formatter class used to display the Date.
-        let year = String(Calendar.current.component(.year, from: mdate))
-        let month = String(format: "%02d", Calendar.current.component(.month, from: mdate))
-        let day = String(format: "%02d", Calendar.current.component(.day, from: mdate))
-        let hour = String(format: "%02d", Calendar.current.component(.hour, from: mdate))
-        let minute = String(format: "%02d", Calendar.current.component(.minute, from: mdate))
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        let dateTime = dateFormatter.date(from: "\(year)-\(month)-\(day) \(hour):\(minute)")!
-        let geo = GeoLocation(lat: latitude, lng: longitude, name: locationName)
-        let moladSeconds = Double(molad.chalakim) * 10 / 3
-        var cal = Calendar.current.date(bySettingHour: molad.hours, minute: molad.minutes, second: Int(moladSeconds), of: dateTime)!
-
-        // subtract local time difference of 20.94 minutes (20 minutes and 56.496 seconds) to get to Standard time
-        cal.addTimeInterval(-1 * geo.localMeanTimeOffsetWithMillis * 0.001)
-        return cal
+    static func getMoladAsDate(_ molad: Molad, _ mdate: Date) -> Date? {
+        let moladHours = (molad.hours + 18) % 24
+        let moladMinutes = molad.minutes - 20
+        let moladSeconds = (Double(molad.chalakim) * 10 / 3 ) - 56.496
+        
+        var calendar = Calendar.init(identifier: .gregorian)
+        calendar.timeZone = Calendar.current.timeZone
+        let moladDay = DateComponents(calendar: calendar, year: mdate.year, month: mdate.month, day: mdate.day, hour: moladHours, minute: moladMinutes, second: Int(moladSeconds) - 1)
+        
+        return calendar.date(from: moladDay)
     }
 }
 
