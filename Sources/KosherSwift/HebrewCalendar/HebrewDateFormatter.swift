@@ -157,7 +157,8 @@ public struct HebrewDateFormatter {
         "Yom Ha'atzmaut",
         "Yom Yerushalayim",
         "Lag B'Omer",
-        "Shushan Purim Katan"
+        "Shushan Purim Katan",
+        "Isru Chag"
     ]
     
     /// Hebrew holiday list
@@ -197,7 +198,8 @@ public struct HebrewDateFormatter {
         "יום העצמאות",
         "יום ירושלים",
         "ל״ג בעומר",
-        "פורים שושן קטן"
+        "פורים שושן קטן",
+        "אסרו חג"
     ]
     
     static let hebrewShortHolidays = [
@@ -236,7 +238,8 @@ public struct HebrewDateFormatter {
         "יום העצמאות",
         "יום ירושלים",
         "ל״ג בעומר",
-        "פורים שושן קטן"
+        "פורים שושן קטן",
+        "אסרו חג"
     ]
     
     static let longOmerDay = [
