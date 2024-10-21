@@ -394,7 +394,7 @@ public class JewishCalendar: JewishDate {
     }
     
     public var isLedavidSaid: Bool {
-        month == .elul || (month == .tishrei && day < 17)
+        month == .elul || (month == .tishrei && day < 22)
     }
     
     public func getRules(baseRules: TefilaRules) -> TefilaRules {
