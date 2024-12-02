@@ -8,9 +8,9 @@
 import Foundation
 
 public class AstronomicalCalendar {
-    let location: GeoLocation
-    let date: Date
-    let astronomicalCalculator: AstronomicalCalculator
+    public let location: GeoLocation
+    public let date: Date
+    public let astronomicalCalculator: AstronomicalCalculator
     
     public init(location: GeoLocation, date: Date, astronomicalCalculator: AstronomicalCalculator = NOAACalculator()) {
         self.location = location
