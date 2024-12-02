@@ -91,22 +91,22 @@ public class AstronomicalCalendar {
     }
     
     func getUtcSunrise(zenith: Double) -> Double? {
-        guard let adjustedDate = adjustedDate else { return nil }
+        guard let adjustedDate else { return nil }
         return astronomicalCalculator.getUtcSunrise(date: adjustedDate, location: location, zenith: zenith, adjustForElevation: true)
     }
     
     func getUtcSeaLevelSunrise(zenith: Zenith) -> Double? {
-        guard let adjustedDate = adjustedDate else { return nil }
+        guard let adjustedDate else { return nil }
         return astronomicalCalculator.getUtcSunrise(date: adjustedDate, location: location, zenith: zenith.rawValue, adjustForElevation: false)
     }
     
     func getUtcSunset(zenith: Double) -> Double? {
-        guard let adjustedDate = adjustedDate else { return nil }
+        guard let adjustedDate else { return nil }
         return astronomicalCalculator.getUtcSunset(date: adjustedDate, location: location, zenith: zenith, adjustForElevation: true)
     }
     
     func getUtcSeaLevelSunset(zenith: Zenith) -> Double? {
-        guard let adjustedDate = adjustedDate else { return nil }
+        guard let adjustedDate else { return nil }
         return astronomicalCalculator.getUtcSunset(date: adjustedDate, location: location, zenith: zenith.rawValue, adjustForElevation: false)
     }
     
