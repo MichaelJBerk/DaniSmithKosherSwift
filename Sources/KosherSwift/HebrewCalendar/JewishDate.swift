@@ -17,7 +17,7 @@ public class JewishDate: Comparable {
 
     public let isJewishLeapYear: Bool
     
-    init(date: Date, includeTime: Bool = true) {
+    init(date: Date, includeTime: Bool = false) {
         var cal = Calendar(identifier: .gregorian)
         cal.timeZone = Calendar.current.timeZone
         let components = DateComponents(year: date.year, month: date.month, day: date.day, hour: includeTime ? date.hour : 0, minute: includeTime ? date.minute : 0, second: includeTime ? date.second : 0)

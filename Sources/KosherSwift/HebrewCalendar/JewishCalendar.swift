@@ -21,7 +21,7 @@ public class JewishCalendar: JewishDate {
     }
     
     
-    public init(date: Date, includeTime: Bool = true, isInIsrael: Bool = false) {
+    public init(date: Date, includeTime: Bool = false, isInIsrael: Bool = false) {
         self.isInIsrael = isInIsrael
         self.moladDate = MoladDate.calculate(forJewishDate: JewishDate(date: date))
 
