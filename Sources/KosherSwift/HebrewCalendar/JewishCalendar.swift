@@ -21,11 +21,11 @@ public class JewishCalendar: JewishDate {
     }
     
     
-    public init(date: Date, isInIsrael: Bool = false) {
+    public init(date: Date, includeTime: Bool = true, isInIsrael: Bool = false) {
         self.isInIsrael = isInIsrael
         self.moladDate = MoladDate.calculate(forJewishDate: JewishDate(date: date))
 
-        super.init(date: date)
+        super.init(date: date, includeTime: includeTime)
     }
     
     public func copy(year: Int? = nil, month: JewishMonth? = nil, day: Int? = nil, isInIsrael: Bool? = nil) -> JewishCalendar {
