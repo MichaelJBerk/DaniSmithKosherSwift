@@ -248,7 +248,7 @@ public class JewishCalendar: JewishDate {
     }
     
     public var isYomTov: Bool {
-        guard let _ = getCurrentChag() else {
+        guard let curChag = getCurrentChag(), curChag != .erevRoshChodesh else {
             return false
         }
         
