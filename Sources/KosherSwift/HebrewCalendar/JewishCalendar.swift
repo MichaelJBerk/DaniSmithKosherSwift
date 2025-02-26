@@ -248,7 +248,7 @@ public class JewishCalendar: JewishDate {
     }
     
     public var isYomTov: Bool {
-        guard let curChag = getCurrentChag(), curChag != .erevRoshChodesh else {
+        guard let _ = getCurrentChag() else {
             return false
         }
         
@@ -287,7 +287,7 @@ public class JewishCalendar: JewishDate {
     
     public var isCholHamoed: Bool { isCholHamoedPesach || isCholHamoedSuccos }
     
-    public var isErevYomTov: Bool { isErevShavuos || isErevPesach || isErevSuccos || isErevRoshHashana || isErevYomKippur || isErevSuccos || isHoshanaRabba || (isCholHamoedPesach && day == 20) }
+    public var isErevYomTov: Bool { isErevRoshChodesh || isErevShavuos || isErevPesach || isErevSuccos || isErevRoshHashana || isErevYomKippur || isErevSuccos || isHoshanaRabba || (isCholHamoedPesach && day == 20) }
     
     public var isTaanis: Bool { isSeventeenthOfTammuz || isTishaBeav || isYomKippur || isFastOfEsther || isFastOfGedalia || isTenthOfTeves }
     
