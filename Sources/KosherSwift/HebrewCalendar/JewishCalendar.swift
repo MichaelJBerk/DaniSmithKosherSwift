@@ -252,11 +252,11 @@ public class JewishCalendar: JewishDate {
             return false
         }
         
-        if (isErevYomTov && (!isHoshanaRabba && (isCholHamoedPesach && day != 20) || isTaanis && !isYomKippur)) {
-            return false
-        }
+        let isExcludedChag = (isErevYomTov && !(isHoshanaRabba || isCholHamoedPesach))
+            || (isTaanis && !isYomKippur)
+            || isIsruChag
         
-        return true
+        return isExcludedChag
     }
     
     public var isYomTovAssurBemelacha: Bool { isPesach || isShavuos || isSuccos || isSheminiAtzeres || isSimchasTorah || isRoshHashana || isYomKippur }
