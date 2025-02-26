@@ -256,7 +256,7 @@ public class JewishCalendar: JewishDate {
             || (isTaanis && !isYomKippur)
             || isIsruChag
         
-        return isExcludedChag
+        return !isExcludedChag
     }
     
     public var isYomTovAssurBemelacha: Bool { isPesach || isShavuos || isSuccos || isSheminiAtzeres || isSimchasTorah || isRoshHashana || isYomKippur }
