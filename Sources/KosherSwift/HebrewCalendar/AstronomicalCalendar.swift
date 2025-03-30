@@ -7,17 +7,32 @@
 
 import Foundation
 
+/// A class used for non-religious astronomical times such as sunrise, sunset and twilight times.
+///
+/// There are times when the algorithms can't calculate proper values for sunrise, sunset and twilight. This is usually caused by trying to calculate times for areas either very far North or South, where sunrise / sunset never happen on that date. This is common when calculating twilight with a deep dip below the horizon for locations as far south of the North Pole as London, in the northern hemisphere. The sun never reaches this dip at certain times of the year. When the calculations encounter this condition, they will return `nil`. The reason that Errors are not thrown in these cases is because the lack of a rise/set or twilight is not an exception, but an expected condition in many parts of the world.
 public class AstronomicalCalendar {
+	///The ``GeoLocation`` used for calculations
     public let location: GeoLocation
+	///The ``Date`` used for calculations
     public let date: Date
+	///The internal ``AstronomicalCalculator`` used for calculating solar based times.
     public let astronomicalCalculator: AstronomicalCalculator
     
+	
+	/// Creates an ``AstronomicalCalendar`` using the given paramenters
+	/// - Parameters:
+	///   - location: The ``GeoLocation`` used for calculations
+	///   - date: The ``Foundation/Date`` used for calculations
+	///   - astronomicalCalculator: The internal ``AstronomicalCalculator`` used for calculating solar based times. Defaults to ``NOAACalculator``.
     public init(location: GeoLocation, date: Date, astronomicalCalculator: AstronomicalCalculator = NOAACalculator()) {
         self.location = location
         self.date = date
         self.astronomicalCalculator = astronomicalCalculator
     }
     
+	///A Date representing the elevation adjusted sunrise time.
+	///
+	///The ``AstronomicalCalculator``'s elevation adjustment is used to calculate sunrise
     public var sunrise: Date? {
         let ret = getUtcSunrise(zenith: Zenith.geometric.rawValue)
         
