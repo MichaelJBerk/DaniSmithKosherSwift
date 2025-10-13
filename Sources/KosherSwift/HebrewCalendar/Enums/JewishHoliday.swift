@@ -9,7 +9,7 @@ import Foundation
 
 public enum JewishHoliday: Int, CaseIterable {
     private static let connections: [[JewishHoliday]] = [
-        [.erevPesach, .pesach], [.erevShavuos, .shavuos], [.erevYomKippur, .yomKippur], [.erevRoshHashana, .roshHashana], [.erevSuccos, .succos]
+        [.erevPesach, .pesach], [.erevShavuos, .shavuos], [.erevYomKippur, .yomKippur], [.erevRoshHashana, .roshHashana], [.erevSuccos, .succos], [.sheminiAtzeres, .simchasTorah]
     ]
     
     case erevPesach, pesach, cholHamoedPesach, pesachSheni, erevShavuos, shavuos, seventeenthOfTammuz, tishaBeav, tuBeav, erevRoshHashana, roshHashana, fastOfGedalia, erevYomKippur, yomKippur, erevSuccos, succos, cholHamoedSuccos, hoshanaRabba, sheminiAtzeres, simchasTorah, erevChanukah, chanukah, tenthOfTeves, tuBeshvat, fastOfEsther, purim, shushanPurim, purimKatan, erevRoshChodesh, roshChodesh, yomHashoah, yomHazikaron, yomHaatzmaut, yomYerushalaim, lagBaomer, shushanPurimKatan, isruChag
