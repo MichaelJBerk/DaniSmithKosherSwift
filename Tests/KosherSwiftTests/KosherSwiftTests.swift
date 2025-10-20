@@ -406,4 +406,12 @@ final class KosherSwiftTests: XCTestCase {
         let cal = JewishCalendar(date: Date(year: 2024, month: 1, day: 23), isInIsrael: false)
         XCTAssert(!cal.isFastOfEsther)
     }
+    
+    func testParsha() {
+        var cal = JewishCalendar(date: Date(year: 2025, month: 10, day: 20), isInIsrael: false)
+        XCTAssert(cal.getWeeklyParsha() == .noach)
+        
+        cal = JewishCalendar(date: Date(year: 2025, month: 8, day: 15), isInIsrael: false)
+        XCTAssert(cal.getWeeklyParsha() == .eikev)
+    }
 }

@@ -114,7 +114,7 @@ public class JewishCalendar: JewishDate {
             return .none
         }
         
-        let rhDow = jewishCalendarElapsedDays & 7
+        let rhDow = (jewishCalendarElapsedDays + 1) & 7
         let day = rhDow + daysSinceStartOfJewishYear
         
         return Parsha.parshalist[yearType][Int(day / 7)]
@@ -125,7 +125,15 @@ public class JewishCalendar: JewishDate {
             return getParsha()
         }
         
-        return JewishCalendar(date: gregDate.next(.saturday), isInIsrael: isInIsrael).getParsha()
+        var nextShabbos = gregDate.next(.saturday)
+        var cal = JewishCalendar(date: nextShabbos, isInIsrael: isInIsrael)
+        
+        while cal.getParsha() == .none {
+            nextShabbos = gregDate.next(.saturday)
+            cal = JewishCalendar(date: nextShabbos, isInIsrael: isInIsrael)
+        }
+        
+        return cal.getParsha()
     }
     
     public func getSpecialShabbos() -> Parsha {
