@@ -13,13 +13,18 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "KosherSwift",
-            targets: ["KosherSwift"]),
+            targets: ["KosherSwift"]
+		),
     ],
+	dependencies: [
+		.package(url: "https://github.com/apple/swift-docc-plugin", from: "1.1.0"),
+	],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "KosherSwift"),
+            name: "KosherSwift"
+		),
         .testTarget(
             name: "KosherSwiftTests",
             dependencies: ["KosherSwift"]),
