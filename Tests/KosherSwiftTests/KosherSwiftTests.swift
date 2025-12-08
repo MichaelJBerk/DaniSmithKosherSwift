@@ -414,4 +414,18 @@ final class KosherSwiftTests: XCTestCase {
         cal = JewishCalendar(date: Date(year: 2025, month: 8, day: 15), isInIsrael: false)
         XCTAssert(cal.getWeeklyParsha() == .eikev)
     }
+	
+    ///Test that a date for the 30th of Kislev on a year with a short Kiselv is converted to the 1st of Tevet
+	func testShortKislevConversion() {
+		let cal = JewishCalendar(withJewishYear: 5784, andMonth: .kislev, andDay: 30, isInIsrael: false)
+        XCTAssert(cal.month == .teves)
+        XCTAssert(cal.day == 1)
+	}
+
+    ///Test that a date for the 30th of Iyar is converted to the 1st of Sivan
+    func test30Iyar() {
+        let cal = JewishCalendar(withJewishYear: 5784, andMonth: .iyar, andDay: 30, isInIsrael: false)
+        XCTAssert(cal.month == .sivan)
+        XCTAssert(cal.day == 1)
+    }
 }
