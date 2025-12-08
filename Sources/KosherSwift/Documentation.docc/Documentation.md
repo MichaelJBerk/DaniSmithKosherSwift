@@ -13,9 +13,40 @@ If you've got any enhancements to offer, bugs to fix, or general contributions, 
 
 ## Topics
 
+### Zmanim
+Calculate times for Zmanim
+
+- ``ZmanimCalendar``
+- ``ComplexZmanimCalendar``
+- ``Molad``
+- ``MoladDate``
+- ``GeoLocation``
+
+### Jewish Calendar & Holidays
+Calculate the dates for Jewish holidays, Daf Yomi, and Parasha 
+
+- ``JewishCalendar``
+- ``DafYomiCalculator``
+- ``Parsha``
+- ``Daf``
+- ``DafType``
+- ``JewishDate``
+- ``JewishMonth``
+- ``JewishHoliday``
+- ``HebrewDateFormatter``
+- ``HebrewFormatterError``
+- ``DayOfWeek``
+
 ### Astonomical Calculations
+Calculate non-religious astronomical times
 
 - ``AstronomicalCalendar``
 - ``AstronomicalCalculator``
 - ``AstronomicalCalculatorConstants``
 - ``NOAACalculator``
+- ``Zenith``
+
+### Tefilla
+Determine which Tefillos are said on a given day
+
+- ``TefilaRules``
