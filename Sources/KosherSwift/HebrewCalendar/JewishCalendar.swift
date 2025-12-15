@@ -42,6 +42,10 @@ public class JewishCalendar: JewishDate {
     public func copy(year: Int? = nil, month: JewishMonth? = nil, day: Int? = nil, isInIsrael: Bool? = nil) -> JewishCalendar {
         JewishCalendar(withJewishYear: year ?? self.year, andMonth: (month ?? self.month), andDay: day ?? self.day, isInIsrael: isInIsrael ?? self.isInIsrael)
     }
+    
+    public func copy(date: Date, includeTime: Bool = false, isInIsrael: Bool? = nil) -> JewishCalendar{
+        JewishCalendar(date: date, includeTime: includeTime, isInIsrael: isInIsrael ?? self.isInIsrael)
+    }
     ///Determine if Birkas Hachama is said on the current day
 	///
 	/// [Birkas Hachamah](https://en.wikipedia.org/wiki/Birkat_Hachama) is recited every 28 years based on *Tekufas Shmuel* (Julian years) that a year is 365.25 days. The Rambam in [Hilchos Kiddush Hachodesh 9:3](http://hebrewbooks.org/pdfpager.aspx?req=14278&st=&pgnum=323) states that *tekufas Nissan* of year 1 was 7 days + 9 hours before *molad Nissan*. This is calculated as every 10,227 days (28 * 365.25).
