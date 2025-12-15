@@ -428,4 +428,12 @@ final class KosherSwiftTests: XCTestCase {
         XCTAssert(cal.month == .sivan)
         XCTAssert(cal.day == 1)
     }
+
+    func testNoParashaInfiniteLoop() {
+        let cal = JewishCalendar(date: Date(year: 2025, month: 10, day: 10))
+        XCTAssert(cal.getWeeklyParsha() == .bereshis)
+        let cal2 = JewishCalendar(date: Date(year: 2025, month: 10, day: 11))
+        XCTAssert(cal2.getWeeklyParsha() == .bereshis)
+
+    }
 }
