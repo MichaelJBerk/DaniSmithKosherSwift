@@ -147,11 +147,34 @@ public class JewishCalendar: JewishDate {
         
         return Parsha.parshalist[yearType][Int(day / 7)]
     }
+
+	/// Returns the upcoming ``Parsha``
+	///
+	/// Returns the upcoming ``Parsha`` regardless of if it is the weekday or *Shabbos* (where next Shabbos's *Parsha* will be returned. This is unlike ``getParsha()`` that returns ``Parsha/none`` if the date is not *Shabbos*. If the upcoming *Shabbos* is a *Yom Tov* and has no *Parsha*, the following week's *Parsha* will be returned.
+	/// - Returns: the upcoming *parsha*.
+    public func getUpcomingParsha() -> Parsha {
+        var newCalendar: JewishCalendar
+        let dayOfWeek = gregDate.weekday
+        let daysToShabbos = (DayOfWeek.saturday.rawValue - dayOfWeek + 7) % 7
+        if dayOfWeek != DayOfWeek.saturday.rawValue {
+            let newDate = Calendar.current.date(byAdding: .day, value: daysToShabbos, to: gregDate)!
+            newCalendar = self.copy(date: newDate)
+        } else {
+            let newDate = Calendar.current.date(byAdding: .day, value: 7, to: gregDate)!
+            newCalendar = self.copy(date: newDate)
+        }
+        while newCalendar.getParsha() == .none {
+            let newDate = Calendar.current.date(byAdding: .day, value: 7, to: newCalendar.gregDate)!
+            newCalendar = newCalendar.copy(date: newDate)
+        }
+        return newCalendar.getParsha()
+    }
     
 	/// Returns this week's upcoming ``Parsha``
 	///
 	/// Returns the upcoming ``Parsha`` regardless of if it is the weekday or *Shabbos* (where next Shabbos's *Parsha* will be returned).  This is unlike ``getParsha()`` that returns ``Parsha/none`` if the date is not *Shabbos*. If the upcoming *Shabbos* is a *Yom Tov* and has no *Parsha*, the following week's *Parsha* will be returned.
 	/// - Returns: the upcoming *parsha*.
+	@available(*, deprecated, renamed: "getUpcomingParsha", message: "Use GetUpcomingParsha instead, since it more closely follows KosherJava.")
     public func getWeeklyParsha() -> Parsha {
         if dow == .saturday {
             return getParsha()
@@ -161,7 +184,7 @@ public class JewishCalendar: JewishDate {
         var cal = JewishCalendar(date: nextShabbos, isInIsrael: isInIsrael)
         
         while cal.getParsha() == .none {
-            nextShabbos = nextShabbos.next(.saturday)
+            nextShabbos = gregDate.next(.saturday)
             cal = JewishCalendar(date: nextShabbos, isInIsrael: isInIsrael)
         }
         
