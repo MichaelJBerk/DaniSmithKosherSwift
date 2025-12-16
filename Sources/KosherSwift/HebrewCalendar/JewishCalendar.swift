@@ -350,13 +350,15 @@ public class JewishCalendar: JewishDate {
         .isruChag: { cal in cal.isIsruChag }
     ]
     
-	///Determine what Chag occurs on the given day
+	/// Determine what Jewish holiday occurs on the given day
 	///
-	///This doesn't handle multiple chagim on the same day (i.e. Rosh Chodesh on Chanukah)
+    /// On occasions where multiple holidays occur on the same day, the holiday with the lower raw value will take precedence. For example, when _Rosh Chodesh_ occurs on _Chanukah_, it will returns _Chanukah_. 
+    /// - Returns: The ``JewishHoliday`` that occurs on the given day. If there's no holiday on the given day, it returns `nil`.
     public func getCurrentChag() -> JewishHoliday? {
-        for checker in JewishCalendar.chagCheckers {
-            if checker.value(self) {
-                return checker.key
+        for yomTov in JewishHoliday.allCases {
+            guard let checker = JewishCalendar.chagCheckers[yomTov] else {return nil}
+            if checker(self) {
+                return yomTov
             }
         }
         
