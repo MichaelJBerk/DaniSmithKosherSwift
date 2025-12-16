@@ -129,7 +129,7 @@ public class JewishCalendar: JewishDate {
         var cal = JewishCalendar(date: nextShabbos, isInIsrael: isInIsrael)
         
         while cal.getParsha() == .none {
-            nextShabbos = gregDate.next(.saturday)
+            nextShabbos = nextShabbos.next(.saturday)
             cal = JewishCalendar(date: nextShabbos, isInIsrael: isInIsrael)
         }
         
