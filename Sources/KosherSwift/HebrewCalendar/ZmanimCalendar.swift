@@ -30,21 +30,16 @@ public class ZmanimCalendar: AstronomicalCalendar {
     public func latestShemaGra() -> Date? { calculateLatestZmanShema(elevationAdjustedSunrise, elevationAdjustedSunset) }
     public func latestShemaMga() -> Date? { calculateLatestZmanShema(alos72(), tzeis72()) }
     public func tzeis72() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 72 * AstronomicalCalendar.minuteMillis) }
-    
-    public func candleLighting() -> Date? {
-        let todayCal = JewishCalendar(date: date)
-        let yesterdayCal = JewishCalendar(date: date.withAdded(days: -1)!)
-        if (todayCal.dow == .saturday && todayCal.isErevYomTov)
-            || (todayCal.isRoshHashana && yesterdayCal.isErevYomTov)
-            || (todayCal.isChanukah && todayCal.dow != .friday) {
-            let offsetDate = getSunsetOffsetByDegrees(offsetZenith: .z7_083)
-            return AstronomicalCalendar.getTimeOffset(time: offsetDate, offset: -13.5 * AstronomicalCalendar.hourMillis)
-        } else if todayCal.dow == .friday || todayCal.isErevYomTov {
-            return AstronomicalCalendar.getTimeOffset(time: seaLevelSunset, offset: -candleLightingOffset * AstronomicalCalendar.minuteMillis)
-        }
-        
-        return nil
-    }
+	
+	/// A method to return candle lighting time, calculated as ``candleLightingOffset`` minutes before ``AstronomicalCalendar/seaLevelSunset`` This will return the time for any day of the week, since it can be used to calculate candle lighting time for *Yom Tov* (mid-week holidays) as well. Elevation adjustments are intentionally not performed by this method, but you can calculate it by passing the elevation adjusted sunset to ``AstronomicalCalendar/getTimeOffset(time:offset:)``.
+	/// - Returns: candle lighting time. If the calculation can't be computed such as in the Arctic Circle where there is at
+	/// least one day a year where the sun does not rise, and one where it does not set, a <code>null</code> will be returned. See detailed explanation on top of the `AstronomicalCalendar` documentation.
+	/// ## See Also
+	/// - ``AstronomicalCalendar/seaLevelSunset``
+	/// - ``candleLightingOffset``
+	public func candleLighting() -> Date? {
+		return AstronomicalCalendar.getTimeOffset(time: seaLevelSunset, offset: -1 * candleLightingOffset * AstronomicalCalendar.minuteMillis)
+	}
     
     public func latestTefilaGra() -> Date? { calculateLatestTefila(elevationAdjustedSunrise, elevationAdjustedSunset) }
     public func latestTefilaMga() -> Date? { calculateLatestTefila(alos72(), tzeis72()) }
