@@ -365,10 +365,10 @@ public class AstronomicalCalendar {
 
 extension AstronomicalCalendar {
     // Constants
-    static let minuteMillis = 60 * 1000.0
-    static let hourMillis = minuteMillis * 60
+	public static let minuteMillis = 60 * 1000.0
+	public static let hourMillis = minuteMillis * 60
     
-    static func getTimeOffset(time: Date?, offset: Double?) -> Date? {
+    public static func getTimeOffset(time: Date?, offset: Double?) -> Date? {
 //        guard let time = time, let offset = offset, offset != Double.leastNormalMagnitude else {
 //            return nil
 //        }
