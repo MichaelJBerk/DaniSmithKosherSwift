@@ -7,7 +7,6 @@
 
 import Foundation
 
-// Only should be used within KosherSwift
-public enum DayOfWeek: Int {
+public enum DayOfWeek: Int, CaseIterable {
     case sunday = 1, monday, tuesday, wednesday, thursday, friday, saturday
 }
