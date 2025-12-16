@@ -31,14 +31,31 @@ public class ZmanimCalendar: AstronomicalCalendar {
     public func latestShemaMga() -> Date? { calculateLatestZmanShema(alos72(), tzeis72()) }
     public func tzeis72() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 72 * AstronomicalCalendar.minuteMillis) }
 	
-	/// A method to return candle lighting time, calculated as ``candleLightingOffset`` minutes before ``AstronomicalCalendar/seaLevelSunset`` This will return the time for any day of the week, since it can be used to calculate candle lighting time for *Yom Tov* (mid-week holidays) as well. Elevation adjustments are intentionally not performed by this method, but you can calculate it by passing the elevation adjusted sunset to ``AstronomicalCalendar/getTimeOffset(time:offset:)``.
+	/// A method to return candle lighting time, calculated as ``candleLightingOffset`` minutes before ``AstronomicalCalendar/seaLevelSunset``
+	///
+	/// This will return the time for any day of the week, since it can be used to calculate candle lighting time for *Yom Tov* (mid-week holidays) as well. Elevation adjustments are intentionally not performed by this method, but you can calculate it by passing the elevation adjusted sunset to ``AstronomicalCalendar/getTimeOffset(time:offset:)``.
 	/// - Returns: candle lighting time. If the calculation can't be computed such as in the Arctic Circle where there is at
-	/// least one day a year where the sun does not rise, and one where it does not set, a <code>null</code> will be returned. See detailed explanation on top of the `AstronomicalCalendar` documentation.
+	/// least one day a year where the sun does not rise, and one where it does not set, `nil` will be returned. See detailed explanation on top of the `AstronomicalCalendar` documentation.
 	/// ## See Also
 	/// - ``AstronomicalCalendar/seaLevelSunset``
 	/// - ``candleLightingOffset``
 	public func candleLighting() -> Date? {
 		return AstronomicalCalendar.getTimeOffset(time: seaLevelSunset, offset: -1 * candleLightingOffset * AstronomicalCalendar.minuteMillis)
+	}
+	
+	/// A method to return the next candle lighting time
+	/// 
+	/// This method returns the value of ``candleLighting()`` time on the next day that has candle lighting (which can also include the current day).
+	/// - Parameter inIsrael: whether or not the user is in Israel, which affects _Yom Tov_ calculations
+	/// ## See Also
+	/// - ``candleLighting()``
+	public func getNextCandleLighting(inIsrael: Bool = false) -> Date? {
+		var cal = JewishCalendar(date: date, isInIsrael: inIsrael)
+		while !cal.isTomorrowShabbosOrYomTov {
+			cal = JewishCalendar(date: Calendar.current.date(byAdding: .day, value: 1, to: cal.gregDate)!, isInIsrael: inIsrael)
+		}
+		let zmanimCal = copy(with: cal.gregDate)
+		return zmanimCal.candleLighting()
 	}
     
     public func latestTefilaGra() -> Date? { calculateLatestTefila(elevationAdjustedSunrise, elevationAdjustedSunset) }
@@ -112,4 +129,10 @@ public class ZmanimCalendar: AstronomicalCalendar {
         }
         return Int64((endOfHalfDay!.timeIntervalSince1970 - startOfHalfDay!.timeIntervalSince1970) / 6)
     }
+	
+	/// Make a copy of the current ``ZmanimCalendar`` instance with a different date
+	/// - Parameter date: The working date for the new instance. If `nil`, it will use the same working date as this instance.
+	func copy(with date: Date?) -> ZmanimCalendar {
+		return ZmanimCalendar(location: location, date: date ?? self.date, astronomicalCalculator: astronomicalCalculator, shouldUseElevation: shouldUseElevation, candleLightingOffset: candleLightingOffset)
+	}
 }
