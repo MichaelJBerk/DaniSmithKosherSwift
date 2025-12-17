@@ -57,6 +57,20 @@ public class ZmanimCalendar: AstronomicalCalendar {
 		let zmanimCal = copy(with: cal.gregDate)
 		return zmanimCal.candleLighting()
 	}
+	
+	/// A method to return the time when *Shabbos* or *Yom Tov* ends
+	///
+	/// - Parameter timeOffset: the number of minutes after ``AstronomicalCalendar/seaLevelSunset`` when *Shabbos* or *Yom Tov* ends. Defaults to `50`.
+	///
+	/// This will return the time for any day of the week, since it can be used to calculate the time for the end of *Yom Tov* (mid-week holidays) as well. Elevation adjustments are intentionally not performed by this method, but you can calculate it by passing the elevation adjusted sunset to ``AstronomicalCalendar/getTimeOffset(time:offset:)``.
+	/// - Returns: the time when *Shabbos* or *Yom Tov* ends. If the calculation can't be computed such as in the Arctic Circle where there is at
+	/// least one day a year where the sun does not rise, and one where it does not set, `nil` will be returned. See detailed explanation on top of the `AstronomicalCalendar` documentation.
+	/// ## See Also
+	/// - ``AstronomicalCalendar/seaLevelSunset``
+	/// - ``candleLightingOffset``
+	public func havdalah(timeOffset: Double = 50) -> Date? {
+		return AstronomicalCalendar.getTimeOffset(time: seaLevelSunset, offset: timeOffset * AstronomicalCalendar.minuteMillis)
+	}
     
     public func latestTefilaGra() -> Date? { calculateLatestTefila(elevationAdjustedSunrise, elevationAdjustedSunset) }
     public func latestTefilaMga() -> Date? { calculateLatestTefila(alos72(), tzeis72()) }
