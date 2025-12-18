@@ -29,4 +29,9 @@ public enum JewishHoliday: Int, CaseIterable {
 	public var transliteratedName: String {
 		return HebrewDateFormatter.transliteratedHolidays[rawValue]
 	}
+	
+	///Determines if the Holiday is _erev_.
+	public var isErev: Bool {
+		[JewishHoliday.erevPesach, .erevShavuos, .erevRoshHashana, .erevYomKippur, .erevSuccos, .erevChanukah, .erevRoshChodesh].contains(self)
+	}
 }

@@ -364,6 +364,17 @@ public class JewishCalendar: JewishDate {
         
         return nil
     }
+	//TODO: Document
+	public func getCurrentChagim() -> [JewishHoliday] {
+		var chagim: [JewishHoliday] = []
+		for yomTov in JewishHoliday.allCases {
+			if let checker = JewishCalendar.chagCheckers[yomTov],
+			   checker(self) {
+				chagim.append(yomTov)
+			}
+		}
+		return chagim
+	}
     
 	///Returns if the current day is a Yom Tov
     public var isYomTov: Bool {
