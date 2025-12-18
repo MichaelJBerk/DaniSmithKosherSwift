@@ -34,4 +34,10 @@ public enum JewishHoliday: Int, CaseIterable {
 	public var isErev: Bool {
 		[JewishHoliday.erevPesach, .erevShavuos, .erevRoshHashana, .erevYomKippur, .erevSuccos, .erevChanukah, .erevRoshChodesh].contains(self)
 	}
+	
+	///Determine if the Holiday has a *melacha* (work)  prohibition
+	public var isAsurBemelacha: Bool {
+		[JewishHoliday.pesach, .shavuos, .succos, .sheminiAtzeres, .simchasTorah, .roshHashana, .yomKippur].contains(self)
+	}
+	
 }
