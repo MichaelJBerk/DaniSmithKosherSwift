@@ -46,6 +46,18 @@ public class JewishCalendar: JewishDate {
     public func copy(date: Date, includeTime: Bool = false, isInIsrael: Bool? = nil) -> JewishCalendar{
         JewishCalendar(date: date, includeTime: includeTime, isInIsrael: isInIsrael ?? self.isInIsrael)
     }
+	
+	/// Create a copy of the ``JewishCalendar`` instance advanced by a given calendar component
+	/// - Parameters:
+	///   - component: The calendar component to advance
+	///   - value: The value the component should be advanced by
+	/// - Returns: A copy of the ``JewishCalendar`` with the `component` advanced by `value`
+	/// ## See Also
+	/// - ``copy(date:includeTime:isInIsrael:)``
+	/// ``copy(year:month:day:isInIsrael:)``
+	public func advanced(byAdding component: Calendar.Component, value: Int) -> JewishCalendar {
+		self.copy(date: Calendar.current.date(byAdding: component, value: value, to: gregDate)!)
+	}
     ///Determine if Birkas Hachama is said on the current day
 	///
 	/// [Birkas Hachamah](https://en.wikipedia.org/wiki/Birkat_Hachama) is recited every 28 years based on *Tekufas Shmuel* (Julian years) that a year is 365.25 days. The Rambam in [Hilchos Kiddush Hachodesh 9:3](http://hebrewbooks.org/pdfpager.aspx?req=14278&st=&pgnum=323) states that *tekufas Nissan* of year 1 was 7 days + 9 hours before *molad Nissan*. This is calculated as every 10,227 days (28 * 365.25).
