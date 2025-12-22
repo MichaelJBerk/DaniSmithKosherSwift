@@ -71,6 +71,20 @@ public class ZmanimCalendar: AstronomicalCalendar {
 	public func havdalah(timeOffset: Double = 50) -> Date? {
 		return AstronomicalCalendar.getTimeOffset(time: seaLevelSunset, offset: timeOffset * AstronomicalCalendar.minuteMillis)
 	}
+	
+	/// A method to return the next *havdala*, including the current date
+	/// - Parameter timeOffset: the number of minutes after ``AstronomicalCalendar/seaLevelSunset`` when *Shabbos* or *Yom Tov* ends. Defaults to `50`.
+	/// - Parameter inIsrael: whether or not the user is in Israel, which affects _Yom Tov_ calculations
+	/// ## See Also
+	/// - ``havdalah(timeOffset:)``
+	public func getNextHavdala(timeOffset: Double = 50, inIsreal: Bool) -> Date? {
+		var cal = JewishCalendar(date: date, isInIsrael: inIsreal)
+		while !cal.isAssurBemelacha {
+			cal = cal.advanced(byAdding: .day, value: 1)
+		}
+		let zmanimCal = copy(with: cal.gregDate)
+		return zmanimCal.havdalah(timeOffset: timeOffset)
+	}
     
     public func latestTefilaGra() -> Date? { calculateLatestTefila(elevationAdjustedSunrise, elevationAdjustedSunset) }
     public func latestTefilaMga() -> Date? { calculateLatestTefila(alos72(), tzeis72()) }
