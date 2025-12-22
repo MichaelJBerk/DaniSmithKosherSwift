@@ -445,7 +445,7 @@ public class JewishCalendar: JewishDate {
 	///## See Also
 	///- ``isYomTov``
 	///- ``isErevYomTovSheni``
-    public var isErevYomTov: Bool { isErevRoshChodesh || isErevShavuos || isErevPesach || isErevSuccos || isErevRoshHashana || isErevYomKippur || isErevSuccos || isHoshanaRabba || (isCholHamoedPesach && day == 20) }
+    public var isErevYomTov: Bool { isErevShavuos || isErevPesach || isErevSuccos || isErevRoshHashana || isErevYomKippur || isErevSuccos || isHoshanaRabba || (isCholHamoedPesach && day == 20) }
     
 	///Returns if the current day is a fast day
     public var isTaanis: Bool { isSeventeenthOfTammuz || isTishaBeav || isYomKippur || isFastOfEsther || isFastOfGedalia || isTenthOfTeves }
