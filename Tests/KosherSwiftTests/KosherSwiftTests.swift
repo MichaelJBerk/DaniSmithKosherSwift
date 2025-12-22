@@ -409,10 +409,12 @@ final class KosherSwiftTests: XCTestCase {
     
     func testParsha() {
         var cal = JewishCalendar(date: Date(year: 2025, month: 10, day: 20), isInIsrael: false)
-        XCTAssert(cal.getWeeklyParsha() == .noach)
+        XCTAssert(cal.getUpcomingParsha() == .noach)
+        cal = JewishCalendar(date: Date(year: 2025, month: 10, day: 25), isInIsrael: false)
+        XCTAssert(cal.getUpcomingParsha() == .lech_lecha)
         
         cal = JewishCalendar(date: Date(year: 2025, month: 8, day: 15), isInIsrael: false)
-        XCTAssert(cal.getWeeklyParsha() == .eikev)
+        XCTAssert(cal.getUpcomingParsha() == .eikev)
     }
 	
     ///Test that a date for the 30th of Kislev on a year with a short Kiselv is converted to the 1st of Tevet
@@ -429,11 +431,11 @@ final class KosherSwiftTests: XCTestCase {
         XCTAssert(cal.day == 1)
     }
 
+    ///Test that the getUpcomingParsha() method does not enter an infinite loop
     func testNoParashaInfiniteLoop() {
         let cal = JewishCalendar(date: Date(year: 2025, month: 10, day: 10))
-        XCTAssert(cal.getWeeklyParsha() == .bereshis)
+        XCTAssert(cal.getUpcomingParsha() == .bereshis)
         let cal2 = JewishCalendar(date: Date(year: 2025, month: 10, day: 11))
-        XCTAssert(cal2.getWeeklyParsha() == .bereshis)
-
+        XCTAssert(cal2.getUpcomingParsha() == .bereshis)
     }
 }
