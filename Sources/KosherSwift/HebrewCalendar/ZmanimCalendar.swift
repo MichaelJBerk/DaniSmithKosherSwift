@@ -52,7 +52,7 @@ public class ZmanimCalendar: AstronomicalCalendar {
 	public func getNextCandleLighting(inIsrael: Bool = false) -> Date? {
 		var cal = JewishCalendar(date: date, isInIsrael: inIsrael)
 		while !cal.isTomorrowShabbosOrYomTov {
-			cal = JewishCalendar(date: Calendar.current.date(byAdding: .day, value: 1, to: cal.gregDate)!, isInIsrael: inIsrael)
+			cal = cal.advanced(byAdding: .day, value: 1)
 		}
 		let zmanimCal = copy(with: cal.gregDate)
 		return zmanimCal.candleLighting()
