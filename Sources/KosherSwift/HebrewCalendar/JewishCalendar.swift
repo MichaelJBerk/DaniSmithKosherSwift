@@ -169,15 +169,12 @@ public class JewishCalendar: JewishDate {
         let dayOfWeek = gregDate.weekday
         let daysToShabbos = (DayOfWeek.saturday.rawValue - dayOfWeek + 7) % 7
         if dayOfWeek != DayOfWeek.saturday.rawValue {
-            let newDate = Calendar.current.date(byAdding: .day, value: daysToShabbos, to: gregDate)!
-            newCalendar = self.copy(date: newDate)
+			newCalendar = self.advanced(byAdding: .day, value: daysToShabbos)
         } else {
-            let newDate = Calendar.current.date(byAdding: .day, value: 7, to: gregDate)!
-            newCalendar = self.copy(date: newDate)
+			newCalendar = self.advanced(byAdding: .day, value: 7)
         }
         while newCalendar.getParsha() == .none {
-            let newDate = Calendar.current.date(byAdding: .day, value: 7, to: newCalendar.gregDate)!
-            newCalendar = newCalendar.copy(date: newDate)
+			newCalendar = newCalendar.advanced(byAdding: .day, value: 7)
         }
         return newCalendar.getParsha()
     }
