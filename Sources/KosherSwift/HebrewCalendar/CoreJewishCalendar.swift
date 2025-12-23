@@ -358,13 +358,16 @@ public class CoreJewishCalendar: JewishDate {
         .shushanPurimKatan: { cal in cal.isShushanPurimKatan },
         .isruChag: { cal in cal.isIsruChag }
     ]
-    
+
+    var holidaysToCheck: [JewishHoliday] {
+       return JewishHoliday.javaHolidays
+    }
 	/// Determine what Jewish holiday occurs on the given day
 	///
     /// On occasions where multiple holidays occur on the same day, the holiday with the lower raw value will take precedence. For example, when _Rosh Chodesh_ occurs on _Chanukah_, it will returns _Chanukah_. 
     /// - Returns: The ``JewishHoliday`` that occurs on the given day. If there's no holiday on the given day, it returns `nil`.
     public func getCurrentChag() -> JewishHoliday? {
-        for yomTov in JewishHoliday.allCases {
+        for yomTov in holidaysToCheck {
             guard let checker = CoreJewishCalendar.chagCheckers[yomTov] else {return nil}
             if checker(self) {
                 return yomTov
@@ -376,7 +379,7 @@ public class CoreJewishCalendar: JewishDate {
 	//TODO: Document
 	public func getCurrentChagim() -> [JewishHoliday] {
 		var chagim: [JewishHoliday] = []
-		for yomTov in JewishHoliday.allCases {
+		for yomTov in holidaysToCheck {
 			if let checker = CoreJewishCalendar.chagCheckers[yomTov],
 			   checker(self) {
 				chagim.append(yomTov)
@@ -384,18 +387,22 @@ public class CoreJewishCalendar: JewishDate {
 		}
 		return chagim
 	}
-    
-	///Returns if the current day is a Yom Tov
+	/// Returns if the current day is *Yom Tov*.
+	///
+	/// The method returns `true` even for holidays such as ``JewishHoliday/chanukah`` and minor ones such as ``JewishHoliday/tuBeav`` and ``JewishHoliday/pesachSheni``. *Erev Yom Tov* (with the exception of ``JewishHoliday/hoshanaRabba`` and *erev* the second days of ``JewishHoliday/pesach`` returns `false`, as do fast days besides ``JewishHoliday/yomKippur`` Use ``isAssurBemelacha`` to find the days that have a prohibition of work.
+	/// - Returns: true if the current day is a Yom Tov
+	/// ## See Also
+	/// - ``getCurrentChag()``
+	/// - ``isErevYomTov``
+	/// - ``isErevYomTovSheni``
+	/// - ``isTaanis``
+	/// - ``isAssurBemelacha``
+	/// - ``isCholHamoed``
     public var isYomTov: Bool {
-        guard let _ = getCurrentChag() else {
-            return false
-        }
-        
-        let isExcludedChag = (isErevYomTov && !(isHoshanaRabba || isCholHamoedPesach))
-            || (isTaanis && !isYomKippur)
-            || isIsruChag
-        
-        return !isExcludedChag
+        if (isErevYomTov && !(isHoshanaRabba || isCholHamoedPesach)) || (isTaanis && !isYomKippur) || isIsruChag {
+			return false
+		}
+		return getCurrentChag() != nil
     }
 	
 	///Returns if the *Yom Tov* day has a *melacha* (work)  prohibition.

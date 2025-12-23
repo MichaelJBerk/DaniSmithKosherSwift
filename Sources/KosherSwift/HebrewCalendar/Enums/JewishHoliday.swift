@@ -48,4 +48,9 @@ public enum JewishHoliday: Int, CaseIterable {
 		[JewishHoliday.pesach, .shavuos, .succos, .sheminiAtzeres, .simchasTorah, .roshHashana, .yomKippur].contains(self)
 	}
 	
+	///All holidays, excluding those added by KosherSwift
+	public static var javaHolidays: [JewishHoliday] {
+		return [.erevPesach, .pesach, .cholHamoedPesach, .pesachSheni, .erevShavuos, .shavuos, .seventeenthOfTammuz, .tishaBeav, .tuBeav, .erevRoshHashana, .roshHashana, .fastOfGedalia, .erevYomKippur, .yomKippur, .erevSuccos, .succos, .cholHamoedSuccos, .hoshanaRabba, .sheminiAtzeres, .simchasTorah, .chanukah, .tenthOfTeves, .tuBeshvat, .fastOfEsther, .purim, .shushanPurim, .purimKatan, .roshChodesh, .yomHashoah, .yomHazikaron, .yomHaatzmaut, .yomYerushalaim, .lagBaomer, .shushanPurimKatan, .isruChag]
+	}
+
 }
