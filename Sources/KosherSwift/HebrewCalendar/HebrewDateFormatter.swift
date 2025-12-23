@@ -150,7 +150,6 @@ public struct HebrewDateFormatter {
         "Purim",
         "Shushan Purim",
         "Purim Katan",
-        "Erev Rosh Chodesh",
         "Rosh Chodesh",
         "Yom HaShoah",
         "Yom Hazikaron",
@@ -158,7 +157,8 @@ public struct HebrewDateFormatter {
         "Yom Yerushalayim",
         "Lag B'Omer",
         "Shushan Purim Katan",
-        "Isru Chag"
+        "Isru Chag",
+		"Erev Rosh Chodesh"
     ]
     
     /// Hebrew holiday list
@@ -191,7 +191,6 @@ public struct HebrewDateFormatter {
         "פורים",
         "פורים שושן",
         "פורים קטן",
-        "ערב ראש חודש",
         "ראש חודש",
         "יום השואה",
         "יום הזיכרון",
@@ -199,7 +198,8 @@ public struct HebrewDateFormatter {
         "יום ירושלים",
         "ל״ג בעומר",
         "פורים שושן קטן",
-        "אסרו חג"
+        "אסרו חג",
+		"ערב ראש חודש"
     ]
     
     static let hebrewShortHolidays = [
@@ -231,7 +231,6 @@ public struct HebrewDateFormatter {
         "פורים",
         "פורים שושן",
         "פורים קטן",
-        "ער״ח    ",
         "ר״ח",
         "יום השואה",
         "יום הזיכרון",
@@ -239,7 +238,8 @@ public struct HebrewDateFormatter {
         "יום ירושלים",
         "ל״ג בעומר",
         "פורים שושן קטן",
-        "אסרו חג"
+        "אסרו חג",
+		"ער״ח    "
     ]
     
     static let longOmerDay = [
