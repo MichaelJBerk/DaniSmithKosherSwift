@@ -50,7 +50,7 @@ public class ZmanimCalendar: AstronomicalCalendar {
 	/// ## See Also
 	/// - ``candleLighting()``
 	public func getNextCandleLighting(inIsrael: Bool = false) -> Date? {
-		var cal = JewishCalendar(date: date, isInIsrael: inIsrael)
+		var cal = CoreJewishCalendar(date: date, isInIsrael: inIsrael)
 		while !cal.isTomorrowShabbosOrYomTov {
 			cal = cal.advanced(byAdding: .day, value: 1)
 		}
@@ -78,7 +78,7 @@ public class ZmanimCalendar: AstronomicalCalendar {
 	/// ## See Also
 	/// - ``havdalah(timeOffset:)``
 	public func getNextHavdala(timeOffset: Double = 50, inIsreal: Bool) -> Date? {
-		var cal = JewishCalendar(date: date, isInIsrael: inIsreal)
+		var cal = CoreJewishCalendar(date: date, isInIsrael: inIsreal)
 		while !cal.isAssurBemelacha {
 			cal = cal.advanced(byAdding: .day, value: 1)
 		}

@@ -437,7 +437,7 @@ public struct HebrewDateFormatter {
     /// @param jewishCalendar the JewishCalendar
     /// @return the formatted holiday or an empty String if the day is not a holiday.
     /// @see #isHebrewFormat()
-    public func formatYomTov(_ cal: JewishCalendar) throws -> String? {
+    public func formatYomTov(_ cal: CoreJewishCalendar) throws -> String? {
         let chag = cal.getCurrentChag()
         guard let chag = chag else {
             return nil
@@ -462,7 +462,7 @@ public struct HebrewDateFormatter {
     /// @param jewishCalendar the JewishCalendar
     /// @return The formatted <code>String</code> in the format of ראש חודש שבט
     /// or Rosh Chodesh Shevat. If it is not Rosh Chodesh, an empty <code>String</code> will be returned.
-    public func formatRoshChodesh(_ cal: JewishCalendar) -> String? {
+    public func formatRoshChodesh(_ cal: CoreJewishCalendar) -> String? {
         let jewishCalendar = cal
         if !jewishCalendar.isRoshChodesh {
             return nil
@@ -495,7 +495,7 @@ public struct HebrewDateFormatter {
     /// @param jewishCalendar the JewishCalendar
     /// @return The formatted <code>String</code> in the format of ערב ראש חודש שבט
     /// or Rosh Chodesh Shevat. If it is not Rosh Chodesh, an empty <code>String</code> will be returned.
-    public func formatErevRoshChodesh(_ cal: JewishCalendar) -> String? {
+    public func formatErevRoshChodesh(_ cal: CoreJewishCalendar) -> String? {
         if !cal.isErevRoshChodesh {
             return ""
         }
@@ -590,7 +590,7 @@ public struct HebrewDateFormatter {
     /// @see #isHebrewFormat()
     /// @see #getHebrewOmerPrefix()
     /// @see #setHebrewOmerPrefix(String)
-    public func formatOmer(jewishCalendar: JewishCalendar) throws -> String? {
+    public func formatOmer(jewishCalendar: CoreJewishCalendar) throws -> String? {
         guard let omer = jewishCalendar.dayOfOmer else { return nil }
         
         if hebrewFormat {
@@ -749,7 +749,7 @@ public struct HebrewDateFormatter {
                 : HebrewDateFormatter.transliteratedParshaMap[parsha])!
     }
     
-    public func formatSpecialParsha(jewishCalendar: JewishCalendar) -> String {
+    public func formatSpecialParsha(jewishCalendar: CoreJewishCalendar) -> String {
         let specialParsha = jewishCalendar.getSpecialShabbos()
         return (hebrewFormat
                 ? HebrewDateFormatter.hebrewParshaMap[specialParsha]

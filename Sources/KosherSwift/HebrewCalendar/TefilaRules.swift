@@ -8,7 +8,7 @@
 import Foundation
 
 public class TefilaRules {
-    let cal: JewishCalendar
+    let cal: CoreJewishCalendar
     
     public let tachanunRecitedEndOfTishrei: Bool
     public let tachanunRecitedWeekAfterShavuos: Bool
@@ -27,7 +27,7 @@ public class TefilaRules {
     private let mashivHaruachStart: Date
     private let mashivHaruachEnd: Date
     
-    public init(_ cal: JewishCalendar, tachanunRecitedEndOfTishrei: Bool = true, tachanunRecitedWeekAfterShavuos: Bool = false, tachanunRecited13SivanOutOfIsrael: Bool = true, tachanunRecitedPesachSheni: Bool = false, tachanunRecited15IyarOutOfIsrael: Bool = true, tachanunRecitedMinchaErevLagBaomer: Bool = false, tachanunRecitedShivasYemeiHamiluim: Bool = true, tachanunRecitedWeekOfHod: Bool = true, tachanunRecitedWeekOfPurim: Bool = true, tachanunRecitedFridays: Bool = true, tachanunRecitedSundays: Bool = true, tachanunRecitedMinchaAllYear: Bool = true, mizmorLesodaRecitedErevYomKippurAndPesach: Bool = false) {
+    public init(_ cal: CoreJewishCalendar, tachanunRecitedEndOfTishrei: Bool = true, tachanunRecitedWeekAfterShavuos: Bool = false, tachanunRecited13SivanOutOfIsrael: Bool = true, tachanunRecitedPesachSheni: Bool = false, tachanunRecited15IyarOutOfIsrael: Bool = true, tachanunRecitedMinchaErevLagBaomer: Bool = false, tachanunRecitedShivasYemeiHamiluim: Bool = true, tachanunRecitedWeekOfHod: Bool = true, tachanunRecitedWeekOfPurim: Bool = true, tachanunRecitedFridays: Bool = true, tachanunRecitedSundays: Bool = true, tachanunRecitedMinchaAllYear: Bool = true, mizmorLesodaRecitedErevYomKippurAndPesach: Bool = false) {
         self.cal = cal
         
         self.tachanunRecitedEndOfTishrei = tachanunRecitedEndOfTishrei
@@ -52,11 +52,11 @@ public class TefilaRules {
         TefilaRules.isTachanunRecitedShacharis(cal: cal, rules: self)
     }
     
-    public func copy(withCal cal: JewishCalendar) -> TefilaRules {
+    public func copy(withCal cal: CoreJewishCalendar) -> TefilaRules {
         TefilaRules(cal, tachanunRecitedEndOfTishrei: tachanunRecitedEndOfTishrei, tachanunRecitedWeekAfterShavuos: tachanunRecitedWeekAfterShavuos, tachanunRecited13SivanOutOfIsrael: tachanunRecited13SivanOutOfIsrael, tachanunRecitedPesachSheni: tachanunRecitedPesachSheni, tachanunRecited15IyarOutOfIsrael: tachanunRecited15IyarOutOfIsrael, tachanunRecitedMinchaErevLagBaomer: tachanunRecitedMinchaErevLagBaomer, tachanunRecitedShivasYemeiHamiluim: tachanunRecitedShivasYemeiHamiluim, tachanunRecitedWeekOfHod: tachanunRecitedWeekOfHod, tachanunRecitedWeekOfPurim: tachanunRecitedWeekOfPurim, tachanunRecitedFridays: tachanunRecitedFridays, tachanunRecitedSundays: tachanunRecitedSundays, tachanunRecitedMinchaAllYear: tachanunRecitedMinchaAllYear, mizmorLesodaRecitedErevYomKippurAndPesach: mizmorLesodaRecitedErevYomKippurAndPesach)
     }
     
-    private static func isTachanunRecitedShacharis(cal: JewishCalendar, rules: TefilaRules) -> Bool {
+    private static func isTachanunRecitedShacharis(cal: CoreJewishCalendar, rules: TefilaRules) -> Bool {
         let day = cal.day
         let month = cal.month
         let dow = cal.dow
@@ -81,7 +81,7 @@ public class TefilaRules {
     }
     
     public func isTachanunRecitedMincha() -> Bool {
-        let tomorrow = JewishCalendar(date: cal.gregDate.withAdded(days: 1)!)
+        let tomorrow = CoreJewishCalendar(date: cal.gregDate.withAdded(days: 1)!)
         
         let notRecited = !tachanunRecitedMinchaAllYear
         || cal.dow == .friday

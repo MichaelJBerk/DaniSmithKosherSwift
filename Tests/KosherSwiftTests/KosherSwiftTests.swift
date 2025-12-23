@@ -41,14 +41,14 @@ final class KosherSwiftTests: XCTestCase {
     }
     
     func testGregorianDateReflectsHebrew() {
-        let jewishCalendar = JewishCalendar(date: Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 26))!)
+        let jewishCalendar = CoreJewishCalendar(date: Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 26))!)
         XCTAssertEqual(jewishCalendar.year, 5784)
         XCTAssertEqual(jewishCalendar.month, .teves)
         XCTAssertEqual(jewishCalendar.day, 14)
     }
     
     func testGregorianDateChange() {
-        let jewishCalendar = JewishCalendar(date: Calendar.current.date(from: DateComponents(year: 2023, month: 9, day: 25))!)
+        let jewishCalendar = CoreJewishCalendar(date: Calendar.current.date(from: DateComponents(year: 2023, month: 9, day: 25))!)
         XCTAssertEqual(jewishCalendar.gregDate.year, 2023)
         XCTAssertEqual(jewishCalendar.gregDate.month, 9)
         XCTAssertEqual(jewishCalendar.gregDate.day, 25)
@@ -61,34 +61,34 @@ final class KosherSwiftTests: XCTestCase {
         comp.setValue(2023, for: .year)
         comp.setValue(12, for: .month)
         comp.setValue(24, for: .day)
-        let jewishCalendar = JewishCalendar(date: calendar.date(from: comp)!)
+        let jewishCalendar = CoreJewishCalendar(date: calendar.date(from: comp)!)
         XCTAssertEqual(jewishCalendar.gregDate.year, 2023)
         XCTAssertEqual(jewishCalendar.gregDate.month, 12)
         XCTAssertEqual(jewishCalendar.gregDate.day, 24)
     }
     
     func testHebrewDateChange() {
-        let jewishCalendar = JewishCalendar(withJewishYear: 5784, andMonth: .teves, andDay: 5, isInIsrael: false)
+        let jewishCalendar = CoreJewishCalendar(withJewishYear: 5784, andMonth: .teves, andDay: 5, isInIsrael: false)
         XCTAssertEqual(jewishCalendar.year, 5784)
         XCTAssertEqual(jewishCalendar.month, .teves)
         XCTAssertEqual(jewishCalendar.day, 5)
     }
     
     func testIsErevPesach() {
-        let jewishCalendar = JewishCalendar(withJewishYear: 5784, andMonth: .nissan, andDay: 14)
+        let jewishCalendar = CoreJewishCalendar(withJewishYear: 5784, andMonth: .nissan, andDay: 14)
         XCTAssertEqual(jewishCalendar.getCurrentChag(), .erevPesach)
         XCTAssertEqual(jewishCalendar.month, .nissan)
         XCTAssertEqual(jewishCalendar.isErevPesach, true)
     }
     
     func testIsPesach() {
-        let jewishCalendar = JewishCalendar(withJewishYear: 5784, andMonth: .nissan, andDay: 15)
+        let jewishCalendar = CoreJewishCalendar(withJewishYear: 5784, andMonth: .nissan, andDay: 15)
         XCTAssertEqual(jewishCalendar.getCurrentChag(), .pesach)
         XCTAssertEqual(jewishCalendar.isPesach, true)
     }
     
     func testMolad() {
-        let jewishCalendar = JewishCalendar(date: Date(year: 2023, month: 12, day: 20))
+        let jewishCalendar = CoreJewishCalendar(date: Date(year: 2023, month: 12, day: 20))
         XCTAssertEqual(jewishCalendar.moladDate?.molad.hours, 20)
         XCTAssertEqual(jewishCalendar.moladDate?.molad.minutes, 1)
         XCTAssertEqual(jewishCalendar.moladDate?.molad.chalakim, 3)
@@ -100,39 +100,39 @@ final class KosherSwiftTests: XCTestCase {
     
     
     func testParasha() {
-        var jewishCalendar = JewishCalendar(date: Date(year: 2023, month: 12, day: 20))
+        var jewishCalendar = CoreJewishCalendar(date: Date(year: 2023, month: 12, day: 20))
         XCTAssertEqual(jewishCalendar.getParsha(), .none)
         
-        jewishCalendar = JewishCalendar(date: Date(year: 2023, month: 12, day: 23))
+        jewishCalendar = CoreJewishCalendar(date: Date(year: 2023, month: 12, day: 23))
         XCTAssertEqual(jewishCalendar.getParsha(), .vayigash)
         
-        jewishCalendar = JewishCalendar(date: Date(year: 2023, month: 12, day: 30))
+        jewishCalendar = CoreJewishCalendar(date: Date(year: 2023, month: 12, day: 30))
         XCTAssertEqual(jewishCalendar.getParsha(), .vayechi)
     }
     
     func testDateFormat() {
         //leap year
-        let jewishCalendar = JewishCalendar(withJewishYear: 5784, andMonth: .tishrei, andDay: 8)
+        let jewishCalendar = CoreJewishCalendar(withJewishYear: 5784, andMonth: .tishrei, andDay: 8)
         let formatter = HebrewDateFormatter()
         let res = try! formatter.formatDate(jewishCalendar)
         XCTAssertEqual(res, "8 Tishrei, 5784")
     }
     
     func testParshahString() {
-        let jewishCalendar = JewishCalendar(date: Date(year: 2023, month: 12, day: 23))
+        let jewishCalendar = CoreJewishCalendar(date: Date(year: 2023, month: 12, day: 23))
         let hebrewDateFormatter = HebrewDateFormatter()
         XCTAssertEqual(hebrewDateFormatter.formatParsha(jewishCalendar.getParsha()), "Vayigash")
     }
     
     func testYomTovString() {
-        let jewishCalendar = JewishCalendar(withJewishYear: 5784, andMonth: .nissan, andDay: 15)
+        let jewishCalendar = CoreJewishCalendar(withJewishYear: 5784, andMonth: .nissan, andDay: 15)
         
         let hebrewDateFormatter = HebrewDateFormatter()
         XCTAssertEqual(try! hebrewDateFormatter.formatYomTov(jewishCalendar), "Pesach")
     }
     
     func testDafYomis() {
-        let jewishCalendar = JewishCalendar(date: Date(year: 2023, month: 12, day: 21))
+        let jewishCalendar = CoreJewishCalendar(date: Date(year: 2023, month: 12, day: 21))
         
         let dafYomi = jewishCalendar.dafYomiBavli
         let dafYomiYeru = jewishCalendar.dafYomiYerushalmi
@@ -358,10 +358,10 @@ final class KosherSwiftTests: XCTestCase {
     }
     
     func testTaanisEsther() {
-        let cal = JewishCalendar(date: Date(year: 2024, month: 2, day: 22), isInIsrael: false)
+        let cal = CoreJewishCalendar(date: Date(year: 2024, month: 2, day: 22), isInIsrael: false)
         XCTAssertFalse(cal.isFastOfEsther)
         
-        let cal2 = JewishCalendar(date: Date(year: 2024, month: 3, day: 21), isInIsrael: false)
+        let cal2 = CoreJewishCalendar(date: Date(year: 2024, month: 3, day: 21), isInIsrael: false)
         XCTAssertTrue(cal2.isFastOfEsther)
     }
     
@@ -392,50 +392,50 @@ final class KosherSwiftTests: XCTestCase {
     }
     
     func testRoshChodeshAdar() {
-        let cal = JewishCalendar(date: Date(year: 2024, month: 3, day: 10))
+        let cal = CoreJewishCalendar(date: Date(year: 2024, month: 3, day: 10))
         let roshChodeshFormatter = HebrewDateFormatter()
 //        XCTAssertEqual(.adar, cal.month)
         XCTAssertEqual("Rosh Chodesh Adar II", roshChodeshFormatter.formatRoshChodesh(cal))
         
-//        let cal2 = JewishCalendar(date: Date(year: 2024, month: 3, day: 11))
+//        let cal2 = CoreJewishCalendar(date: Date(year: 2024, month: 3, day: 11))
 //        XCTAssertEqual(.adar2, cal2.month)
 //        XCTAssertEqual("Adar II", roshChodeshFormatter.formatMonth(cal2))
     }
     
     func testFastOfEsther() {
-        let cal = JewishCalendar(date: Date(year: 2024, month: 1, day: 23), isInIsrael: false)
+        let cal = CoreJewishCalendar(date: Date(year: 2024, month: 1, day: 23), isInIsrael: false)
         XCTAssert(!cal.isFastOfEsther)
     }
     
     func testParsha() {
-        var cal = JewishCalendar(date: Date(year: 2025, month: 10, day: 20), isInIsrael: false)
+        var cal = CoreJewishCalendar(date: Date(year: 2025, month: 10, day: 20), isInIsrael: false)
         XCTAssert(cal.getUpcomingParsha() == .noach)
-        cal = JewishCalendar(date: Date(year: 2025, month: 10, day: 25), isInIsrael: false)
+        cal = CoreJewishCalendar(date: Date(year: 2025, month: 10, day: 25), isInIsrael: false)
         XCTAssert(cal.getUpcomingParsha() == .lech_lecha)
         
-        cal = JewishCalendar(date: Date(year: 2025, month: 8, day: 15), isInIsrael: false)
+        cal = CoreJewishCalendar(date: Date(year: 2025, month: 8, day: 15), isInIsrael: false)
         XCTAssert(cal.getUpcomingParsha() == .eikev)
 	}
 	
     ///Test that a date for the 30th of Kislev on a year with a short Kiselv is converted to the 1st of Tevet
 	func testShortKislevConversion() {
-		let cal = JewishCalendar(withJewishYear: 5784, andMonth: .kislev, andDay: 30, isInIsrael: false)
+		let cal = CoreJewishCalendar(withJewishYear: 5784, andMonth: .kislev, andDay: 30, isInIsrael: false)
         XCTAssert(cal.month == .teves)
         XCTAssert(cal.day == 1)
 	}
 
     ///Test that a date for the 30th of Iyar is converted to the 1st of Sivan
     func test30Iyar() {
-        let cal = JewishCalendar(withJewishYear: 5784, andMonth: .iyar, andDay: 30, isInIsrael: false)
+        let cal = CoreJewishCalendar(withJewishYear: 5784, andMonth: .iyar, andDay: 30, isInIsrael: false)
         XCTAssert(cal.month == .sivan)
         XCTAssert(cal.day == 1)
     }
 
     ///Test that the getUpcomingParsha() method does not enter an infinite loop
     func testNoParashaInfiniteLoop() {
-        let cal = JewishCalendar(date: Date(year: 2025, month: 10, day: 10))
+        let cal = CoreJewishCalendar(date: Date(year: 2025, month: 10, day: 10))
         XCTAssert(cal.getUpcomingParsha() == .bereshis)
-        let cal2 = JewishCalendar(date: Date(year: 2025, month: 10, day: 11))
+        let cal2 = CoreJewishCalendar(date: Date(year: 2025, month: 10, day: 11))
         XCTAssert(cal2.getUpcomingParsha() == .bereshis)
     }
     

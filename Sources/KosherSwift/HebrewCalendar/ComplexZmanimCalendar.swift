@@ -249,9 +249,9 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     }
     
     public func getYomTovStartTime() -> Date? {
-        var jewishCalendar = JewishCalendar(date: date)
+        var jewishCalendar = CoreJewishCalendar(date: date)
         while !jewishCalendar.isErevYomTov {
-            jewishCalendar = JewishCalendar(date: jewishCalendar.gregDate.withAdded(days: 1)!)
+            jewishCalendar = CoreJewishCalendar(date: jewishCalendar.gregDate.withAdded(days: 1)!)
         }
         
         let tempCal = copy(withDate: jewishCalendar.gregDate)
@@ -260,9 +260,9 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     }
     
     public func getYomTovExitTime() -> Date? {
-        var jewishCalendar = JewishCalendar(date: date)
+        var jewishCalendar = CoreJewishCalendar(date: date)
         while !jewishCalendar.isYomTov {
-            jewishCalendar = JewishCalendar(date: jewishCalendar.gregDate.withAdded(days: 1)!)
+            jewishCalendar = CoreJewishCalendar(date: jewishCalendar.gregDate.withAdded(days: 1)!)
         }
         
         let tempCal = copy(withDate: jewishCalendar.gregDate)
@@ -271,9 +271,9 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     }
     
     public func getTaanisStartTime(isInIsrael: Bool = false, isAshkenaz: Bool = false) -> Date? {
-        var jewishCalendar = JewishCalendar(date: date, isInIsrael: isInIsrael)
+        var jewishCalendar = CoreJewishCalendar(date: date, isInIsrael: isInIsrael)
         while !jewishCalendar.isTaanis {
-            jewishCalendar = JewishCalendar(date: jewishCalendar.gregDate.withAdded(days: 1)!)
+            jewishCalendar = CoreJewishCalendar(date: jewishCalendar.gregDate.withAdded(days: 1)!)
         }
         let tempCal = copy(withDate: jewishCalendar.gregDate)
         
@@ -287,9 +287,9 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     }
     
     public func getTaanisExitTime(isInIsrael: Bool = false, isAshkenaz: Bool = false) -> Date? {
-        var jewishCalendar = JewishCalendar(date: date, isInIsrael: isInIsrael)
+        var jewishCalendar = CoreJewishCalendar(date: date, isInIsrael: isInIsrael)
         while !jewishCalendar.isTaanis {
-            jewishCalendar = JewishCalendar(date: jewishCalendar.gregDate.withAdded(days: 1)!)
+            jewishCalendar = CoreJewishCalendar(date: jewishCalendar.gregDate.withAdded(days: 1)!)
         }
         
         let tempCal = copy(withDate: jewishCalendar.gregDate)

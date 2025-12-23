@@ -21,7 +21,7 @@ public class DafYomiCalculator {
     
     private static let blattPerMasechtaYerushalmi = [ 68, 37, 34, 44, 31, 59, 26, 33, 28, 20, 13, 92, 65, 71, 22, 22, 42, 26, 26, 33, 34, 22, 19, 85, 72, 47, 40, 47, 54, 48, 44, 37, 34, 44, 9, 57, 37, 19, 13 ]
     
-    public static func getDafYomiBavli(cal: JewishCalendar) -> Daf? {
+    public static func getDafYomiBavli(cal: CoreJewishCalendar) -> Daf? {
         /*
          * The number of daf per masechta. Since the number of blatt in Shekalim changed on the 8th Daf Yomi cycle
          * beginning on June 24, 1975 from 13 to 22, the actual calculation for blattPerMasechta[4] will later be
@@ -77,7 +77,7 @@ public class DafYomiCalculator {
         return nil
     }
     
-    public static func getDafYomiYerushalmi(cal: JewishCalendar) -> Daf? {
+    public static func getDafYomiYerushalmi(cal: CoreJewishCalendar) -> Daf? {
         var masechta = 0
         
         // There isn't Daf Yomi on Yom Kippur or Tisha B'Av.
