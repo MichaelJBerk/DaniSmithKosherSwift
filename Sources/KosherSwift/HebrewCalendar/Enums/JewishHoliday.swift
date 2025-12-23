@@ -29,6 +29,14 @@ public enum JewishHoliday: Int, CaseIterable {
 	public var transliteratedName: String {
 		return HebrewDateFormatter.transliteratedHolidays[rawValue]
 	}
+	///Name of the Holiday, in Hebrew
+	public var hebrewName: String {
+		return HebrewDateFormatter.hebrewHolidays[rawValue]
+	}
+	///Name of the Holiday, in Hebrew, abbreviated
+	public var hebrewShortName: String {
+		return HebrewDateFormatter.hebrewShortHolidays[rawValue]
+	}
 	
 	///Determines if the Holiday is _erev_.
 	public var isErev: Bool {
