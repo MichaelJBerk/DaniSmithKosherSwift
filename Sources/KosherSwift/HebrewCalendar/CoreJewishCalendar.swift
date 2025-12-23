@@ -413,9 +413,23 @@ public class CoreJewishCalendar: JewishDate {
 	///Returns if it is *Shabbos* or if it is a *Yom Tov* day that has a *melacha* (work)  prohibition.
     public var isAssurBemelacha: Bool { dow == .saturday || isYomTovAssurBemelacha }
     
+	/// Returns `true` if the day has candle lighting.
+	///
+	/// This will return true on *Erev Shabbos*, *Erev Yom Tov*, the first day of *Rosh Hashana* and the first days of *Yom Tov* out of Israel. It is identical to calling ``isTomorrowShabbosOrYomTov``
+	/// - Returns: if the day has candle lighting.
+	/// ## See Also
+	/// - ``isTomorrowShabbosOrYomTov``
+    public var hasCandleLighting: Bool {
+        return isTomorrowShabbosOrYomTov
+    }
+    
 	/// Returns if tomorrow is *Shabbos* or *Yom Tov*.
 	///
 	/// This will return `true` on *Erev Shabbos*, *Erev Yom Tov*, the first day of *Rosh Hashana* and *erev* the first days of *Yom Tov* out of Israel.
+    /// 
+    /// ## See Also
+    /// - ``isErevYomTov``
+    /// - ``isErevYomTovSheni
     public var isTomorrowShabbosOrYomTov: Bool { dow == .friday || isErevYomTov || isErevYomTovSheni }
 	
 	/// Returns true if the day is the second day of *Yom Tov*. This impacts the second day of *Rosh Hashana* everywhere and the second days of Yom Tov in *chutz laaretz* (out of Israel).

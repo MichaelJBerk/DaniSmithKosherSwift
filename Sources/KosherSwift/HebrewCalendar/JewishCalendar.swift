@@ -17,11 +17,21 @@ public class JewishCalendar: CoreJewishCalendar {
 	///This returns `true` for *Erev* - *Pesach* (first and last days), *Shavuos*, *Rosh Hashana*, *Yom Kippur*, *Succos*, *Hoshana Rabba*, *Chanukah*, and *Rosh Chodesh*.
 	///
 	///## See Also
-	///- ``isYomTov``
-	///- ``isErevYomTovSheni``
+	///- ``CoreJewishCalendar/isYomTov``
+	///- ``CoreJewishCalendar/isErevYomTovSheni``
     override public var isErevYomTov: Bool { isErevShavuos || isErevPesach || isErevSuccos || isErevRoshHashana || isErevYomKippur || isErevSuccos || isHoshanaRabba || isErevChanukah || isErevRoshChodesh || (isCholHamoedPesach && day == 20) }
 
     override var holidaysToCheck: [JewishHoliday] {
         return JewishHoliday.allCases
+    }
+	
+	/// Returns `true` if the day has candle lighting.
+	///
+	/// This will return true on *Erev Shabbos*, *Erev Yom Tov*, the first day of *Rosh Hashana* and the first days of *Yom Tov* out of Israel. Unlike ``CoreJewishCalendar/isTomorrowShabbosOrYomTov``, it returns `false` on *Erev Rosh Chodesh* and *Erev Chanukah*
+	/// - Returns: if the day has candle lighting.
+	/// ## See Also
+	/// - ``CoreJewishCalendar/isTomorrowShabbosOrYomTov``
+    public override var hasCandleLighting: Bool {
+        return (dow == .friday || (isErevYomTov && !(isErevRoshChodesh || isErevChanukah)) || isErevYomTovSheni)
     }
 }

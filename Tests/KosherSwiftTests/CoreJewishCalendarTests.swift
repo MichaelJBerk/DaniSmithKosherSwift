@@ -60,7 +60,7 @@ struct JewishCalendarTests: JewishCalendarTestProtocol {
 	@Test(arguments: JewishHoliday.allCases)
 	func testErev(yomTov: JewishHoliday) throws {
 		let trueDays = [JewishHoliday.erevPesach, .erevShavuos, .erevSuccos, .erevYomKippur, .erevRoshHashana, .hoshanaRabba, .erevRoshChodesh, .erevChanukah]
-		guard let cal = getNext(yomTov: yomTov, startingCal: JewishCalendar(date: .now)) else {
+		guard let cal = getNext(yomTov: yomTov, startingCal: JewishCalendar(date: .init(year: 2025, month: 12, day: 1))) else {
 			Issue.record()
 			return
 		}
@@ -69,8 +69,35 @@ struct JewishCalendarTests: JewishCalendarTestProtocol {
 		} else {
 			#expect(!cal.isErevYomTov)
 		}
+		if ![JewishHoliday.erevPesach, .erevSuccos, .erevShavuos, .erevYomKippur, .erevRoshHashana, .hoshanaRabba, .succos, .pesach, .roshHashana, .sheminiAtzeres].contains(cal.getCurrentChag()), cal.dow != .friday {
+			#expect(!cal.hasCandleLighting)
+		}
 
 	}
+
+	@Test
+	func testHasCandleLighting() throws {
+		let calendar = Calendar.current
+
+		var now = Date(year: 2025, month: 1, day: 1)
+
+		let endDate = calendar.date(byAdding: .year, value: 20, to: now)!
+		while now != endDate {
+			let cal = JewishCalendar(date: now)
+			let yt = cal.getCurrentChag()
+			if [JewishHoliday.erevPesach, .erevSuccos, .erevShavuos, .erevYomKippur, .erevRoshHashana, .hoshanaRabba, .sheminiAtzeres].contains(yt) || cal.dow == .friday || (cal.isCholHamoedPesach && cal.day == 20) || [JewishHoliday.pesach, .shavuos, .roshHashana, .succos].contains(yt) && cal.isErevYomTovSheni {
+				#expect(cal.hasCandleLighting, "Failed on \(now) \(cal.getCurrentChag())")
+			} else {
+				#expect(!cal.hasCandleLighting, "Failed on \(now) \(cal.getCurrentChag())")
+			}
+			now = calendar.date(byAdding: .day, value: 1, to: now)!
+		}
+	}
+
+	// @Test func erevStuff() throws {
+	// 	let cal = JewishCalendar(date: .init(year: 2025, month: 11, day: 19))
+	// 	#expect(cal.isTomorrowShabbosOrYomTov)
+	// }
 
 }
 
@@ -113,6 +140,25 @@ struct CoreJewishCalendarTests: JewishCalendarTestProtocol {
 
 
 
+	}
+
+	@Test
+	func testHasCandleLighting() throws {
+		let calendar = Calendar.current
+
+		var now = Date(year: 2025, month: 1, day: 1)
+
+		let endDate = calendar.date(byAdding: .year, value: 20, to: now)!
+		while now != endDate {
+			let cal = CoreJewishCalendar(date: now)
+			let yt = cal.getCurrentChag()
+			if [JewishHoliday.erevPesach, .erevSuccos, .erevShavuos, .erevYomKippur, .erevRoshHashana, .hoshanaRabba, .sheminiAtzeres].contains(yt) || cal.dow == .friday || (cal.isCholHamoedPesach && cal.day == 20) || [JewishHoliday.pesach, .shavuos, .roshHashana, .succos].contains(yt) && cal.isErevYomTovSheni {
+				#expect(cal.hasCandleLighting, "Failed on \(now) \(cal.getCurrentChag())")
+			} else {
+				#expect(!cal.hasCandleLighting, "Failed on \(now) \(cal.getCurrentChag())")
+			}
+			now = calendar.date(byAdding: .day, value: 1, to: now)!
+		}
 	}
 
 }

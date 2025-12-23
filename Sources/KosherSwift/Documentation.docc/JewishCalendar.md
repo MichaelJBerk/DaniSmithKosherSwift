@@ -15,6 +15,7 @@ Check what Chagim or other events occur on a given day.
 - ``CoreJewishCalendar/isTomorrowShabbosOrYomTov``
 - ``CoreJewishCalendar/isErevYomTovSheni``
 - ``CoreJewishCalendar/isCholHamoed``
+- ``hasCandleLighting``
 - ``isErevYomTov``
 - ``CoreJewishCalendar/isTaanis``
 - ``CoreJewishCalendar/isAseresYemeiTeshuva``
