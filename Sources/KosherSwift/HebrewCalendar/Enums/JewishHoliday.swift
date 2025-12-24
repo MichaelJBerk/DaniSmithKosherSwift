@@ -7,7 +7,24 @@
 
 import Foundation
 
-public enum JewishHoliday: Int, CaseIterable {
+///A type with a Hebrew, Transliterated, and abbreviated Hebrew name
+public protocol HebrewNameRepresentable {
+	///Transliteration of the Hebrew name in English
+	var transliteratedName: String {get}
+	///Main Hebrew string for the type
+	var hebrewName: String {get}
+	///Abbreviated Hebrew name of the type
+	var hebrewShortName: String {get}
+}
+
+///Basic structure conforming to the ``HebrewNameRepresentable`` protocol
+public struct HebrewName: HebrewNameRepresentable {
+	public var transliteratedName: String
+	public var hebrewName: String
+	public var hebrewShortName: String
+}
+
+public enum JewishHoliday: Int, CaseIterable, HebrewNameRepresentable {
     private static let connections: [[JewishHoliday]] = [
         [.erevPesach, .pesach], [.erevShavuos, .shavuos], [.erevYomKippur, .yomKippur], [.erevRoshHashana, .roshHashana], [.erevSuccos, .succos], [.sheminiAtzeres, .simchasTorah]
     ]
