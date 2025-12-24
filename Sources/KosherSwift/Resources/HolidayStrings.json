@@ -1,0 +1,189 @@
+{
+	"holidays": [
+		{
+			"transliteratedName": "Erev Pesach",
+			"hebrewName": "ערב פסח",
+			"hebrewShortName": "ער״פ"
+		},
+		{
+			"transliteratedName": "Pesach",
+			"hebrewName": "פסח",
+			"hebrewShortName": "פסח"
+		},
+		{
+			"transliteratedName": "Chol Hamoed Pesach",
+			"hebrewName": "חול המועד פסח",
+			"hebrewShortName": "חוהמ״פ"
+		},
+		{
+			"transliteratedName": "Pesach Sheni",
+			"hebrewName": "פסח שני",
+			"hebrewShortName": "פ״ש"
+		},
+		{
+			"transliteratedName": "Erev Shavuos",
+			"hebrewName": "ערב שבועות",
+			"hebrewShortName": "ערב שבועות"
+		},
+		{
+			"transliteratedName": "Shavuos",
+			"hebrewName": "שבועות",
+			"hebrewShortName": "שבועות"
+		},
+		{
+			"transliteratedName": "Seventeenth of Tammuz",
+			"hebrewName": "שבעה עשר בתמוז",
+			"hebrewShortName": "יז בתמוז"
+		},
+		{
+			"transliteratedName": "Tishah B'Av",
+			"hebrewName": "תשעה באב",
+			"hebrewShortName": "תשעה באב"
+		},
+		{
+			"transliteratedName": "Tu B'Av",
+			"hebrewName": "ט״ו באב",
+			"hebrewShortName": "ט״ו באב"
+		},
+		{
+			"transliteratedName": "Erev Rosh Hashana",
+			"hebrewName": "ערב ראש השנה",
+			"hebrewShortName": "ער״ה"
+		},
+		{
+			"transliteratedName": "Rosh Hashana",
+			"hebrewName": "ראש השנה",
+			"hebrewShortName": "ר״ה"
+		},
+		{
+			"transliteratedName": "Fast of Gedalyah",
+			"hebrewName": "צום גדליה",
+			"hebrewShortName": "צום גדליה"
+		},
+		{
+			"transliteratedName": "Erev Yom Kippur",
+			"hebrewName": "ערב יום כיפור",
+			"hebrewShortName": "עיו'כ"
+		},
+		{
+			"transliteratedName": "Yom Kippur",
+			"hebrewName": "יום כיפור",
+			"hebrewShortName": "כיפור"
+		},
+		{
+			"transliteratedName": "Erev Succos",
+			"hebrewName": "ערב סוכות",
+			"hebrewShortName": "ערב סוכות"
+		},
+		{
+			"transliteratedName": "Succos",
+			"hebrewName": "סוכות",
+			"hebrewShortName": "סוכות"
+		},
+		{
+			"transliteratedName": "Chol Hamoed Succos",
+			"hebrewName": "חול המועד סוכות",
+			"hebrewShortName": "חומה״ס"
+		},
+		{
+			"transliteratedName": "Hoshana Rabbah",
+			"hebrewName": "הושענא רבה",
+			"hebrewShortName": "הו״ר"
+		},
+		{
+			"transliteratedName": "Shemini Atzeres",
+			"hebrewName": "שמיני עצרת",
+			"hebrewShortName": "שמ״ע"
+		},
+		{
+			"transliteratedName": "Simchas Torah",
+			"hebrewName": "שמחת תורה",
+			"hebrewShortName": "שמח״ת"
+		},
+		{
+			"transliteratedName": "Erev Chanukah",
+			"hebrewName": "ערב חנוכה",
+			"hebrewShortName": "ערב חנוכה"
+		},
+		{
+			"transliteratedName": "Chanukah",
+			"hebrewName": "חנוכה",
+			"hebrewShortName": "חנוכה"
+		},
+		{
+			"transliteratedName": "Tenth of Teves",
+			"hebrewName": "עשרה בטבת",
+			"hebrewShortName": "עשרה בטבת"
+		},
+		{
+			"transliteratedName": "Tu B'Shvat",
+			"hebrewName": "ט״ו בשבט",
+			"hebrewShortName": "ט״ו בשבט"
+		},
+		{
+			"transliteratedName": "Fast of Esther",
+			"hebrewName": "תענית אסתר",
+			"hebrewShortName": "תענית אסתר"
+		},
+		{
+			"transliteratedName": "Purim",
+			"hebrewName": "פורים",
+			"hebrewShortName": "פורים"
+		},
+		{
+			"transliteratedName": "Shushan Purim",
+			"hebrewName": "פורים שושן",
+			"hebrewShortName": "פורים שושן"
+		},
+		{
+			"transliteratedName": "Purim Katan",
+			"hebrewName": "פורים קטן",
+			"hebrewShortName": "פורים קטן"
+		},
+		{
+			"transliteratedName": "Rosh Chodesh",
+			"hebrewName": "ראש חודש",
+			"hebrewShortName": "ר״ח"
+		},
+		{
+			"transliteratedName": "Yom HaShoah",
+			"hebrewName": "יום השואה",
+			"hebrewShortName": "יום השואה"
+		},
+		{
+			"transliteratedName": "Yom Hazikaron",
+			"hebrewName": "יום הזיכרון",
+			"hebrewShortName": "יום הזיכרון"
+		},
+		{
+			"transliteratedName": "Yom Ha'atzmaut",
+			"hebrewName": "יום העצמאות",
+			"hebrewShortName": "יום העצמאות"
+		},
+		{
+			"transliteratedName": "Yom Yerushalayim",
+			"hebrewName": "יום ירושלים",
+			"hebrewShortName": "יום ירושלים"
+		},
+		{
+			"transliteratedName": "Lag B'Omer",
+			"hebrewName": "ל״ג בעומר",
+			"hebrewShortName": "ל״ג בעומר"
+		},
+		{
+			"transliteratedName": "Shushan Purim Katan",
+			"hebrewName": "פורים שושן קטן",
+			"hebrewShortName": "פורים שושן קטן"
+		},
+		{
+			"transliteratedName": "Isru Chag",
+			"hebrewName": "אסרו חג",
+			"hebrewShortName": "אסרו חג"
+		},
+		{
+			"transliteratedName": "Erev Rosh Chodesh",
+			"hebrewName": "ערב ראש חודש",
+			"hebrewShortName": "ער״ח"
+		}
+	]
+}

@@ -118,130 +118,6 @@ public struct HebrewDateFormatter {
         "אדר א"
     ]
     
-    /// List of holidays transliterated into Latin chars. This is used by the
-    /// _[formatYomTov(JewishCalendar)]_ when formatting the Yom Tov String. The default list of months uses
-    /// Ashkenazi pronunciation in typical American English spelling.
-    static let transliteratedHolidays = [
-        "Erev Pesach",
-        "Pesach",
-        "Chol Hamoed Pesach",
-        "Pesach Sheni",
-        "Erev Shavuos",
-        "Shavuos",
-        "Seventeenth of Tammuz",
-        "Tishah B'Av",
-        "Tu B'Av",
-        "Erev Rosh Hashana",
-        "Rosh Hashana",
-        "Fast of Gedalyah",
-        "Erev Yom Kippur",
-        "Yom Kippur",
-        "Erev Succos",
-        "Succos",
-        "Chol Hamoed Succos",
-        "Hoshana Rabbah",
-        "Shemini Atzeres",
-        "Simchas Torah",
-        "Erev Chanukah",
-        "Chanukah",
-        "Tenth of Teves",
-        "Tu B'Shvat",
-        "Fast of Esther",
-        "Purim",
-        "Shushan Purim",
-        "Purim Katan",
-        "Rosh Chodesh",
-        "Yom HaShoah",
-        "Yom Hazikaron",
-        "Yom Ha'atzmaut",
-        "Yom Yerushalayim",
-        "Lag B'Omer",
-        "Shushan Purim Katan",
-        "Isru Chag",
-		"Erev Rosh Chodesh"
-    ]
-    
-    /// Hebrew holiday list
-    static let hebrewHolidays = [
-        "ערב פסח",
-        "פסח",
-        "חול המועד פסח",
-        "פסח שני",
-        "ערב שבועות",
-        "שבועות",
-        "שבעה עשר בתמוז",
-        "תשעה באב",
-        "ט״ו באב",
-        "ערב ראש השנה",
-        "ראש השנה",
-        "צום גדליה",
-        "ערב יום כיפור",
-        "יום כיפור",
-        "ערב סוכות",
-        "סוכות",
-        "חול המועד סוכות",
-        "הושענא רבה",
-        "שמיני עצרת",
-        "שמחת תורה",
-        "ערב חנוכה",
-        "חנוכה",
-        "עשרה בטבת",
-        "ט״ו בשבט",
-        "תענית אסתר",
-        "פורים",
-        "פורים שושן",
-        "פורים קטן",
-        "ראש חודש",
-        "יום השואה",
-        "יום הזיכרון",
-        "יום העצמאות",
-        "יום ירושלים",
-        "ל״ג בעומר",
-        "פורים שושן קטן",
-        "אסרו חג",
-		"ערב ראש חודש"
-    ]
-    
-    static let hebrewShortHolidays = [
-        "ער״פ",
-        "פסח",
-        "חוהמ״פ",
-        "פ״ש",
-        "ערב שבועות",
-        "שבועות",
-        "יז בתמוז",
-        "תשעה באב",
-        "ט״ו באב",
-        "ער״ה",
-        "ר״ה",
-        "צום גדליה",
-        "עיו'כ",
-        "כיפור",
-        "ערב סוכות",
-        "סוכות",
-        "חומה״ס",
-        "הו״ר",
-        "שמ״ע",
-        "שמח״ת",
-        "ערב חנוכה",
-        "חנוכה",
-        "עשרה בטבת",
-        "ט״ו בשבט",
-        "תענית אסתר",
-        "פורים",
-        "פורים שושן",
-        "פורים קטן",
-        "ר״ח",
-        "יום השואה",
-        "יום הזיכרון",
-        "יום העצמאות",
-        "יום ירושלים",
-        "ל״ג בעומר",
-        "פורים שושן קטן",
-        "אסרו חג",
-		"ער״ח    "
-    ]
-    
     static let longOmerDay = [
         "הַיּוֹם יוֹם אֶחָד לָעֹמֶר:",
         "הַיּוֹם שְׁנֵי יָמִים לָעֹמֶר:",
@@ -446,15 +322,15 @@ public struct HebrewDateFormatter {
         if cal.isChanukah {
             let dayOfChanukah = cal.dayOfChanukah
             return hebrewFormat
-            ? (try formatHebrewNumber(dayOfChanukah!) + " " + HebrewDateFormatter.hebrewHolidays[chag.rawValue])
-            : (HebrewDateFormatter.transliteratedHolidays[chag.rawValue] + " \(dayOfChanukah!)")
+			? (try formatHebrewNumber(dayOfChanukah!) + " " + chag.hebrewName)
+			: (chag.transliteratedName + " \(dayOfChanukah!)")
         }
         
         return hebrewFormat
         ? (useShortHolidayFormat
-           ? HebrewDateFormatter.hebrewShortHolidays[chag.rawValue]
-           : HebrewDateFormatter.hebrewHolidays[chag.rawValue])
-        : HebrewDateFormatter.transliteratedHolidays[chag.rawValue]
+		   ? chag.hebrewShortName
+		   : chag.hebrewName)
+		: chag.transliteratedName
     }
     
     /// Formats a day as Rosh Chodesh in the format of in the format of ראש חודש שבט
@@ -481,9 +357,9 @@ public struct HebrewDateFormatter {
         let tempCal = jewishCalendar.copy(month: month, day: 1)
         formattedRoshChodesh = hebrewFormat
         ? (useShortHolidayFormat
-           ? HebrewDateFormatter.hebrewShortHolidays[JewishHoliday.roshChodesh.rawValue]
-           : HebrewDateFormatter.hebrewHolidays[JewishHoliday.roshChodesh.rawValue])
-        : HebrewDateFormatter.transliteratedHolidays[JewishHoliday.roshChodesh.rawValue]
+		   ? JewishHoliday.roshChodesh.hebrewShortName
+		   : JewishHoliday.roshChodesh.hebrewName)
+        : JewishHoliday.roshChodesh.transliteratedName
         
         formattedRoshChodesh += " " + formatMonth(tempCal)
         
@@ -516,9 +392,9 @@ public struct HebrewDateFormatter {
         let tempCal = cal.copy(month: month, day: 1)
         formattedErevRoshChodesh = hebrewFormat
         ? (useShortHolidayFormat
-           ? HebrewDateFormatter.hebrewShortHolidays[JewishHoliday.erevRoshChodesh.rawValue]
-           : HebrewDateFormatter.hebrewHolidays[JewishHoliday.erevRoshChodesh.rawValue])
-        : HebrewDateFormatter.transliteratedHolidays[JewishHoliday.erevRoshChodesh.rawValue]
+		   ? JewishHoliday.erevRoshChodesh.hebrewShortName
+		   : JewishHoliday.erevRoshChodesh.hebrewName)
+		: JewishHoliday.erevRoshChodesh.transliteratedName
         formattedErevRoshChodesh += " " + formatMonth(tempCal)
         return formattedErevRoshChodesh
     }
@@ -599,7 +475,7 @@ public struct HebrewDateFormatter {
             : try formatHebrewNumber(omer) + " " + hebrewOmerPrefix + "עומר"
         } else {
             if omer == 33 {
-                return HebrewDateFormatter.transliteratedHolidays[JewishHoliday.lagBaomer.rawValue]
+				return JewishHoliday.lagBaomer.transliteratedName
             } else {
                 return "Omer \(omer)"
             }
