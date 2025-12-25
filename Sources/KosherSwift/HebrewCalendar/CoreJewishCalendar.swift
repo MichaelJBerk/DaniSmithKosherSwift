@@ -319,7 +319,7 @@ public class CoreJewishCalendar: JewishDate {
 	///Returns if the current day is *Isru Chag*
     public var isIsruChag: Bool { month == .sivan && ((day == 7 && isInIsrael) || day == 8 && !isInIsrael) }
     
-    private static let chagCheckers: [JewishHoliday: (CoreJewishCalendar) -> Bool] = [
+	static let chagCheckers: [JewishHoliday: (CoreJewishCalendar) -> Bool] = [
         .erevPesach: { cal in cal.isErevPesach },
         .pesach: { cal in cal.isPesach },
         .cholHamoedPesach: { cal in cal.isCholHamoedPesach },
@@ -362,31 +362,25 @@ public class CoreJewishCalendar: JewishDate {
     var holidaysToCheck: [JewishHoliday] {
        return JewishHoliday.javaHolidays
     }
+	
+	func checkForChag(_ holiday: JewishHoliday) -> Bool {
+		guard let checker = CoreJewishCalendar.chagCheckers[holiday] else {return false}
+		return checker(self)
+	}
+	
 	/// Determine what Jewish holiday occurs on the given day
 	///
     /// On occasions where multiple holidays occur on the same day, the holiday with the lower raw value will take precedence. For example, when _Rosh Chodesh_ occurs on _Chanukah_, it will returns _Chanukah_. 
     /// - Returns: The ``JewishHoliday`` that occurs on the given day. If there's no holiday on the given day, it returns `nil`.
     public func getCurrentChag() -> JewishHoliday? {
         for yomTov in holidaysToCheck {
-            guard let checker = CoreJewishCalendar.chagCheckers[yomTov] else {return nil}
-            if checker(self) {
+            if checkForChag(yomTov) {
                 return yomTov
             }
         }
-        
         return nil
     }
-	//TODO: Document
-	public func getCurrentChagim() -> [JewishHoliday] {
-		var chagim: [JewishHoliday] = []
-		for yomTov in holidaysToCheck {
-			if let checker = CoreJewishCalendar.chagCheckers[yomTov],
-			   checker(self) {
-				chagim.append(yomTov)
-			}
-		}
-		return chagim
-	}
+	
 	/// Returns if the current day is *Yom Tov*.
 	///
 	/// The method returns `true` even for holidays such as ``JewishHoliday/chanukah`` and minor ones such as ``JewishHoliday/tuBeav`` and ``JewishHoliday/pesachSheni``. *Erev Yom Tov* (with the exception of ``JewishHoliday/hoshanaRabba`` and *erev* the second days of ``JewishHoliday/pesach`` returns `false`, as do fast days besides ``JewishHoliday/yomKippur`` Use ``isAssurBemelacha`` to find the days that have a prohibition of work.

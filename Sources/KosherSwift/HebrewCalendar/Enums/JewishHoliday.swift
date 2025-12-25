@@ -41,6 +41,8 @@ public enum JewishHoliday: Int, CaseIterable, HebrewNameRepresentable {
 	}()
     
     case erevPesach, pesach, cholHamoedPesach, pesachSheni, erevShavuos, shavuos, seventeenthOfTammuz, tishaBeav, tuBeav, erevRoshHashana, roshHashana, fastOfGedalia, erevYomKippur, yomKippur, erevSuccos, succos, cholHamoedSuccos, hoshanaRabba, sheminiAtzeres, simchasTorah, erevChanukah, chanukah, tenthOfTeves, tuBeshvat, fastOfEsther, purim, shushanPurim, purimKatan, roshChodesh, yomHashoah, yomHazikaron, yomHaatzmaut, yomYerushalaim, lagBaomer, shushanPurimKatan, isruChag, erevRoshChodesh
+	///*Erev* the "second days" of _Pesach_
+	case erevPesach2
     
     /// If a erev chag is passed in, return true if this is a non-erev version and vis versa.
     public func isErevConnection(_ other: JewishHoliday) -> Bool {
@@ -81,6 +83,10 @@ public enum JewishHoliday: Int, CaseIterable, HebrewNameRepresentable {
 	///All holidays, excluding those added by KosherSwift
 	public static var javaHolidays: [JewishHoliday] {
 		return [.erevPesach, .pesach, .cholHamoedPesach, .pesachSheni, .erevShavuos, .shavuos, .seventeenthOfTammuz, .tishaBeav, .tuBeav, .erevRoshHashana, .roshHashana, .fastOfGedalia, .erevYomKippur, .yomKippur, .erevSuccos, .succos, .cholHamoedSuccos, .hoshanaRabba, .sheminiAtzeres, .simchasTorah, .chanukah, .tenthOfTeves, .tuBeshvat, .fastOfEsther, .purim, .shushanPurim, .purimKatan, .roshChodesh, .yomHashoah, .yomHazikaron, .yomHaatzmaut, .yomYerushalaim, .lagBaomer, .shushanPurimKatan, .isruChag]
+	}
+	
+	public static var kosherSwiftHolidays: [JewishHoliday] {
+		return [.erevChanukah, .erevRoshChodesh, .erevPesach2]
 	}
 
 }

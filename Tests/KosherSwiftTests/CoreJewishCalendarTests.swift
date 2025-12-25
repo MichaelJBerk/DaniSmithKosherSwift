@@ -59,7 +59,7 @@ struct JewishCalendarTests: JewishCalendarTestProtocol {
 	}
 	@Test(arguments: JewishHoliday.allCases)
 	func testErev(yomTov: JewishHoliday) throws {
-		let trueDays = [JewishHoliday.erevPesach, .erevShavuos, .erevSuccos, .erevYomKippur, .erevRoshHashana, .hoshanaRabba, .erevRoshChodesh, .erevChanukah]
+		let trueDays = [JewishHoliday.erevPesach2, .erevPesach, .erevShavuos, .erevSuccos, .erevYomKippur, .erevRoshHashana, .hoshanaRabba, .erevRoshChodesh, .erevChanukah]
 		guard let cal = getNext(yomTov: yomTov, startingCal: JewishCalendar(date: .init(year: 2025, month: 12, day: 1))) else {
 			Issue.record()
 			return
@@ -69,7 +69,7 @@ struct JewishCalendarTests: JewishCalendarTestProtocol {
 		} else {
 			#expect(!cal.isErevYomTov)
 		}
-		if ![JewishHoliday.erevPesach, .erevSuccos, .erevShavuos, .erevYomKippur, .erevRoshHashana, .hoshanaRabba, .succos, .pesach, .roshHashana, .sheminiAtzeres].contains(cal.getCurrentChag()), cal.dow != .friday {
+		if ![JewishHoliday.erevPesach2, .erevPesach, .erevSuccos, .erevShavuos, .erevYomKippur, .erevRoshHashana, .hoshanaRabba, .succos, .pesach, .roshHashana, .sheminiAtzeres].contains(cal.getCurrentChag()), cal.dow != .friday {
 			#expect(!cal.hasCandleLighting)
 		}
 
@@ -92,6 +92,16 @@ struct JewishCalendarTests: JewishCalendarTestProtocol {
 			}
 			now = calendar.date(byAdding: .day, value: 1, to: now)!
 		}
+	}
+	@Test func testErevPeach2() throws {
+		var cal = JewishCalendar(date: Date(year: 2024, month: 4, day: 28))
+		#expect(cal.isErevPesach2)
+		#expect(cal.getCurrentChagim() == [.erevPesach2, .cholHamoedPesach])
+		#expect(cal.getCurrentChag() == .erevPesach2)
+		let hdf = HebrewDateFormatter()
+		#expect(try hdf.formatYomTov(cal) == JewishHoliday.erevPesach2.transliteratedName)
+		cal = JewishCalendar(date: Date(year: 2024, month: 4, day: 26))
+		#expect(try hdf.formatYomTov(cal) == JewishHoliday.cholHamoedPesach.transliteratedName)
 	}
 
 	// @Test func erevStuff() throws {

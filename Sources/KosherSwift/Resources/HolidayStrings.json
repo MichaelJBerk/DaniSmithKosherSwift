@@ -184,6 +184,11 @@
 			"transliteratedName": "Erev Rosh Chodesh",
 			"hebrewName": "ערב ראש חודש",
 			"hebrewShortName": "ער״ח"
+		},
+		{
+			"transliteratedName": "Erev Pesach",
+			"hebrewName": "ערב פסח",
+			"hebrewShortName": "ער״פ"
 		}
 	]
 }
