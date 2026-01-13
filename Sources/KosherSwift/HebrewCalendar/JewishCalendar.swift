@@ -76,5 +76,20 @@ public class JewishCalendar: CoreJewishCalendar {
 		}
 		return chagim
 	}
+	
+	/// Returns the ``Parsha`` on the current week
+	///
+	/// Returns the ``Parsha`` on the current week regardless of wheher if it is the weekday or *Shabbos* (where the current *Shabbos*'s *Parsha* will be returned). This is unlike ``CoreJewishCalendar/getUpcomingParsha()`` that returns the following week's parsha on *Shabbos*. If the upcoming *Shabbos* is a *Yom Tov* and has no *Parsha* it will return ``Parsha/none`` (``CoreJewishCalendar/getUpcomingParsha()`` would return the following week's *parsha* instead).
+	/// - Returns: the *parsha* on the current week
+	public func currentWeekParsha() -> Parsha {
+		let dayOfWeek = gregDate.weekday
+		if dayOfWeek == DayOfWeek.saturday.rawValue {
+			return getParsha()
+		}
+		
+		let daysToShabbos = (DayOfWeek.saturday.rawValue - dayOfWeek + 7) % 7
+		let newCalendar = self.advanced(byAdding: .day, value: daysToShabbos)
+		return newCalendar.getParsha()
+	}
 
 }

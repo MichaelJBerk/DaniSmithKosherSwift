@@ -104,6 +104,17 @@ struct JewishCalendarTests: JewishCalendarTestProtocol {
 		#expect(try hdf.formatYomTov(cal) == JewishHoliday.cholHamoedPesach.transliteratedName)
 	}
 
+	typealias CurrentWeekParshaArgs = (date: Date, parsha: Parsha)
+
+	//TODO: Test inIsrael
+	@Test(arguments: [
+		CurrentWeekParshaArgs(date: Date(year: 2026, month: 1, day: 13), parsha: .vaera),
+		CurrentWeekParshaArgs(date: Date(year: 2026, month: 3, day: 31), parsha: .none),
+		CurrentWeekParshaArgs(date: Date(year: 2026, month: 4, day: 5), parsha: .shmini),
+	]) func currentWeekParshaTest(arguments: CurrentWeekParshaArgs) throws {
+		#expect(JewishCalendar(date: arguments.date, isInIsrael: false).currentWeekParsha() == arguments.parsha)
+	}
+
 	// @Test func erevStuff() throws {
 	// 	let cal = JewishCalendar(date: .init(year: 2025, month: 11, day: 19))
 	// 	#expect(cal.isTomorrowShabbosOrYomTov)
