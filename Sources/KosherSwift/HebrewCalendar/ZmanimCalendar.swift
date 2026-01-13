@@ -72,14 +72,18 @@ public class ZmanimCalendar: AstronomicalCalendar {
 		return AstronomicalCalendar.getTimeOffset(time: seaLevelSunset, offset: timeOffset * AstronomicalCalendar.minuteMillis)
 	}
 	
-	/// A method to return the next *havdala*, including the current date
-	/// - Parameter timeOffset: the number of minutes after ``AstronomicalCalendar/seaLevelSunset`` when *Shabbos* or *Yom Tov* ends. Defaults to `50`.
-	/// - Parameter inIsrael: whether or not the user is in Israel, which affects _Yom Tov_ calculations
+	/// A method to return *havdala* on the next day where *Shabbos* or *Yom Tov* ends
+	///
+	/// This will return the time for *havdala* on the next day that *Shabbos* or *Yom Tov* ends.
+	/// For example, if the ``AstronomicalCalendar/date`` is set to a day that is *Erev Yom Tov*, it will return the *havdala* on the last day of *Yom Tov*. If the *Yom Tov* occurs on Friday, it will return the *havdala* for *Shabbos*. If called on a weekday, it will return the *havdala* for the upcoming *Shabbos*.
+	/// - Parameters:
+	///   - timeOffset: the number of minutes after ``AstronomicalCalendar/seaLevelSunset`` when *Shabbos* or *Yom Tov* ends. Defaults to `50`.
+	///   - inIsreal: whether or not the user is in Israel, which affects _Yom Tov_ calculations
 	/// ## See Also
 	/// - ``havdalah(timeOffset:)``
-	public func getNextHavdala(timeOffset: Double = 50, inIsreal: Bool) -> Date? {
+	public func nextHavdala(timeOffset: Double = 50, inIsreal: Bool) -> Date? {
 		var cal = CoreJewishCalendar(date: date, isInIsrael: inIsreal)
-		while !cal.isAssurBemelacha {
+		while !(cal.isAssurBemelacha && !cal.isTomorrowShabbosOrYomTov) {
 			cal = cal.advanced(byAdding: .day, value: 1)
 		}
 		let zmanimCal = copy(with: cal.gregDate)
