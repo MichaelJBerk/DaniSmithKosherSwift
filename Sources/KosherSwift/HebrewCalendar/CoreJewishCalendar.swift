@@ -317,7 +317,18 @@ public class CoreJewishCalendar: JewishDate {
 	///Returns if the current day is *Shushan Purim Katan*
     public var isShushanPurimKatan: Bool { isJewishLeapYear && month == .adar && day == 15 }
 	///Returns if the current day is *Isru Chag*
-    public var isIsruChag: Bool { month == .sivan && ((day == 7 && isInIsrael) || day == 8 && !isInIsrael) }
+	public var isIsruChag: Bool {
+		if month == .sivan {
+			return ((day == 7 && isInIsrael) || day == 8 && !isInIsrael)
+		}
+		if month == .nissan {
+			return ((day == 22 && isInIsrael) || day == 23 && !isInIsrael)
+		}
+		if month == .tishrei {
+			return ((day == 23 && isInIsrael) || day == 24 && !isInIsrael)
+		}
+		return false
+	}
     
 	static let chagCheckers: [JewishHoliday: (CoreJewishCalendar) -> Bool] = [
         .erevPesach: { cal in cal.isErevPesach },
