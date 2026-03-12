@@ -14,6 +14,12 @@ public protocol JewishDateProtocol {
     var year: Int { get }
     var dow: DayOfWeek { get }
     var isJewishLeapYear: Bool {get}
+
+    func getDaysInJewishMonth(month: JewishMonth) -> Int 
+}
+
+public extension JewishDateProtocol {
+    func getDaysInJewishMonth(month: JewishMonth) -> Int { JewishDate.getDaysInJewishMonth(month: month, year: year) }
 }
 
 public class JewishDate: Comparable, JewishDateProtocol {
@@ -60,7 +66,7 @@ public class JewishDate: Comparable, JewishDateProtocol {
     }
 }
 
-extension JewishDateProtocol {
+extension JewishDate {
     static func moladToAbsDate(chalakim: Double) -> Int {
       return Int((chalakim / Double(chalakimPerDay)) + Double(jewishEpoch))
     }
@@ -240,6 +246,4 @@ extension JewishDateProtocol {
         
         return is29 ? 29 : 30
       }
-    
-    public func getDaysInJewishMonth(month: JewishMonth) -> Int { JewishDate.getDaysInJewishMonth(month: month, year: year) }
 }

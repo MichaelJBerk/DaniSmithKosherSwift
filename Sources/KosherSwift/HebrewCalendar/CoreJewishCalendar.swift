@@ -8,12 +8,38 @@
 import Foundation
 
 ///A port of the KosherJava `JewishCalendar` class
-public class CoreJewishCalendar: JewishDate {
+public class CoreJewishCalendar: JewishDateProtocol {
+    public var isJewishLeapYear: Bool {
+        jewishDate.isJewishLeapYear
+    }
+
+    public var gregDate: Date {
+        jewishDate.gregDate
+    }
+
+    public var month: JewishMonth {
+        jewishDate.month
+    }
+
+    public var day: Int {
+        jewishDate.day
+    }
+
+    public var year: Int {
+        jewishDate.year
+    }
+
+    public var dow: DayOfWeek {
+        jewishDate.dow
+    }
+
 	///A Boolean value indicating whether or not the user is in Israel, where different rules may apply
     public let isInIsrael: Bool
 	
     public let moladDate: MoladDate?
-    
+
+    private var jewishDate: JewishDate
+
 	/// Create a Jewish calendar based on the specified Jewish year, month, and day
 	/// - Parameters:
 	///   - year: the Jewish year
@@ -35,8 +61,7 @@ public class CoreJewishCalendar: JewishDate {
     public required init(date: Date, includeTime: Bool = false, isInIsrael: Bool = false) {
         self.isInIsrael = isInIsrael
         self.moladDate = MoladDate.calculate(forJewishDate: JewishDate(date: date))
-
-        super.init(date: date, includeTime: includeTime)
+        self.jewishDate = JewishDate(date: date, includeTime: includeTime)
     }
     
     public func copy(year: Int? = nil, month: JewishMonth? = nil, day: Int? = nil, isInIsrael: Bool? = nil) -> Self {
@@ -62,7 +87,7 @@ public class CoreJewishCalendar: JewishDate {
 	///
 	/// [Birkas Hachamah](https://en.wikipedia.org/wiki/Birkat_Hachama) is recited every 28 years based on *Tekufas Shmuel* (Julian years) that a year is 365.25 days. The Rambam in [Hilchos Kiddush Hachodesh 9:3](http://hebrewbooks.org/pdfpager.aspx?req=14278&st=&pgnum=323) states that *tekufas Nissan* of year 1 was 7 days + 9 hours before *molad Nissan*. This is calculated as every 10,227 days (28 * 365.25).
     public var isBirkasHachama: Bool {
-        let elapsedDays = jewishCalendarElapsedDays + daysSinceStartOfJewishYear
+        let elapsedDays = jewishDate.jewishCalendarElapsedDays + jewishDate.daysSinceStartOfJewishYear
         
         return elapsedDays % Int(28.0 * 365.25) == 172
     }
@@ -76,37 +101,37 @@ public class CoreJewishCalendar: JewishDate {
 	/// ## See Also
 	///- ``isVeseinTalUmatarRecited``
     public var tekufasTishreiElapsedDays: Int {
-        let days = Double(jewishCalendarElapsedDays + (daysSinceStartOfJewishYear - 1)) + 0.5
+        let days = Double(jewishDate.jewishCalendarElapsedDays + (jewishDate.daysSinceStartOfJewishYear - 1)) + 0.5
         let solar = Double(year - 1) * 365.25
         
         return Int((days - solar).rounded(.down))
     }
     
     private func getParshaYearType() -> Int? {
-        var rhDow = (jewishCalendarElapsedDays + 1) % 7
+        var rhDow = (jewishDate.jewishCalendarElapsedDays + 1) % 7
         if rhDow == 0 { rhDow = 7 }
         let compDow = DayOfWeek(rawValue: rhDow)!
         
         if isJewishLeapYear {
             switch compDow {
             case .monday:
-                if isKislevShort {
+                if jewishDate.isKislevShort {
                     return isInIsrael ? 14 : 6
-                } else if isCheshvanLong {
+                } else if jewishDate.isCheshvanLong {
                     return isInIsrael ? 15 : 7
                 }
             case .tuesday:
                 return isInIsrael ? 15 : 7
             case .thursday:
-                if isKislevShort {
+                if jewishDate.isKislevShort {
                     return 8
-                } else if isCheshvanLong {
+                } else if jewishDate.isCheshvanLong {
                     return 9
                 }
             case .saturday:
-                if isKislevShort {
+                if jewishDate.isKislevShort {
                     return 10
-                } else if isCheshvanLong {
+                } else if jewishDate.isCheshvanLong {
                     return isInIsrael ? 16 : 11
                 }
             default:
@@ -115,23 +140,23 @@ public class CoreJewishCalendar: JewishDate {
         } else {
             switch compDow {
             case .monday:
-                if isKislevShort {
+                if jewishDate.isKislevShort {
                     return 0
-                } else if isCheshvanLong {
+                } else if jewishDate.isCheshvanLong {
                     return isInIsrael ? 12 : 1
                 }
             case .tuesday:
                 return isInIsrael ? 12 : 1
             case .thursday:
-                if isCheshvanLong {
+                if jewishDate.isCheshvanLong {
                     return 3
-                } else if !isKislevShort {
+                } else if !jewishDate.isKislevShort {
                     return isInIsrael ? 13 : 2
                 }
             case .saturday:
-                if isKislevShort {
+                if jewishDate.isKislevShort {
                     return 4
-                } else if isCheshvanLong {
+                } else if jewishDate.isCheshvanLong {
                     return 5
                 }
             default:
@@ -154,8 +179,8 @@ public class CoreJewishCalendar: JewishDate {
             return .none
         }
         
-        let rhDow = jewishCalendarElapsedDays % 7
-        let day = rhDow + daysSinceStartOfJewishYear
+        let rhDow = jewishDate.jewishCalendarElapsedDays % 7
+        let day = rhDow + jewishDate.daysSinceStartOfJewishYear
         
         return Parsha.parshalist[yearType][Int(day / 7)]
     }
@@ -301,7 +326,7 @@ public class CoreJewishCalendar: JewishDate {
 	///Returns if the current day is *Erev Chanukah*
     public var isErevChanukah: Bool { month == .kislev && day == 24 } // TODO formatting?
 	///Returns if the current day is *Chanukah*
-    public var isChanukah: Bool { (month == .kislev && day >= 25) || (month == .teves && ((day == 1 || day == 2) || (day == 3 && isKislevShort)))}
+    public var isChanukah: Bool { (month == .kislev && day >= 25) || (month == .teves && ((day == 1 || day == 2) || (day == 3 && jewishDate.isKislevShort)))}
 	///Returns if the current day is the 10th of *Teves*
     public var isTenthOfTeves: Bool { month == .teves && day == 10 }
 	///Returns if the current day is *Tu B'Shvat*
@@ -486,7 +511,7 @@ public class CoreJewishCalendar: JewishDate {
         if month == .kislev {
             return day - 24
         } else {
-            return isKislevShort ? day + 5 : day + 6
+            return jewishDate.isKislevShort ? day + 5 : day + 6
         }
     }
 	

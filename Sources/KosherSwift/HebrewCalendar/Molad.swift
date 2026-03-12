@@ -56,7 +56,7 @@ public class MoladDate: JewishDate {
     }
     
     private static func moladFromChalakim(chalakim: Double) -> Molad {
-        let conjunctionDay = chalakim ~/ CoreJewishCalendar.chalakimPerDay
+        let conjunctionDay = chalakim ~/ JewishDate.chalakimPerDay
         var adjustedChalakim = (chalakim - Double(conjunctionDay) * Double(chalakimPerDay))
         
         let hours = adjustedChalakim ~/ chalakimPerHour
