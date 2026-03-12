@@ -8,7 +8,7 @@
 import Foundation
 
 ///A port of the KosherJava `JewishCalendar` class
-public class CoreJewishCalendar: JewishDateWrapper, JewishDateProtocol {
+public class CoreJewishCalendar: JewishDateWrapper, JewishDateRepresentable {
 
 	///A Boolean value indicating whether or not the user is in Israel, where different rules may apply
     public let isInIsrael: Bool

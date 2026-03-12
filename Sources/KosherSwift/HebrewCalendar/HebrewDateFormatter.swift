@@ -409,7 +409,7 @@ public struct HebrewDateFormatter {
     /// @see #setHebrewFormat(letean)
     /// @see #getTransliteratedMonthList()
     /// @see #setTransliteratedMonthList(String[])
-    public func formatMonth(_ jewishDate: any JewishDateProtocol) -> String {
+    public func formatMonth(_ jewishDate: any JewishDateRepresentable) -> String {
         let month = jewishDate.month
         if hebrewFormat {
             if jewishDate.isJewishLeapYear && month == JewishMonth.adar {
@@ -438,7 +438,7 @@ public struct HebrewDateFormatter {
     ]
     
     @available(*, deprecated, message: "JewishDate.FormatStyle instead")
-    public func formatDate(_ jewishDate: any JewishDateProtocol, pattern: String = "d MMMM, yyyy") -> String {
+    public func formatDate(_ jewishDate: any JewishDateRepresentable, pattern: String = "d MMMM, yyyy") -> String {
         let formatter = DateFormatter()
         
         formatter.calendar = Calendar(identifier: .hebrew)
@@ -449,7 +449,7 @@ public struct HebrewDateFormatter {
        return formatDate(jewishDate, formatter: formatter)
     }
 
-    func formatDate(_ jewishDate: any JewishDateProtocol, formatter: DateFormatter) -> String{
+    func formatDate(_ jewishDate: any JewishDateRepresentable, formatter: DateFormatter) -> String{
         var ret = formatter.string(from: jewishDate.gregDate)
         for m in HebrewDateFormatter.monthNameMap {
             ret = ret.replacingOccurrences(of: m.key, with: m.value)

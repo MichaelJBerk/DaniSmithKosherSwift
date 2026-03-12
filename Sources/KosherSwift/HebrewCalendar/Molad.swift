@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class MoladDate: JewishDateWrapper, JewishDateProtocol {
+public class MoladDate: JewishDateWrapper, JewishDateRepresentable {
     public let molad: Molad
     var jewishDate: JewishDate
     
