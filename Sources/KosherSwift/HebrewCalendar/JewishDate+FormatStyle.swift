@@ -7,8 +7,8 @@
 
 import Foundation
 
-
 public extension JewishDate {
+	/// A structure that creates a string representation of a Jewish date instance
 	struct FormatStyle: Codable, Copyable {
 
 		enum DateItems: Codable {
