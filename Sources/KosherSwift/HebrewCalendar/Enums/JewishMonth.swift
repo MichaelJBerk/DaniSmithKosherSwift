@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum JewishMonth: Int {
+public enum JewishMonth: Int, Codable {
     case nissan = 1
     case iyar
     case sivan

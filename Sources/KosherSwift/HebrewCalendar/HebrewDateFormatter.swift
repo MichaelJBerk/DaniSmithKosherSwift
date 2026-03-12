@@ -437,7 +437,8 @@ public struct HebrewDateFormatter {
         "Tishri": "Tishrei"
     ]
     
-    public func formatDate(_ jewishDate: any JewishDateProtocol, pattern: String = "d MMMM, yyyy") throws -> String {
+    @available(*, deprecated, message: "JewishDate.FormatStyle instead")
+    public func formatDate(_ jewishDate: any JewishDateProtocol, pattern: String = "d MMMM, yyyy") -> String {
         let formatter = DateFormatter()
         
         formatter.calendar = Calendar(identifier: .hebrew)
@@ -445,15 +446,17 @@ public struct HebrewDateFormatter {
         formatter.dateFormat = pattern
         //        formatter.setLocalizedDateFormatFromTemplate(pattern)
         
+       return formatDate(jewishDate, formatter: formatter)
+    }
+
+    func formatDate(_ jewishDate: any JewishDateProtocol, formatter: DateFormatter) -> String{
         var ret = formatter.string(from: jewishDate.gregDate)
-        
         for m in HebrewDateFormatter.monthNameMap {
             ret = ret.replacingOccurrences(of: m.key, with: m.value)
         }
-        
         return ret
     }
-    
+
     /// Returns a String of the Omer day in the form ל״ג בעומר if Hebrew Format is set,
     /// or "Omer X" or "Lag BaOmer" if not. An empty string if there is no Omer this day.
     ///

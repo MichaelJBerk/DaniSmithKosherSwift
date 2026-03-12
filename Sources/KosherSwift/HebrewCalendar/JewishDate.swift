@@ -51,7 +51,10 @@ public extension JewishDateProtocol {
     func getDaysInJewishMonth(month: JewishMonth) -> Int { JewishDate.getDaysInJewishMonth(month: month, year: year) }
 }
 
-public struct JewishDate: Comparable, JewishDateProtocol {
+/// A structure representing a date on the Hebrew calendar.
+/// 
+/// Please note that the calendar does not currently support dates prior to 1/1/1 Gregorian. Also keep in mind that the Gregorian calendar started on October 15, 1582, so any calculations prior to that are suspect (at least from a Gregorian perspective). While 1/1/1 Gregorian and forward are technically supported, any calculations prior to Hillel II's (Hakatan's) calendar (4119 in the Jewish Calendar / 359 CE Julian as recorded by Rav Hai Gaon) would be just an approximation. See the [KosherJava Documentation](https://kosherjava.com/zmanim/docs/api/com/kosherjava/zmanim/hebrewcalendar/JewishDate.html) for more information
+public struct JewishDate: Comparable, JewishDateProtocol, Codable, Hashable {
     public let gregDate: Date
 
     public let month: JewishMonth
@@ -61,7 +64,7 @@ public struct JewishDate: Comparable, JewishDateProtocol {
 
     public let isJewishLeapYear: Bool
     
-    init(date: Date, includeTime: Bool = false) {
+    public init(date: Date, includeTime: Bool = false) {
         var cal = Calendar(identifier: .gregorian)
         cal.timeZone = Calendar.current.timeZone
         let components = DateComponents(year: date.year, month: date.month, day: date.day, hour: includeTime ? date.hour : 0, minute: includeTime ? date.minute : 0, second: includeTime ? date.second : 0)
