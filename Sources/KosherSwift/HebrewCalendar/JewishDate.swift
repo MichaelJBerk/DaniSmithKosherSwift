@@ -7,7 +7,16 @@
 
 import Foundation
 
-public class JewishDate: Comparable {
+public protocol JewishDateProtocol {
+    var gregDate: Date { get }
+    var month: JewishMonth { get }
+    var day: Int { get }
+    var year: Int { get }
+    var dow: DayOfWeek { get }
+    var isJewishLeapYear: Bool {get}
+}
+
+public class JewishDate: Comparable, JewishDateProtocol {
     public let gregDate: Date
 
     public let month: JewishMonth
@@ -51,7 +60,7 @@ public class JewishDate: Comparable {
     }
 }
 
-extension JewishDate {
+extension JewishDateProtocol {
     static func moladToAbsDate(chalakim: Double) -> Int {
       return Int((chalakim / Double(chalakimPerDay)) + Double(jewishEpoch))
     }
@@ -198,7 +207,7 @@ extension JewishDate {
         return Double(chalakimMoladTohu) + (chalakimPerMonth * Double(monthsElapsed))
       }
     
-    private static func getDaysSinceStartOfJewishYear(jewishDate: JewishDate) -> Int {
+    private static func getDaysSinceStartOfJewishYear(jewishDate: JewishDateProtocol) -> Int {
         var elapsedDays = jewishDate.day
         
         // Before Tishrei (from Nissan to Tishrei), add days in prior months
@@ -221,7 +230,7 @@ extension JewishDate {
         return elapsedDays
     }
     
-    var daysSinceStartOfJewishYear: Int { JewishDate.getDaysSinceStartOfJewishYear(jewishDate: self) }
+    var daysSinceStartOfJewishYear: Int { Self.getDaysSinceStartOfJewishYear(jewishDate: self) }
 
     static func getDaysInJewishMonth(month: JewishMonth, year: Int) -> Int {
         let is29 = [.iyar, .tammuz, .elul, .teves, .adar2].contains(month)
