@@ -7,19 +7,19 @@
 
 import Foundation
 
-public class MoladDate: JewishDate {
+public class MoladDate: JewishDateWrapper, JewishDateProtocol {
     public let molad: Molad
+    var jewishDate: JewishDate
     
     init(fromMolad molad: Double) {
         self.molad = MoladDate.moladFromChalakim(chalakim: molad)
         let absDate = JewishDate.moladToAbsDate(chalakim: molad)
-        
-        super.init(date: JewishDate.absDateToDate(absDate: absDate))
+        self.jewishDate = JewishDate(date: JewishDate.absDateToDate(absDate: absDate))
     }
     
     init(chalakim: Double, date: Date) {
         self.molad = MoladDate.moladFromChalakim(chalakim: chalakim)
-        super.init(date: date, includeTime: true)
+        self.jewishDate = JewishDate(date: date, includeTime: true)
     }
     
     convenience init(date: Date, hour: Int, minute: Int, chalakim: Int) {
@@ -29,7 +29,7 @@ public class MoladDate: JewishDate {
     
     init(date: Date, molad: Molad) {
         self.molad = molad
-        super.init(date: date, includeTime: true)
+        self.jewishDate = JewishDate(date: date, includeTime: true)
     }
     
     func withMoladHours(_ hours: Int) -> MoladDate {
@@ -37,10 +37,10 @@ public class MoladDate: JewishDate {
     }
     
     static func calculate(forJewishDate jewishDate: JewishDate) -> MoladDate? {
-        let m = getChalakimSinceMoladTohu(year: jewishDate.year, month: jewishDate.month)
+        let m = JewishDate.getChalakimSinceMoladTohu(year: jewishDate.year, month: jewishDate.month)
         
-        let absM = moladToAbsDate(chalakim: m)
-        let gdate = absDateToDate(absDate: absM)
+        let absM = JewishDate.moladToAbsDate(chalakim: m)
+        let gdate = JewishDate.absDateToDate(absDate: absM)
         
         let temp = moladFromChalakim(chalakim: m)
         let hours = (temp.hours + 18) % 24
@@ -57,12 +57,12 @@ public class MoladDate: JewishDate {
     
     private static func moladFromChalakim(chalakim: Double) -> Molad {
         let conjunctionDay = chalakim ~/ JewishDate.chalakimPerDay
-        var adjustedChalakim = (chalakim - Double(conjunctionDay) * Double(chalakimPerDay))
+        var adjustedChalakim = (chalakim - Double(conjunctionDay) * Double(JewishDate.chalakimPerDay))
         
-        let hours = adjustedChalakim ~/ chalakimPerHour
-        adjustedChalakim = adjustedChalakim - (Double(hours) * Double(chalakimPerHour))
-        let minutes = adjustedChalakim ~/ chalakimPerMinute
-        let chalakim = adjustedChalakim - Double(minutes * chalakimPerMinute)
+        let hours = adjustedChalakim ~/ JewishDate.chalakimPerHour
+        adjustedChalakim = adjustedChalakim - (Double(hours) * Double(JewishDate.chalakimPerHour))
+        let minutes = adjustedChalakim ~/ JewishDate.chalakimPerMinute
+        let chalakim = adjustedChalakim - Double(minutes * JewishDate.chalakimPerMinute)
         
         return Molad(hours: hours, minutes: minutes, chalakim: Int(chalakim))
     }

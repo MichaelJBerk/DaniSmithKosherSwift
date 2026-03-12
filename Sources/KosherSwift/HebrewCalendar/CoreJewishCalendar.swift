@@ -8,37 +8,14 @@
 import Foundation
 
 ///A port of the KosherJava `JewishCalendar` class
-public class CoreJewishCalendar: JewishDateProtocol {
-    public var isJewishLeapYear: Bool {
-        jewishDate.isJewishLeapYear
-    }
-
-    public var gregDate: Date {
-        jewishDate.gregDate
-    }
-
-    public var month: JewishMonth {
-        jewishDate.month
-    }
-
-    public var day: Int {
-        jewishDate.day
-    }
-
-    public var year: Int {
-        jewishDate.year
-    }
-
-    public var dow: DayOfWeek {
-        jewishDate.dow
-    }
+public class CoreJewishCalendar: JewishDateWrapper, JewishDateProtocol {
 
 	///A Boolean value indicating whether or not the user is in Israel, where different rules may apply
     public let isInIsrael: Bool
 	
     public let moladDate: MoladDate?
 
-    private var jewishDate: JewishDate
+    var jewishDate: JewishDate
 
 	/// Create a Jewish calendar based on the specified Jewish year, month, and day
 	/// - Parameters:

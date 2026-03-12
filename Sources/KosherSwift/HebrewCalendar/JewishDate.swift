@@ -18,11 +18,40 @@ public protocol JewishDateProtocol {
     func getDaysInJewishMonth(month: JewishMonth) -> Int 
 }
 
+protocol JewishDateWrapper: JewishDateProtocol {
+    var jewishDate: JewishDate {get}
+}
+extension JewishDateWrapper {
+    public var isJewishLeapYear: Bool {
+        jewishDate.isJewishLeapYear
+    }
+
+    public var gregDate: Date {
+        jewishDate.gregDate
+    }
+
+    public var month: JewishMonth {
+        jewishDate.month
+    }
+
+    public var day: Int {
+        jewishDate.day
+    }
+
+    public var year: Int {
+        jewishDate.year
+    }
+
+    public var dow: DayOfWeek {
+        jewishDate.dow
+    }
+}
+
 public extension JewishDateProtocol {
     func getDaysInJewishMonth(month: JewishMonth) -> Int { JewishDate.getDaysInJewishMonth(month: month, year: year) }
 }
 
-public class JewishDate: Comparable, JewishDateProtocol {
+public struct JewishDate: Comparable, JewishDateProtocol {
     public let gregDate: Date
 
     public let month: JewishMonth
@@ -49,7 +78,7 @@ public class JewishDate: Comparable, JewishDateProtocol {
         self.dow = DayOfWeek(rawValue: Calendar.current.dateComponents([.weekday], from: gregDate).weekday!)!
     }
     
-    public convenience init(withJewishYear year: Int, andMonth month: JewishMonth, andDay day: Int) {
+    public init(withJewishYear year: Int, andMonth month: JewishMonth, andDay day: Int) {
         var hebCal = Calendar(identifier: .hebrew)
         hebCal.timeZone = Calendar.current.timeZone
         
