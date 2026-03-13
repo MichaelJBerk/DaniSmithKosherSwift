@@ -24,6 +24,13 @@ public class ZmanimCalendar: AstronomicalCalendar {
     
     // Zmanim
     public func tzeis() -> Date? { getSunsetOffsetByDegrees(offsetZenith: Zenith.z8_5) }
+	
+	/// Returns *alos* (dawn) based on the time when the sun is [16.1°](``Zenith/z16_1``) below the eastern [geometric horizon](``Zenith/geometric``) before [sunrise](``AstronomicalCalendar/sunrise``). This is based on the calculation that the time between dawn and sunrise (and sunset to nightfall) is 72 minutes, the time that is takes to walk 4 [mil](https://en.wikipedia.org/wiki/Biblical_and_Talmudic_units_of_measurement) at 18 minutes a mil ([Rambam](https://en.wikipedia.org/wiki/Maimonides) and others). The sun's position below the horizon 72 minutes before [sunrise](``AstronomicalCalendar/sunrise``) in Jerusalem on the [around the equinox / equilux](https://kosherjava.com/2022/01/12/equinox-vs-equilux-zmanim-calculations/) is 16.1&deg; below [geometric zenith](``Zenith/geometric``).
+	/// - Returns: The `Date` of dawn. If the calculation can't be computed such as northern and southern
+	/// locations even south of the Arctic Circle and north of the Antarctic Circle where the sun may not reach low enough below the horizon for this calculation, a `null` will be returned. See detailed explanation on top of the ``AstronomicalCalendar`` documentation.
+	/// ## See Also
+	/// - ``ComplexZmanimCalendar/alos16Point1Degrees()``
+	/// - ``Zenith/z16_1``
     public func alosHashachar() -> Date? { getSunriseOffsetByDegrees(offsetZenith: .z16_1) }
     public func alos72() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunrise, offset: -72 * ZmanimCalendar.minuteMillis) }
     public func chatzos() -> Date? { getSunTransit() }
