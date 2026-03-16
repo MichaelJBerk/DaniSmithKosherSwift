@@ -457,18 +457,17 @@ public struct HebrewDateFormatter {
         return ret
     }
 
-    /// Returns a String of the Omer day in the form ל״ג בעומר if Hebrew Format is set,
-    /// or "Omer X" or "Lag BaOmer" if not. An empty string if there is no Omer this day.
-    ///
-    /// @param jewishCalendar
-    ///            the JewishCalendar to be formatted
-    ///
-    /// @return a String of the Omer day in the form or an empty string if there is no Omer this day. The default
-    ///         formatting has a ב׳ prefix that would output בעומר, but this
-    ///         can be set via the {@link #hebrewOmerPrefix}  to use a ל and output ל״ג לעומר.
-    /// @see #isHebrewFormat()
-    /// @see #getHebrewOmerPrefix()
-    /// @see #setHebrewOmerPrefix(String)
+    /// Returns a String of the Omer day
+	///
+    /// - Parameter jewishCalendar: the JewishCalendar to be formatted
+    /// - Throws: ``HebrewDateFormatterError``
+    /// - Returns: If there is no omer on the given day, the method returns `nil`. If `hebrewFormat` is `true`, the string will be in the form "ל״ג בעומר". Otherwise, it will return "Omer X" (or "Lag BaOmer" on the 33rd day).
+	///
+    /// The default formatting has a ב׳ prefix that would output בעומר, but this can be set via the `hebrewOmerPrefix`  to use a ל and output ל״ג לעומר.
+    /// ## See Also
+	/// - ``isHebrewFormat()``
+    /// - ``getHebrewOmerPrefix()``
+    /// - ``setHebrewOmerPrefix(String)``
     public func formatOmer(jewishCalendar: CoreJewishCalendar) throws -> String? {
         guard let omer = jewishCalendar.dayOfOmer else { return nil }
         
