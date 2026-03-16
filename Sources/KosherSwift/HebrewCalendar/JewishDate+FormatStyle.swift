@@ -27,7 +27,7 @@ public extension JewishDate {
 
 		/// Initializes the FormatStyle
 		/// - Parameter hebrew: Determines if the output should be in Hebrew. Defaults to `false`.
-		/// - Parameter localized: Determines if the text of the string should be localized.  See ``localize`` for more information.
+		/// - Parameter localized: Determines if the text of the string should be localized.  See ``localize(_:)`` for more information.
 		public init(hebrew: Bool = false, localized: Bool = false) {
 			self.inHebrew = hebrew
 			self.shouldLocalize = localized
