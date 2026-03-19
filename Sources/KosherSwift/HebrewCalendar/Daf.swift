@@ -5,7 +5,7 @@
 //  Created by Daniel Smith on 12/19/23.
 //
 
-public struct Daf {
+public struct Daf: Equatable {
     public let masechtaNumber: Int
     public let daf: Int
     public let dafType: DafType
