@@ -414,4 +414,13 @@ final class KosherSwiftTests: XCTestCase {
         cal = JewishCalendar(date: Date(year: 2025, month: 8, day: 15), isInIsrael: false)
         XCTAssert(cal.getWeeklyParsha() == .eikev)
     }
+
+    func testLongOmer() throws {
+        
+        let formatter = HebrewDateFormatter(hebrewFormat: true, longOmerFormat: true)
+        let omer1Cal = JewishCalendar(withJewishYear: 5786, andMonth: .nissan, andDay: 16)
+        XCTAssert(try formatter.formatOmer(jewishCalendar: omer1Cal) == "הַיּוֹם יוֹם אֶחָד לָעֹמֶר:")
+        let omer49Cal = JewishCalendar(withJewishYear: 5786, andMonth: .sivan, andDay: 5)
+        XCTAssert(try formatter.formatOmer(jewishCalendar: omer49Cal) == "הַיּוֹם תִּשְׁעָה וְאַרְבָּעִים יוֹם לָעֹמֶר, שֶׁהֵם שִׁבְעָה שָׁבוּעוֹת:")
+    }
 }

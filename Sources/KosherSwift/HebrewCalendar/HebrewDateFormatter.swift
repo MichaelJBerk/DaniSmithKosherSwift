@@ -595,7 +595,7 @@ public struct HebrewDateFormatter {
         
         if hebrewFormat {
             return longOmerFormat
-            ? HebrewDateFormatter.longOmerDay[omer]
+            ? HebrewDateFormatter.longOmerDay[omer - 1]
             : try formatHebrewNumber(omer) + " " + hebrewOmerPrefix + "עומר"
         } else {
             if omer == 33 {
