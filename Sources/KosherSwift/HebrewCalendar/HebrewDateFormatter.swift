@@ -470,19 +470,33 @@ public struct HebrewDateFormatter {
     /// - ``setHebrewOmerPrefix(String)``
     public func formatOmer(jewishCalendar: CoreJewishCalendar) throws -> String? {
         guard let omer = jewishCalendar.dayOfOmer else { return nil }
-        
-        if hebrewFormat {
-            return longOmerFormat
-            ? HebrewDateFormatter.longOmerDay[omer - 1]
-            : try formatHebrewNumber(omer) + " " + hebrewOmerPrefix + "עומר"
-        } else {
-            if omer == 33 {
-				return JewishHoliday.lagBaomer.transliteratedName
-            } else {
-                return "Omer \(omer)"
-            }
-        }
+        return try formatOmer(day: omer)
     }
+	
+	/// Returns a String of the Omer day
+	///
+	/// - Parameter day: an integer representing the day of the Omer
+	/// - Throws: ``HebrewDateFormatterError``
+	/// - Returns: If there is no omer on the given day, the method returns `nil`. If `hebrewFormat` is `true`, the string will be in the form "ל״ג בעומר". Otherwise, it will return "Omer X" (or "Lag BaOmer" on the 33rd day).
+	///
+	/// The default formatting has a ב׳ prefix that would output בעומר, but this can be set via the `hebrewOmerPrefix`  to use a ל and output ל״ג לעומר.
+	/// ## See Also
+	/// - ``isHebrewFormat()``
+	/// - ``getHebrewOmerPrefix()``
+	/// - ``setHebrewOmerPrefix(String)``
+	public func formatOmer(day: Int) throws -> String? {
+		if hebrewFormat {
+			return longOmerFormat
+			? HebrewDateFormatter.longOmerDay[day - 1]
+			: try formatHebrewNumber(day) + " " + hebrewOmerPrefix + "עומר"
+		} else {
+			if day == 33 {
+				return JewishHoliday.lagBaomer.transliteratedName
+			} else {
+				return "Omer \(day)"
+			}
+		}
+	}
     
     ///
     /// Formats the [Daf Yomi](https://en.wikipedia.org/wiki/Daf_Yomi) Bavli in the format of
