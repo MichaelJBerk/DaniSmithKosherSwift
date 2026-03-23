@@ -8,7 +8,7 @@
 import Foundation
 
 ///A month on the Hebrew calendar
-public enum JewishMonth: Int, Codable {
+public enum JewishMonth: Int, Codable, Sendable {
     case nissan = 1
     case iyar
     case sivan

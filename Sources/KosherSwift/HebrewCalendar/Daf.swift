@@ -16,7 +16,7 @@ public struct Daf: Equatable {
         self.dafType = dafType
     }
     
-    static private var masechtosBavliTransliterated = [
+    static private let masechtosBavliTransliterated = [
         "Berachos",
         "Shabbos",
         "Eruvin",

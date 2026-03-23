@@ -18,7 +18,7 @@ public protocol HebrewNameRepresentable: Codable {
 }
 
 ///Basic structure conforming to the ``HebrewNameRepresentable`` protocol
-public struct HebrewName: HebrewNameRepresentable {
+public struct HebrewName: HebrewNameRepresentable, Sendable {
 	public var transliteratedName: String
 	public var hebrewName: String
 	public var hebrewShortName: String
@@ -28,7 +28,7 @@ private struct JewishHolidaysFile: Codable {
 	var holidays: [HebrewName]
 }
 
-public enum JewishHoliday: Int, CaseIterable, HebrewNameRepresentable {
+public enum JewishHoliday: Int, CaseIterable, HebrewNameRepresentable, Sendable {
     private static let connections: [[JewishHoliday]] = [
         [.erevPesach, .pesach], [.erevShavuos, .shavuos], [.erevYomKippur, .yomKippur], [.erevRoshHashana, .roshHashana], [.erevSuccos, .succos], [.sheminiAtzeres, .simchasTorah]
     ]

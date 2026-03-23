@@ -5,7 +5,7 @@
 //  Created by Daniel Smith on 12/19/23.
 //
 
-public enum Parsha: Codable {
+public enum Parsha: Codable, Sendable {
     case none
     case bereshis
     case noach
