@@ -9,7 +9,7 @@ import Foundation
 
 typealias ZmanCalculator = () -> Date?
 
-public class ZmanimCalendar: AstronomicalCalendar {
+public class ZmanimCalendar: AstronomicalCalendar, @unchecked Sendable {
     let shouldUseElevation: Bool
     public let candleLightingOffset: Double
     

@@ -5,7 +5,7 @@
 //  Created by Daniel Smith on 12/19/23.
 //
 
-public struct Daf: Equatable {
+public struct Daf: Equatable, Sendable {
     public let masechtaNumber: Int
     public let daf: Int
     public let dafType: DafType
@@ -212,6 +212,6 @@ public struct Daf: Equatable {
     }
 }
 
-public enum DafType {
+public enum DafType: Sendable {
     case bavli, yerushalmi
 }

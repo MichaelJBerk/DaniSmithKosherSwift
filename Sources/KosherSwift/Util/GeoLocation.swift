@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct GeoLocation {
+public struct GeoLocation: Sendable {
     public let lat: Double
     public let lng: Double
     public let timezone: TimeZone

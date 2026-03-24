@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class ComplexZmanimCalendar: ZmanimCalendar {
+public class ComplexZmanimCalendar: ZmanimCalendar, @unchecked Sendable {
     private static let ateretTorahSunsetOffset = 40.0
     
     public func copy(withDate date: Date) -> ComplexZmanimCalendar {

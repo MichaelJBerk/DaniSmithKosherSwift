@@ -8,14 +8,14 @@
 import Foundation
 
 ///A port of the KosherJava `JewishCalendar` class
-public class CoreJewishCalendar: JewishDateWrapper, JewishDateRepresentable {
+public class CoreJewishCalendar: JewishDateWrapper, JewishDateRepresentable, @unchecked Sendable {
 
 	///A Boolean value indicating whether or not the user is in Israel, where different rules may apply
     public let isInIsrael: Bool
 	
     public let moladDate: MoladDate?
 
-    var jewishDate: JewishDate
+    let jewishDate: JewishDate
 
 	/// Create a Jewish calendar based on the specified Jewish year, month, and day
 	/// - Parameters:

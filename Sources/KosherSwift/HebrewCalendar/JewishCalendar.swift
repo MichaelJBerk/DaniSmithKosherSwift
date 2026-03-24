@@ -10,7 +10,7 @@ import Foundation
 ///A class that calculates the dates for Jewish holidays, Daf Yomi, and more
 ///
 ///This class may have API changes from the Java implementation. If you would like to use the original KosherJava behavior, use the ``CoreJewishCalendar`` class.
-public class JewishCalendar: CoreJewishCalendar {
+public class JewishCalendar: CoreJewishCalendar, @unchecked Sendable {
 	
     ///Returns if the current day is *Erev Yom Tov*.
 	///
@@ -35,7 +35,7 @@ public class JewishCalendar: CoreJewishCalendar {
         return (dow == .friday || (isErevYomTov && !(isErevRoshChodesh || isErevChanukah)) || isErevYomTovSheni)
     }
 	
-	var additionalChagCheckers: [JewishHoliday: (JewishCalendar) -> Bool] = [
+	let additionalChagCheckers: [JewishHoliday: (JewishCalendar) -> Bool] = [
 		.erevPesach2: {cal in cal.isErevPesach2 }
 	]
 	
