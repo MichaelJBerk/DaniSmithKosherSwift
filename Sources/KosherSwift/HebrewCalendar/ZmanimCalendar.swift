@@ -13,7 +13,7 @@ public class ZmanimCalendar: AstronomicalCalendar, @unchecked Sendable {
     let shouldUseElevation: Bool
     public let candleLightingOffset: Double
     
-    public init(location: GeoLocation, date: Date, astronomicalCalculator: AstronomicalCalculator = NOAACalculator(), shouldUseElevation: Bool = false, candleLightingOffset: Double = 18) {
+    public required init(location: GeoLocation, date: Date, astronomicalCalculator: AstronomicalCalculator = NOAACalculator(), shouldUseElevation: Bool = false, candleLightingOffset: Double = 18) {
         self.shouldUseElevation = shouldUseElevation
         self.candleLightingOffset = candleLightingOffset
         super.init(location: location, date: date, astronomicalCalculator: astronomicalCalculator)
@@ -171,7 +171,19 @@ public class ZmanimCalendar: AstronomicalCalendar, @unchecked Sendable {
 	
 	/// Make a copy of the current ``ZmanimCalendar`` instance with a different date
 	/// - Parameter date: The working date for the new instance. If `nil`, it will use the same working date as this instance.
-	func copy(with date: Date?) -> ZmanimCalendar {
-		return ZmanimCalendar(location: location, date: date ?? self.date, astronomicalCalculator: astronomicalCalculator, shouldUseElevation: shouldUseElevation, candleLightingOffset: candleLightingOffset)
+	public func copy(with date: Date?) -> Self {
+		return Self.init(location: location, date: date ?? self.date, astronomicalCalculator: astronomicalCalculator, shouldUseElevation: shouldUseElevation, candleLightingOffset: candleLightingOffset)
+	}
+	
+	/// Create a copy of the ``ZmanimCalendar`` instance advanced by a given calendar component
+	/// - Parameters:
+	///   - component: The calendar component to advance
+	///   - value: The value the component should be advanced by
+	/// - Returns: A copy of the ``ZmanimCalendar`` with the `component` advanced by `value`
+	/// - Warning: This method will crash in rare situations where ``Calendar/date(byAdding:to:wrappingComponents:)`` returns `nil`.
+	/// ## See Also
+	/// - ``copy(with:)``
+	public func advanced(byAdding component: Calendar.Component, value: Int) -> Self {
+		self.copy(with: Calendar.current.date(byAdding: component, value: value, to: self.date)!)
 	}
 }
