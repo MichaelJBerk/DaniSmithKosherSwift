@@ -54,6 +54,7 @@ public class CoreJewishCalendar: JewishDateWrapper, JewishDateRepresentable, @un
 	///   - component: The calendar component to advance
 	///   - value: The value the component should be advanced by
 	/// - Returns: A copy of the ``CoreJewishCalendar`` with the `component` advanced by `value`
+	/// - Warning: This method will crash in rare situations where ``Calendar/date(byAdding:to:wrappingComponents:)`` returns `nil`.
 	/// ## See Also
 	/// - ``copy(date:includeTime:isInIsrael:)``
 	/// ``copy(year:month:day:isInIsrael:)``
