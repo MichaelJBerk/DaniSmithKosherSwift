@@ -9,33 +9,33 @@ import Foundation
 
 public struct HebrewDateFormatter {
     ///Sets the formatter to format in Hebrew in the various formatting methods.
-    let hebrewFormat: Bool
+    public let hebrewFormat: Bool
     
     /// When formatting a Hebrew Year, traditionally the thousands digit is omitted and output for a year such as 5729
     /// (1969 Gregorian) would be calculated for 729 and format as תשכ״ט. This method
     /// allows setting this to true to return the long format year such as ה׳ תשכ״ט for 5729/1969.
-    let useLongHebrewYears: Bool
+    public let useLongHebrewYears: Bool
     
     /// Sets whether to use the Geresh ׳ and Gershayim ״ in formatting Hebrew dates and numbers. The default
     /// value is true and output would look like כ״א שבט תש״כ
     /// (or כ״א שבט תש״ך). When set to false, this output would display as כא שבט תשכ (or כא שבט תשך).
     /// Single digit days or month or years such as כ׳ שבט ו׳ אלפים show the use of the Geresh.
-    let useGershGershayim: Bool
+    public let useGershGershayim: Bool
     
-    /// Setting to control if the {@link #formatDayOfWeek(JewishDate)} will use the long format such as ראשון
+    /// Setting to control if the ``formatDayOfWeek(JewishDate)`` will use the long format such as ראשון
     /// or short such as א when formatting the day of week in Hebrew.
-    let longWeekFormat: Bool
+    public let longWeekFormat: Bool
     
     /// Returns whether the class is set to use the מנצפ״ך letters when
     /// formatting years ending in 20, 40, 50, 80 and 90 to produce תש״פ if false or
     /// or תש״ף if true. Traditionally non-final form letters are used, so the year
     /// 5780 would be formatted as תש״פ if the default false is used here. If this returns
     /// true, the format תש״ף would be used.
-    let useFinalFormLetters: Bool
+    public let useFinalFormLetters: Bool
     
-    let longOmerFormat: Bool
+    public let longOmerFormat: Bool
     
-    let useShortHolidayFormat: Bool
+    public let useShortHolidayFormat: Bool
     
     /// The [gersh](https://en.wikipedia.org/wiki/Geresh#Punctuation_mark) character is the ׳ char
     /// that is similar to a single quote and is used in formatting Hebrew numbers.
@@ -46,7 +46,7 @@ public struct HebrewDateFormatter {
     static let _GERSHAYIM = "״"
     
     /// Hebrew Omer prefix. By default it is the letter ב, but can be set to ל (or any other prefix).
-    let hebrewOmerPrefix = "ב"
+    public let hebrewOmerPrefix = "ב"
     
     ///day of Shabbos transliterated into Latin chars. The default uses Ashkenazi pronunciation "Shabbos".
     let transliteratedShabbosDayOfWeek = "Shabbos"
@@ -308,11 +308,12 @@ public struct HebrewDateFormatter {
         .hachodesh: "Hachodesh",
     ]
     
-    /// Formats the Yom Tov (holiday) in Hebrew or transliterated Latin characters.
-    ///
-    /// @param jewishCalendar the JewishCalendar
-    /// @return the formatted holiday or an empty String if the day is not a holiday.
-    /// @see #isHebrewFormat()
+	/// Formats the Yom Tov (holiday) in Hebrew or transliterated Latin characters.
+	///
+	/// - Parameter cal: the JewishCalendar
+	/// - Returns: the formatted holiday, or an empty String if the day is not a holiday.
+	/// ## See Also
+	/// - ``hebrewFormat``
     public func formatYomTov(_ cal: CoreJewishCalendar) throws -> String? {
         let chag = cal.getCurrentChag()
         guard let chag = chag else {
@@ -333,11 +334,11 @@ public struct HebrewDateFormatter {
 		: chag.transliteratedName
     }
     
-    /// Formats a day as Rosh Chodesh in the format of in the format of ראש חודש שבט
-    /// or Rosh Chodesh Shevat. If it is not Rosh Chodesh, an empty <code>String</code> will be returned.
-    /// @param jewishCalendar the JewishCalendar
-    /// @return The formatted <code>String</code> in the format of ראש חודש שבט
-    /// or Rosh Chodesh Shevat. If it is not Rosh Chodesh, an empty <code>String</code> will be returned.
+	/// Formats a day as Rosh Chodesh in the format of in the format of ראש חודש שבט
+	/// or Rosh Chodesh Shevat. If it is not Rosh Chodesh, an empty `String` will be returned.
+	/// - Parameter cal: the JewishCalendar
+	/// - Returns: The formatted `String` in the format of ראש חודש שבט
+	/// or Rosh Chodesh Shevat. If it is not Rosh Chodesh, an empty `String` will be returned.
     public func formatRoshChodesh(_ cal: CoreJewishCalendar) -> String? {
         let jewishCalendar = cal
         if !jewishCalendar.isRoshChodesh {
@@ -366,11 +367,11 @@ public struct HebrewDateFormatter {
         return formattedRoshChodesh
     }
     
-    /// Formats a day as Erev Rosh Chodesh in the format of in the format of ערב ראש חודש שבט
-    /// or Rosh Chodesh Shevat. If it is not Erev Rosh Chodesh, an empty <code>String</code> will be returned.
-    /// @param jewishCalendar the JewishCalendar
-    /// @return The formatted <code>String</code> in the format of ערב ראש חודש שבט
-    /// or Rosh Chodesh Shevat. If it is not Rosh Chodesh, an empty <code>String</code> will be returned.
+	/// Formats a day as Erev Rosh Chodesh in the format of in the format of ערב ראש חודש שבט
+	/// or Rosh Chodesh Shevat. If it is not Erev Rosh Chodesh, an empty <code>String</code> will be returned.
+	/// - Parameter cal: the JewishCalendar
+	/// - Returns: The formatted `String` in the format of ערב ראש חודש שבט
+	/// or Rosh Chodesh Shevat. If it is not Rosh Chodesh, an empty `String` will be returned.
     public func formatErevRoshChodesh(_ cal: CoreJewishCalendar) -> String? {
         if !cal.isErevRoshChodesh {
             return ""
@@ -399,16 +400,11 @@ public struct HebrewDateFormatter {
         return formattedErevRoshChodesh
     }
     
-    /// Returns a string of the current Hebrew month such as "Tishrei".
-    /// Returns a string of the current Hebrew month such as "אדר ב׳".
-    ///
-    /// @param jewishDate
-    ///            the JewishDate to format
-    /// @return the formatted month name
-    /// @see #isHebrewFormat()
-    /// @see #setHebrewFormat(letean)
-    /// @see #getTransliteratedMonthList()
-    /// @see #setTransliteratedMonthList(String[])
+	/// Returns a string of the current Hebrew month such as "Tishrei" or "אדר ב׳", depending on ``hebrewFormat``
+	/// - Parameter jewishDate: the JewishDate to format
+	/// - Returns: the formatted month name
+	/// ## See Also
+	/// - ``hebrewFormat``
     public func formatMonth(_ jewishDate: any JewishDateRepresentable) -> String {
         let month = jewishDate.month
         if hebrewFormat {
@@ -460,14 +456,13 @@ public struct HebrewDateFormatter {
     /// Returns a String of the Omer day
 	///
     /// - Parameter jewishCalendar: the JewishCalendar to be formatted
-    /// - Throws: ``HebrewDateFormatterError``
+    /// - Throws: ``HebrewFormatterError``
     /// - Returns: If there is no omer on the given day, the method returns `nil`. If `hebrewFormat` is `true`, the string will be in the form "ל״ג בעומר". Otherwise, it will return "Omer X" (or "Lag BaOmer" on the 33rd day).
 	///
     /// The default formatting has a ב׳ prefix that would output בעומר, but this can be set via the `hebrewOmerPrefix`  to use a ל and output ל״ג לעומר.
     /// ## See Also
-	/// - ``isHebrewFormat()``
-    /// - ``getHebrewOmerPrefix()``
-    /// - ``setHebrewOmerPrefix(String)``
+	/// - ``hebrewFormat``
+    /// - ``hebrewOmerPrefix``
     public func formatOmer(jewishCalendar: CoreJewishCalendar) throws -> String? {
         guard let omer = jewishCalendar.dayOfOmer else { return nil }
         return try formatOmer(day: omer)
@@ -476,14 +471,13 @@ public struct HebrewDateFormatter {
 	/// Returns a String of the Omer day
 	///
 	/// - Parameter day: an integer representing the day of the Omer
-	/// - Throws: ``HebrewDateFormatterError``
+	/// - Throws: ``HebrewFormatterError``
 	/// - Returns: If there is no omer on the given day, the method returns `nil`. If `hebrewFormat` is `true`, the string will be in the form "ל״ג בעומר". Otherwise, it will return "Omer X" (or "Lag BaOmer" on the 33rd day).
 	///
 	/// The default formatting has a ב׳ prefix that would output בעומר, but this can be set via the `hebrewOmerPrefix`  to use a ל and output ל״ג לעומר.
 	/// ## See Also
-	/// - ``isHebrewFormat()``
-	/// - ``getHebrewOmerPrefix()``
-	/// - ``setHebrewOmerPrefix(String)``
+	/// - ``hebrewFormat``
+	/// - ``hebrewOmerPrefix``
 	public func formatOmer(day: Int) throws -> String? {
 		if hebrewFormat {
 			return longOmerFormat
@@ -498,14 +492,13 @@ public struct HebrewDateFormatter {
 		}
 	}
     
-    ///
-    /// Formats the [Daf Yomi](https://en.wikipedia.org/wiki/Daf_Yomi) Bavli in the format of
-    /// "&#x05E2&#x05D9&#x05E8&#x05D5&#x05D1&#x05D9&#x05DF &#x05E0&#x05F4&#x05D1" in [hebrewFormat],
-    /// or the transliterated format of "Eruvin 52".
-    ///
-    /// @param daf the Daf to be formatted.
-    /// @return the formatted daf.
-    ///
+	/// Formats the [Daf Yomi](https://en.wikipedia.org/wiki/Daf_Yomi) in the format of "עירובין נ״ב" in Hebrew, or the transliterated format of "Eruvin 52".
+	/// 
+	///  @param daf the Daf to be formatted.
+	///  @return the formatted daf.
+	/// 
+	/// - Parameter daf: the Daf to be formatted
+	/// - Returns: the formatted Daf
     public func formatDafYomi(daf: Daf) throws -> String {
         if hebrewFormat {
             return try daf.masechta + " " + formatHebrewNumber(daf.daf)
@@ -514,24 +507,21 @@ public struct HebrewDateFormatter {
         }
     }
     
-    /// Returns a Hebrew formatted string of a number. The method can calculate from 0 - 9999.
-    /// <ul>
-    /// <li>Single digit numbers such as 3, 30 and 100 will be returned with a ׳ (<a
-    /// href="http://en.wikipedia.org/wiki/Geresh">Geresh</a>) appended as at the end. For example ג׳, and ק׳</li>
-    /// <li>multi digit numbers such as 21 and 769 will be returned with a ״ (<a href="http://en.wikipedia.org/wiki/Gershayim">Gershayim</a>)
-    /// between the second to last and last letters. For example כ״א, תשכ״ט</li>
-    /// <li>15 and 16 will be returned as ט״ו and ט״ז</li>
-    /// <li>Single digit numbers (years assumed) such as 6000 (%1000=0) will be returned as ו׳ אלפים</li>
-    /// <li>0 will return אפס</li>
-    /// </ul>
-    ///
-    /// @param number
-    ///            the number to be formatted. It will trow an IllegalArgumentException if the number is &lt 0 or &gt 9999.
-    /// @return the Hebrew formatted number such as תשכ״ט
-    /// @see #isUseFinalFormLetters()
-    /// @see #isUseGershGershayim()
-    /// @see #isHebrewFormat()
-    ///
+	/// Returns a Hebrew formatted string of a number. The method can calculate from 0 - 9999.
+	/// 
+	/// - Single digit numbers such as 3, 30 and 100 will be returned with a ׳ ([Geresh](http://en.wikipedia.org/wiki/Geresh)) appended as at the end. For example ג׳, and ק׳
+	/// - Multi digit numbers such as 21 and 769 will be returned with a ״ ([Gershayim](http://en.wikipedia.org/wiki/Gershayim))
+	/// between the second to last and last letters. For example כ״א, תשכ״ט
+	/// - 15 and 16 will be returned as ט״ו and ט״ז
+	/// - Single digit numbers (years assumed) such as 6000 (%1000=0) will be returned as ו׳ אלפים
+	/// - 0 will return אפס
+	///
+	/// - Parameter num: the number to be formatted. It will trow a ``HebrewFormatterError`` if the number is < 0 or > 9999.
+	/// - Returns: the Hebrew formatted number such as תשכ״ט
+	/// ## See Also
+	/// - ``useFinalFormLetters``
+	/// - ``useGershGershayim``
+	/// - ``hebrewFormat``
     public func formatHebrewNumber(_ num: Int) throws ->  String {
         var number = num
         if number < 0 {
