@@ -21,12 +21,12 @@ public class AstronomicalCalendar {
     public var sunrise: Date? {
         let ret = getUtcSunrise(zenith: Zenith.geometric.rawValue)
         
-        return getDateFromTime(time: ret, isSunrise: true)
+		return getDateFromTime(time: ret, solarEvent: .sunrise)
     }
     
     public var seaLevelSunrise: Date? {
         let ret = getUtcSeaLevelSunrise(zenith: Zenith.geometric)
-        return getDateFromTime(time: ret, isSunrise: true)
+		return getDateFromTime(time: ret, solarEvent: .sunrise)
     }
     
     public var civilTwilightStart: Date? {
@@ -43,12 +43,12 @@ public class AstronomicalCalendar {
     
     public var sunset: Date? {
         let ret = getUtcSunset(zenith: Zenith.geometric.rawValue)
-        return getDateFromTime(time: ret, isSunrise: false)
+		return getDateFromTime(time: ret, solarEvent: .sunset)
     }
     
     public var seaLevelSunset: Date? {
         let ret = getUtcSeaLevelSunset(zenith: .geometric)
-        return getDateFromTime(time: ret, isSunrise: false)
+		return getDateFromTime(time: ret, solarEvent: .sunset)
     }
     
     public var civilTwilightEnd: Date? {
@@ -65,7 +65,7 @@ public class AstronomicalCalendar {
     
     func getSunriseOffsetByDegrees(offset: Double) -> Date? {
         let ret = getUtcSunrise(zenith: offset)
-        return getDateFromTime(time: ret, isSunrise: true)
+		return getDateFromTime(time: ret, solarEvent: .sunrise)
     }
     
     func getSunriseOffsetByDegrees(offsetZenith: Zenith) -> Date? {
@@ -74,7 +74,7 @@ public class AstronomicalCalendar {
     
     func getSunsetOffsetByDegrees(offset: Double) -> Date? {
         let ret = getUtcSunset(zenith: offset)
-        return getDateFromTime(time: ret, isSunrise: false)
+		return getDateFromTime(time: ret, solarEvent: .sunset)
     }
     
     func getSunsetOffsetByDegrees(offsetZenith: Zenith) -> Date? {
@@ -118,12 +118,27 @@ public class AstronomicalCalendar {
         
         return Double((end.millisecondsSince1970 - start.millisecondsSince1970) / 12)
     }
+	
+	func getSunTransit() -> Date? {
+		guard let adjustedDate else {return nil}
+		let noon = astronomicalCalculator.getUTCNoon(date: adjustedDate, geoLocation: location)
+		return getDateFromTime(time: noon, solarEvent: .noon)
+	}
     
-    func getSunTransit(dayStart: Date? = nil, dayEnd: Date? = nil) -> Date? {
-        let start = dayStart ?? seaLevelSunrise
-        let end = dayEnd ?? seaLevelSunset
-        
-        guard let start = start, let end = end else { return nil }
+	/// A method that returns sundial or solar noon.
+	///
+	/// Sundial, or solar noon, occurs when the Sun is [transiting](https://en.wikipedia.org/wiki/Transit_%28astronomy%29) the [celestial meridian](https://en.wikipedia.org/wiki/Meridian_%28astronomy%29).
+	/// The calculations used by this class depend on the ``AstronomicalCalculator`` used. If this calendar instance is set to use the ``NOAACalculator`` (the default) it will calculate astronomical noon. See [The Definition of Chatzos](https://kosherjava.com/2020/07/02/definition-of-chatzos/) for details on the proper definition of solar noon / midday.
+	///
+	/// This time can be slightly off the real transit time due to changes in declination (the lengthening or shortening day).
+	///
+	/// If no parameters are passed, the method defaults to using ``seaLevelSunrise`` and ``seaLevelSunset``.
+	///
+	/// - Parameters:
+	///   - dayStart: the start of day for calculating the sun's transit. This can be sea level sunrise, visual sunrise (or any arbitrary start of day) passed to this method. Defaults to ``seaLevelSunrise``
+	///   - dayEnd: the end of day for calculating the sun's transit. This can be sea level sunset, visual sunset (or any arbitrary end of day) passed to this method. Defaults to ``seaLevelSunset``
+	/// - Returns: the Date representing Sun's transit.  If the calculation can't be computed,  `nil` will be returned. See details on ``AstronomicalCalendar`` for more information.
+    func getSunTransit(start: Date, end: Date) -> Date? {
         
         let temporalHour = getTemporalHour(dayStart: start, dayEnd: end)
         guard let temporalHour = temporalHour else { return nil }
@@ -131,18 +146,29 @@ public class AstronomicalCalendar {
         return AstronomicalCalendar.getTimeOffset(time: start, offset: temporalHour * 6)
     }
     
-    func getDateFromTime(time: Double?, isSunrise: Bool) -> Date? {
-        guard let time = time else { return nil }
+	/// A method that returns a Date from the time passed in as a parameter.
+	/// 
+	/// 
+	/// - Parameters:
+	///   - time: The time to be set as the time for the Date. time is sunrise and false if it is sunset
+	///   - isSunrise: `true` if the date being calculated is relating to Sunrise, `false` if it is not.
+	/// - Returns: The Date representation of the time double
+	func getDateFromTime(time: Double?, solarEvent: SolarEvent) -> Date? {
+		guard let time, let adjustedDate, !time.isNaN else { return nil }
         
         var calculatedTime = time
         
         var gregorianCalendar =  Calendar(identifier: .gregorian)
-        gregorianCalendar.timeZone = location.timezone
+		//we need to set the calendar to the location's time zone, or the calculations will be determined for the device's current time zone.
+		gregorianCalendar.timeZone = location.timezone
+		
+		let adjustedComponents = gregorianCalendar.dateComponents([.year, .month, .day, .hour, .minute, .second, .nanosecond], from: adjustedDate)
+		var components = DateComponents(calendar: gregorianCalendar,
+										year: adjustedComponents.year,
+										month: adjustedComponents.month,
+										day: adjustedComponents.day)
         
-        var components = gregorianCalendar.dateComponents([.era,.year,.month,.weekOfYear,.day,.hour,.minute,.second], from: date)
-        
-        components.timeZone = TimeZone(identifier: "GMT")
-        
+		components.timeZone = TimeZone(identifier: "GMT")
         let hours = Int(calculatedTime)
         calculatedTime -= Double(hours)
         
@@ -153,26 +179,27 @@ public class AstronomicalCalendar {
         calculatedTime = calculatedTime * 60
         let seconds = Int(calculatedTime)
         calculatedTime -= Double(seconds)
-        
-        components.hour = hours
-        components.minute = minutes
-        components.second = seconds
+		
+		
+		// Check if a date transition has occurred, or is about to occur - this indicates the date of the event is
+		// actually not the target date, but the day prior or after
+		let localTimeHours = Int(location.lng / 15)
+		var daysToAdd = 0
+		if solarEvent == .sunrise && localTimeHours + hours > 18 {
+			daysToAdd = -1
+		} else if solarEvent == .sunset && localTimeHours + hours < 6 {
+			daysToAdd = 1
+		} else if solarEvent == .midnight && localTimeHours + hours < 12 {
+			daysToAdd = 1
+		} else if solarEvent == .noon && localTimeHours + hours > 24 {
+			daysToAdd = -1
+		}
+		components.day! += daysToAdd
+		components.hour = hours
+		components.minute = minutes
+		components.second = seconds
         components.nanosecond = Int(calculatedTime * 1000 * 1000000)
-        
-        var returnDate = gregorianCalendar.date(from: components)
-        
-        let offsetFromGMT = Double(location.timezone.secondsFromGMT(for: date)/3600)
-        
-        if (time + offsetFromGMT > 24)
-        {
-            returnDate = returnDate?.addingTimeInterval(-86400)
-        }
-        else if (time + offsetFromGMT < 0)
-        {
-            returnDate = returnDate?.addingTimeInterval(86400)
-        }
-        
-        return returnDate;
+		return gregorianCalendar.date(from: components)
     }
     
     func getSunriseSolarDipFromOffset(minutes: Double) -> Double {
@@ -214,7 +241,7 @@ public class AstronomicalCalendar {
     }
     
     public func getLocalMeanTime(hours: Double) -> Date? {
-        AstronomicalCalendar.getTimeOffset(time: getDateFromTime(time: hours - Double(location.timezone.secondsFromGMT()) / AstronomicalCalendar.hourMillis, isSunrise: true), offset: -location.localMeanTimeOffset);
+		AstronomicalCalendar.getTimeOffset(time: getDateFromTime(time: hours - Double(location.timezone.secondsFromGMT()) / AstronomicalCalendar.hourMillis, solarEvent: .sunrise), offset: -location.localMeanTimeOffset);
     }
 }
 

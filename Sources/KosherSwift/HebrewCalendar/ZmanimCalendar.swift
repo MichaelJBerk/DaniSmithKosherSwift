@@ -26,7 +26,9 @@ public class ZmanimCalendar: AstronomicalCalendar {
     public func tzeis() -> Date? { getSunsetOffsetByDegrees(offsetZenith: Zenith.z8_5) }
     public func alosHashachar() -> Date? { getSunriseOffsetByDegrees(offsetZenith: .z16_1) }
     public func alos72() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunrise, offset: -72 * ZmanimCalendar.minuteMillis) }
-    public func chatzos() -> Date? { getSunTransit() }
+	public func chatzos() -> Date? {
+		return getSunTransit()
+	}
     public func latestShemaGra() -> Date? { calculateLatestZmanShema(elevationAdjustedSunrise, elevationAdjustedSunset) }
     public func latestShemaMga() -> Date? { calculateLatestZmanShema(alos72(), tzeis72()) }
     public func tzeis72() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 72 * AstronomicalCalendar.minuteMillis) }

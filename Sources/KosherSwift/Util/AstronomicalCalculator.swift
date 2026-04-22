@@ -12,6 +12,9 @@ public protocol AstronomicalCalculator {
     func getUtcSunset(date: Date, location: GeoLocation, zenith: Double, adjustForElevation: Bool) -> Double
     
     init()
+	
+	
+	func getUTCNoon(date: Date, geoLocation: GeoLocation) -> Double
 }
 
 extension AstronomicalCalculator {
