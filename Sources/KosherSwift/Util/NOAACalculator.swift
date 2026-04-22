@@ -17,7 +17,7 @@ public class NOAACalculator: AstronomicalCalculator {
         let elevation = adjustForElevation ? (location.elevation ?? 0) : 0
         let adjustedZenith = NOAACalculator.adjustZenith(zenith: zenith, elevation: elevation)
         
-		var sunrise = getSunriseUTC(julianDay: getJulianDay(dateTime: date, timeZone: location.timezone), latitude: location.lat, longitude: -location.lng, zenith: adjustedZenith);
+		var sunrise = getSunriseUTC(julianDay: Self.getJulianDay(dateTime: date, timeZone: location.timezone), latitude: location.lat, longitude: -location.lng, zenith: adjustedZenith);
 		
         sunrise = sunrise / 60;
         
@@ -35,32 +35,32 @@ public class NOAACalculator: AstronomicalCalculator {
         let elevation = adjustForElevation ? location.elevation ?? 0 : 0
         let adjustedZenith = NOAACalculator.adjustZenith(zenith: zenith, elevation: elevation)
 
-		var sunset = getSunsetUTC(julianDay: getJulianDay(dateTime: date, timeZone: location.timezone), latitude: location.lat, longitude: -location.lng, zenith: adjustedZenith)
+		var sunset = getSunsetUTC(julianDay: Self.getJulianDay(dateTime: date, timeZone: location.timezone), latitude: location.lat, longitude: -location.lng, zenith: adjustedZenith)
         sunset = sunset / 60
 		return sunset > 0 ? sunset.truncatingRemainder(dividingBy: 24) : sunset.truncatingRemainder(dividingBy: 24) + 24
     }
     
-	//TODO: Replace other getJulianDay with this
-    static func getJulianDay(_ date: Date) -> Double {
-        let comp = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        
-        var year = comp.year!
-        var month = comp.month!
-        let day = comp.day!
-        
-        if (month <= 2) {
-            year -= 1
-            month += 12
-        }
-        
-        let a = year ~/ 100
-        let b = 2 - a + (a ~/ 4)
-        let c = (365.25 * Double(year + 4716)).rounded(.down)
-        let d = (30.6001 * Double(month + 1)).rounded(.down)
-        
-        let ret = c + d + Double(day + b) - 1524.5
-        return ret
-    }
+//	//TODO: Replace other getJulianDay with this
+//    static func getJulianDay(_ date: Date) -> Double {
+//        let comp = Calendar.current.dateComponents([.year, .month, .day], from: date)
+//        
+//        var year = comp.year!
+//        var month = comp.month!
+//        let day = comp.day!
+//        
+//        if (month <= 2) {
+//            year -= 1
+//            month += 12
+//        }
+//        
+//        let a = year ~/ 100
+//        let b = 2 - a + (a ~/ 4)
+//        let c = (365.25 * Double(year + 4716)).rounded(.down)
+//        let d = (30.6001 * Double(month + 1)).rounded(.down)
+//        
+//        let ret = c + d + Double(day + b) - 1524.5
+//        return ret
+//    }
     
     private static func getJulianDayFromJulianCenturies(_ julianCenturies: Double) -> Double {
         return julianCenturies * julianDaaysPerCentury + julianDayJan12000;
@@ -168,7 +168,7 @@ public class NOAACalculator: AstronomicalCalculator {
 		return hourAngle
 	}
 
-	func getJulianDay(dateTime: Date, timeZone: TimeZone) -> Double {
+	static func getJulianDay(dateTime: Date, timeZone: TimeZone) -> Double {
         var calendar = Calendar(identifier: .gregorian)
 		calendar.timeZone = timeZone
         let components = calendar.dateComponents([.year, .month, .day], from: dateTime)
@@ -228,7 +228,7 @@ public class NOAACalculator: AstronomicalCalculator {
     }
 	
 	public func getUTCNoon(date: Date, geoLocation: GeoLocation) -> Double {
-		var noon = getSolarNoonMidnightUTC(julianDay: getJulianDay(dateTime: date, timeZone: geoLocation.timezone), longitude: -geoLocation.lng, solarEvent: .noon)
+		var noon = getSolarNoonMidnightUTC(julianDay: Self.getJulianDay(dateTime: date, timeZone: geoLocation.timezone), longitude: -geoLocation.lng, solarEvent: .noon)
 		noon = noon / 60
 		return noon > 0 ? noon.truncatingRemainder(dividingBy: 24) : noon.truncatingRemainder(dividingBy: 24) + 24
 		

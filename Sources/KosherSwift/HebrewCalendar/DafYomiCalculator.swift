@@ -9,9 +9,9 @@ import Foundation
 
 public class DafYomiCalculator {
     private static let dafYomiStart = Calendar.current.date(from: DateComponents(year: 1923, month: 9, day: 11))!
-    private static let dafYomiJulianStart = NOAACalculator.getJulianDay(dafYomiStart)
+	private static let dafYomiJulianStart = NOAACalculator.getJulianDay(dateTime: dafYomiStart, timeZone: .current)
     private static let shekalimChangeDay = Calendar.current.date(from: DateComponents(year: 1975, month: 6, day: 24))!
-    private static let shekalimJulianChangeDay = NOAACalculator.getJulianDay(shekalimChangeDay)
+	private static let shekalimJulianChangeDay = NOAACalculator.getJulianDay(dateTime: shekalimChangeDay, timeZone: .current)
     
     private static let dafYomiYerushalmiStart = Calendar.current.date(from: DateComponents(year: 1980, month: 2, day: 2))!
     private static let dayMillis = 1000 * 60 * 60 * 24
@@ -31,7 +31,7 @@ public class DafYomiCalculator {
         
         let calendar = cal.gregDate
         
-        let julianDay = Int(NOAACalculator.getJulianDay(calendar))
+		let julianDay = Int(NOAACalculator.getJulianDay(dateTime: calendar, timeZone: .current))
         var cycleNo = 0
         var dafNo = 0
         if (calendar.compare(dafYomiStart) == .orderedAscending) {
