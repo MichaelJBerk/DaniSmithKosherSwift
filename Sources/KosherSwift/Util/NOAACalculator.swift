@@ -21,14 +21,7 @@ public class NOAACalculator: AstronomicalCalculator {
 		
         sunrise = sunrise / 60;
         
-        // ensure that the time is >= 0 and < 24
-        while (sunrise < 0.0) {
-            sunrise += 24.0;
-        }
-        while (sunrise >= 24.0) {
-            sunrise -= 24.0;
-        }
-        return sunrise;
+		return sunrise > 0 ? sunrise.truncatingRemainder(dividingBy: 24) : sunrise.truncatingRemainder(dividingBy: 24) + 24
     }
     
     public func getUtcSunset(date: Date, location: GeoLocation, zenith: Double, adjustForElevation: Bool) -> Double {
