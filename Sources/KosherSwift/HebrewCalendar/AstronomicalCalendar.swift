@@ -265,7 +265,7 @@ public class AstronomicalCalendar {
 	///   - isSunrise: `true` if the date being calculated is relating to Sunrise, `false` if it is not.
 	/// - Returns: The Date representation of the time double
 	func getDateFromTime(time: Double?, solarEvent: SolarEvent) -> Date? {
-        guard let time, let adjustedDate else { return nil }
+		guard let time, let adjustedDate, !time.isNaN else { return nil }
         
         var calculatedTime = time
         
