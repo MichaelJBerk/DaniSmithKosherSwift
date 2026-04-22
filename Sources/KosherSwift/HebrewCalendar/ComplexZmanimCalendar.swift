@@ -33,7 +33,8 @@ public class ComplexZmanimCalendar: ZmanimCalendar, @unchecked Sendable {
     public func shaahZmanis120MinutesZmanis() -> Double? { getTemporalHour(dayStart: alos120Zmanis(), dayEnd: tzeis120Zmanis()) }
     public func plagHamincha120MinutesZmanis() -> Date? { calculatePlagHamincha(alos120Zmanis(), tzeis120Zmanis()) }
     public func plagHamincha120Minutes() -> Date? { calculatePlagHamincha(alos120(), tzeis120()) }
-    public func alos60() -> Date? { AstronomicalCalendar.getTimeOffset(time: sunrise, offset: -60 * AstronomicalCalendar.minuteMillis) }
+    public func alos60() -> Date? {
+		AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunrise, offset: -60 * AstronomicalCalendar.minuteMillis) }
     public func alos72Zmanis() -> Date? { zmanisBasedOffset(-1.2) }
     public func alos96() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunrise, offset: -96 * AstronomicalCalendar.minuteMillis) }
     public func alos90Zmanis() -> Date? {
@@ -122,7 +123,9 @@ public class ComplexZmanimCalendar: ZmanimCalendar, @unchecked Sendable {
     public func tzeis120() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 120 * AstronomicalCalendar.minuteMillis) }
     public func tzeis120Zmanis() -> Date? { zmanisBasedOffset(2.0) }
     public func tzeis16Point1Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z16_1) }
-    public func tzeis26Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z26Deg) }
+	public func tzeis26Degrees() -> Date? {
+		getSunsetOffsetByDegrees(offsetZenith: .z26Deg)
+	}
     public func tzeis18Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .astronomical) }
     public func latestTefila2HoursBeforeChatzos() -> Date? { AstronomicalCalendar.getTimeOffset(time: chatzos(), offset: -120 * AstronomicalCalendar.minuteMillis) }
     public func minchaGedola30Minutes() -> Date? { AstronomicalCalendar.getTimeOffset(time: chatzos(), offset: 30 * AstronomicalCalendar.minuteMillis) }
@@ -221,6 +224,7 @@ public class ComplexZmanimCalendar: ZmanimCalendar, @unchecked Sendable {
         var shiftTime = -25
         for loc in ComplexZmanimCalendar.shiftTimeByLocationName {
             if location.name.lowercased().contains(loc.key) {
+				print("Shift")
                 shiftTime = loc.value
             }
         }

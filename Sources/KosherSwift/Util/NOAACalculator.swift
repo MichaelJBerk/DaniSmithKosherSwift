@@ -10,14 +10,15 @@ import Foundation
 public class NOAACalculator: AstronomicalCalculator {
     private static let julianDayJan12000 = 2451545.0
     private static let julianDaaysPerCentury = 36525.0
-    
+	
     required public init() { }
         
     public func getUtcSunrise(date: Date, location: GeoLocation, zenith: Double, adjustForElevation: Bool) -> Double {
         let elevation = adjustForElevation ? (location.elevation ?? 0) : 0
         let adjustedZenith = NOAACalculator.adjustZenith(zenith: zenith, elevation: elevation)
         
-        var sunrise = getSunriseUTC(julianDay: NOAACalculator.getJulianDay(date), latitude: location.lat, longitude: -location.lng, zenith: adjustedZenith);
+		var sunrise = getSunriseUTC(julianDay: getJulianDay(dateTime: date, timeZone: location.timezone), latitude: location.lat, longitude: -location.lng, zenith: adjustedZenith);
+		
         sunrise = sunrise / 60;
         
         // ensure that the time is >= 0 and < 24
@@ -34,19 +35,12 @@ public class NOAACalculator: AstronomicalCalculator {
         let elevation = adjustForElevation ? location.elevation ?? 0 : 0
         let adjustedZenith = NOAACalculator.adjustZenith(zenith: zenith, elevation: elevation)
 
-        var sunset = getSunsetUTC(julianDay: NOAACalculator.getJulianDay(date), latitude: location.lat, longitude: -location.lng, zenith: adjustedZenith)
+		var sunset = getSunsetUTC(julianDay: getJulianDay(dateTime: date, timeZone: location.timezone), latitude: location.lat, longitude: -location.lng, zenith: adjustedZenith)
         sunset = sunset / 60
-
-        // ensure that the time is >= 0 and < 24
-        while sunset < 0.0 {
-            sunset += 24.0
-        }
-        while sunset >= 24.0 {
-            sunset -= 24.0
-        }
-        return sunset
+		return sunset > 0 ? sunset.truncatingRemainder(dividingBy: 24) : sunset.truncatingRemainder(dividingBy: 24) + 24
     }
     
+	//TODO: Replace other getJulianDay with this
     static func getJulianDay(_ date: Date) -> Double {
         let comp = Calendar.current.dateComponents([.year, .month, .day], from: date)
         
@@ -73,16 +67,10 @@ public class NOAACalculator: AstronomicalCalculator {
       }
     
     private static func getSunGeometricMeanLongitude(_ julianCenturies: Double) -> Double {
-        var longitude = 280.46646 +
+        let longitude = 280.46646 +
         julianCenturies * (36000.76983 + 0.0003032 * julianCenturies);
-        while (longitude > 360.0) {
-            longitude -= 360.0;
-        }
-        while (longitude < 0.0) {
-            longitude += 360.0;
-        }
-        
-        return longitude; // in degrees
+
+		return longitude > 0 ? longitude.truncatingRemainder(dividingBy: 360) : longitude.truncatingRemainder(dividingBy: 360) + 360
     }
     
     private static func getSunGeometricMeanAnomaly(_ julianCenturies: Double) -> Double {
@@ -166,57 +154,35 @@ public class NOAACalculator: AstronomicalCalculator {
             1.25 * eccentricityEarthOrbit * eccentricityEarthOrbit * sin2m
         return equationOfTime.degrees * 4.0 // in minutes of time
     }
+	
+	func getSunHourAngle(lat: Double, solarDec: Double, zenith: Double, solarEvent: SolarEvent) -> Double {
+		let latRad = lat.radians
+		let sdRad = solarDec.radians
 
-    func getSunHourAngleAtSunrise(lat: Double, solarDec: Double, zenith: Double) -> Double {
-        let latRad = lat.radians
-        let sdRad = solarDec.radians
-        var x = (cos(zenith.radians) / (cos(latRad) * cos(sdRad)) - tan(latRad) * tan(sdRad))
-        x = max(min(1, x), -1)
-        return acos(x) // in radians
-    }
+		var hourAngle = (acos(cos(zenith.radians) / (cos(latRad) * cos(sdRad))
+						 - tan(latRad) * tan(sdRad))
+		)
+		if solarEvent == .sunset {
+			hourAngle = -hourAngle
+		}
+		return hourAngle
+	}
 
-    func getSunHourAngleAtSunset(lat: Double, solarDec: Double, zenith: Double) -> Double {
-        let latRad = lat.radians
-        let sdRad = solarDec.radians
-        let hourAngle = acos(cos(zenith.radians) / (cos(latRad) * cos(sdRad)) - tan(latRad) * tan(sdRad))
-        return -hourAngle // in radians
-    }
-
-    func getSolarElevation(dateTime: Date, lat: Double, lon: Double) -> Double {
-        let julianDay = getJulianDay(dateTime: dateTime)
-        let julianCenturies = getJulianCenturiesFromJulianDay(julianDay: julianDay)
-        let eot = getEquationOfTime(julianCenturies: julianCenturies)
-        
-        let comps = Calendar.current.dateComponents([.hour, .minute, .second], from: dateTime)
-        
-        let a = (Double(comps.hour!) + 12.0)
-        let b = (Double(comps.minute!) + eot + Double(comps.second!) / 60.0)
-        var longitude = a + b / 60.0
-        
-        longitude = -(longitude * 360.0 / 24.0).truncatingRemainder(dividingBy: 360.0)
-        let hourAngleRad = (lon - longitude).radians
-        let declination = getSunDeclination(julianCenturies: julianCenturies)
-        let decRad = declination.radians
-        let latRad = lat.radians
-        return asin((sin(latRad) * sin(decRad)) + (cos(latRad) * cos(decRad) * cos(hourAngleRad))).degrees
-    }
-
-    func getJulianDay(dateTime: Date) -> Double {
-        let calendar = Calendar(identifier: .gregorian)
+	func getJulianDay(dateTime: Date, timeZone: TimeZone) -> Double {
+        var calendar = Calendar(identifier: .gregorian)
+		calendar.timeZone = timeZone
         let components = calendar.dateComponents([.year, .month, .day], from: dateTime)
-        let year = Double(components.year!)
-        let month = Double(components.month!)
-        let day = Double(components.day!)
-        
-        if month <= 2 {
-            let y = year - 1
-            let m = month + 12
-            return floor(365.25 * (y + 4716)) + floor(30.6001 * (m + 1)) + day - 1524.5
-        } else {
-            let y = year
-            let m = month
-            return floor(365.25 * (y + 4716)) + floor(30.6001 * (m + 1)) + day - 1524.5
-        }
+        var year = components.year!
+		//KosherJava adds 1 to this, but it seems to be due to an effect of java's Calendar implemention
+        var month = components.month!
+        let day = components.day!
+		if month <= 2 {
+			year -= 1
+			month += 12
+		}
+		let a = year / 100
+		let b = 2 - a + a / 4
+		return floor(365.25 * (Double(year) + 4716)) + floor(30.6001 * (Double(month) + 1)) + Double(day) + Double(b) - 1524.5
     }
 
     func getJulianCenturiesFromJulianDay(julianDay: Double) -> Double {
@@ -241,43 +207,52 @@ public class NOAACalculator: AstronomicalCalculator {
         let e = asin(sin(r.radians) * sin(l.radians))
         return e
     }
-
-    func getSolarAzimuth(dateTime: Date, lat: Double, lon: Double) -> Double {
-        let julianDay = getJulianDay(dateTime: dateTime)
-        let julianCenturies = getJulianCenturiesFromJulianDay(julianDay: julianDay)
-        let eot = getEquationOfTime(julianCenturies: julianCenturies)
-        var longitude = (Double(Calendar.current.component(.hour, from: dateTime)) + 12.0) +
-            (Double(Calendar.current.component(.minute, from: dateTime)) + eot + Double(Calendar.current.component(.second, from: dateTime)) / 60.0) / 60.0
-        longitude = -(longitude * 360.0 / 24.0).truncatingRemainder(dividingBy: 360.0)
-        let hourAngleRad = lon - longitude.radians
-        let declination = getSunDeclination(julianCenturies: julianCenturies)
-        let decRad = declination.radians
-        let latRad = lat.radians
-        return atan(sin(hourAngleRad.degrees /
-                ((cos(hourAngleRad) * sin(latRad)) -
-                    (tan(decRad) * cos(latRad))))) +
-            180
-    }
-
+	
     func getSunriseUTC(julianDay: Double, latitude: Double, longitude: Double, zenith: Double) -> Double {
-        let julianCenturies = getJulianCenturiesFromJulianDay(julianDay: julianDay)
-        let noonmin = getSolarNoonUTC(julianCenturies: julianCenturies, longitude: longitude)
+		let noonmin = getSolarNoonMidnightUTC(julianDay: julianDay, longitude: longitude, solarEvent: .noon)
         let tnoon = getJulianCenturiesFromJulianDay(julianDay: julianDay + noonmin / 1440.0)
         var eqTime = getEquationOfTime(tnoon)
         var solarDec = getSunDeclination(tnoon)
-        var hourAngle = getSunHourAngleAtSunrise(lat: latitude, solarDec: solarDec, zenith: zenith)
+        var hourAngle = getSunHourAngle(lat: latitude, solarDec: solarDec, zenith: zenith, solarEvent: .sunrise)
         var delta = longitude - hourAngle.degrees
         var timeDiff = 4 * delta // in minutes of time
         var timeUTC = 720 + timeDiff - eqTime // in minutes
-        let newt = getJulianCenturiesFromJulianDay(julianDay: NOAACalculator.getJulianDayFromJulianCenturies(julianCenturies) + timeUTC / 1440.0)
+		let newt = getJulianCenturiesFromJulianDay(julianDay: julianDay + timeUTC / 1440.0)
         eqTime = getEquationOfTime(newt)
         solarDec = getSunDeclination(newt)
-        hourAngle = getSunHourAngleAtSunrise(lat: latitude, solarDec: solarDec, zenith: zenith)
+		hourAngle = getSunHourAngle(lat: latitude, solarDec: solarDec, zenith: zenith, solarEvent: .sunrise)
         delta = longitude - hourAngle.degrees
         timeDiff = 4 * delta
         timeUTC = 720 + timeDiff - eqTime // in minutes
         return timeUTC
     }
+	
+	public func getUTCNoon(date: Date, geoLocation: GeoLocation) -> Double {
+		var noon = getSolarNoonMidnightUTC(julianDay: getJulianDay(dateTime: date, timeZone: geoLocation.timezone), longitude: -geoLocation.lng, solarEvent: .noon)
+		noon = noon / 60
+		return noon > 0 ? noon.truncatingRemainder(dividingBy: 24) : noon.truncatingRemainder(dividingBy: 24) + 24
+		
+	}
+	
+	/// Return the [Universal Coordinated Time](https://en.wikipedia.org/wiki/Universal_Coordinated_Time) (UTC) of the current day [solar noon](http://en.wikipedia.org/wiki/Noon#Solar_noon) or the the upcoming midnight (about 12 hours after solar noon) of the given day at the given location on earth.
+	/// - Returns: the time in minutes from zero UTC
+	/// - Parameters:
+	///   - julianDay: The Julian day since [J2000.0](https://en.wikipedia.org/wiki/Epoch_(astronomy)#J2000).
+	///   - longitude: The longitude of observer in degrees
+	///   - solarEvent: If the calculation is for `noon` or `midnight`
+	/// ## See Also
+	/// - ``getUTCNoon(date:geoLocation:)``
+	func getSolarNoonMidnightUTC(julianDay: Double, longitude: Double, solarEvent: SolarEvent) -> Double {
+		let julianDay = (solarEvent == .noon) ? julianDay : julianDay + 0.5
+		let tnoon = getJulianCenturiesFromJulianDay(julianDay: julianDay + longitude / 360.0)
+		var equationOfTime = getEquationOfTime(tnoon)
+		let solNoonUTC = (longitude * 4) - equationOfTime
+		
+		//second pass
+		let newt = getJulianCenturiesFromJulianDay(julianDay: julianDay + solNoonUTC / 1440.0)
+		equationOfTime = getEquationOfTime(newt)
+		return (solarEvent == .noon ? 720 : 1440) + (longitude * 4) - equationOfTime
+	}
     
     func getSolarNoonUTC(julianCenturies: Double, longitude: Double) -> Double {
         // First pass uses approximate solar noon to calculate eqtime
@@ -299,14 +274,15 @@ public class NOAACalculator: AstronomicalCalculator {
         let tnoon = getJulianCenturiesFromJulianDay(julianDay: julianDay + noonmin / 1440.0)
         let eqTime = getEquationOfTime(tnoon)
         let solarDec = getSunDeclination(tnoon)
-        let hourAngle = getSunHourAngleAtSunset(lat: latitude, solarDec: solarDec, zenith: zenith)
+		
+        let hourAngle = getSunHourAngle(lat: latitude, solarDec: solarDec, zenith: zenith, solarEvent: .sunset)
         let delta = longitude - hourAngle.degrees
         let timeDiff = 4 * delta
         var timeUTC = 720 + timeDiff - eqTime
         let newt = getJulianCenturiesFromJulianDay(julianDay: NOAACalculator.getJulianDayFromJulianCenturies(julianCenturies) + timeUTC / 1440.0)
         let eqTime2 = getEquationOfTime(newt)
         let solarDec2 = getSunDeclination(newt)
-        let hourAngle2 = getSunHourAngleAtSunset(lat: latitude, solarDec: solarDec2, zenith: zenith)
+		let hourAngle2 = getSunHourAngle(lat: latitude, solarDec: solarDec2, zenith: zenith, solarEvent: .sunset)
         let delta2 = longitude - hourAngle2.degrees
         let timeDiff2 = 4 * delta2
         timeUTC = 720 + timeDiff2 - eqTime2
@@ -316,10 +292,10 @@ public class NOAACalculator: AstronomicalCalculator {
 
 extension Double {
     var radians: Double {
-        return self * .pi / 180.0
+		Measurement(value: self, unit: UnitAngle.degrees).converted(to: .radians).value
     }
     
     var degrees: Double {
-        return self * 180.0 / .pi
+		Measurement(value: self, unit: UnitAngle.radians).converted(to: .degrees).value
     }
 }
