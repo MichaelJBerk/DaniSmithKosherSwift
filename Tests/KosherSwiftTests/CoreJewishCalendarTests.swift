@@ -36,7 +36,7 @@ extension JewishCalendarTestProtocol {
 		var loop = true
 		var loopAmount = 0
 
-		let loopMax = [JewishHoliday.purimKatan, .shushanPurimKatan].contains(yomTov) ? 1540 : 385
+		let loopMax = [JewishHoliday.purimKatan, .shushanPurimKatan].contains(yomTov) ? 1540 : 386
 		while loop {
 			cal = cal.advanced(byAdding: .day, value: 1)
 			loop = cal.getCurrentChag() != yomTov
