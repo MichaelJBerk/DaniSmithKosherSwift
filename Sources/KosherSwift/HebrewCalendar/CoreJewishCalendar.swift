@@ -555,6 +555,7 @@ public class CoreJewishCalendar: JewishDateWrapper, JewishDateRepresentable, @un
 	
 	//MARK: - Mashiv HaRuach/Vesen Bracha
 
+    @available(*, deprecated, message: "Use TefilaRules.isMashivHaruachRecited instead.")
     public var isMashivHaruachRecited: Bool {
         let start = JewishDate(withJewishYear: year, andMonth: .tishrei, andDay: 22)
         let end = JewishDate(withJewishYear: year, andMonth: .nissan, andDay: 15)
@@ -562,6 +563,7 @@ public class CoreJewishCalendar: JewishDateWrapper, JewishDateRepresentable, @un
         return gregDate > start.gregDate && gregDate < end.gregDate
     }
     
+    @available(*, deprecated, message: "Use TefilaRules.isVeseinTalUmatarRecited instead.")
     public var isVeseinTalUmatarRecited: Bool {
         if month == .nissan && day < 15 {
             return true
@@ -574,10 +576,14 @@ public class CoreJewishCalendar: JewishDateWrapper, JewishDateRepresentable, @un
         return tekufasTishreiElapsedDays >= 47
     }
     
+    @available(*, deprecated, message: "Use TefilaRules.isMashivHaruachStartDate instead.")
     public var isMashivHaruachStartDate: Bool { return month == .tishrei && day == 22 }
+    @available(*, deprecated, message: "Use TefilaRules.isMashivHaruachEndDate instead.")
     public var isMashivHaruachEndDate: Bool { return month == .nissan && day == 15 }
     
+    @available(*, deprecated, message: "Use TefilaRules.isVeseinBerachaRecited instead.")
     public var isVeseinBerachaRecited: Bool { !isVeseinTalUmatarRecited }
+    @available(*, deprecated, message: "Use TefilaRules.isMoridHatalRecited instead.")
     public var isMoridHatalRecited: Bool { !isMashivHaruachRecited || isMashivHaruachStartDate || isMashivHaruachEndDate }
 	
     ///Return the ``CoreJewishCalendar`` for the following day

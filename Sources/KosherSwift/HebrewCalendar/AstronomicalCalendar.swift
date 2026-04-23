@@ -315,7 +315,7 @@ public class AstronomicalCalendar {
     ///Returns the dip below the horizon before sunrise that matches the offset minutes on passed in as a parameter
 	///
 	///For exampl,e passing in 72 minutes for a calendar set to the equinox in Jerusalem returns a value close to 16.1°
-	///- Warning: Please note that this method is very slow and inefficient and should NEVER be used in a loop.
+	///- Warning: Please note that this method is very slow and inefficient and should NEVER be used in a loop. This method should be replaced by calls to AstronomicalCalculator.getSolarElevation.
 	///- Parameter minutes: offset
 	///- Returns: The degrees below the horizon before sunrise that match the offset in minutes passed it as a parameter.
     func getSunriseSolarDipFromOffset(minutes: Double) -> Double {
@@ -339,7 +339,7 @@ public class AstronomicalCalendar {
     ///Returns the dip below the horizon after sunset that matches the offset minutes on passed in as a parameter.
 	///
 	///For example passing in 72 minutes for a calendar set to the equinox in Jerusalem returns a value close to 16.1°
-	///- Warning: Please note that this method is very slow and inefficient and should NEVER be used in a loop.
+	///- Warning: Please note that this method is very slow and inefficient and should NEVER be used in a loop. This method should be replaced by calls to AstronomicalCalculator.getSolarElevation.
 	///- Parameter minutes: offset
 	///- Returns: the degrees below the horizon after sunset that match the offset in minutes passed it as a parameter.
     func getSunsetSolarDipFromOffset(minutes: Double) -> Double {

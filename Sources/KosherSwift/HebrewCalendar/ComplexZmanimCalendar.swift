@@ -31,7 +31,9 @@ public class ComplexZmanimCalendar: ZmanimCalendar, @unchecked Sendable {
     public func shaahZmanis96Minutes() -> Double? { getTemporalHour(dayStart: alos96(), dayEnd: tzeis96()) }
     public func shaahZmanis120Minutes() -> Double? { getTemporalHour(dayStart: alos120(), dayEnd: tzeis120()) }
     public func shaahZmanis120MinutesZmanis() -> Double? { getTemporalHour(dayStart: alos120Zmanis(), dayEnd: tzeis120Zmanis()) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func plagHamincha120MinutesZmanis() -> Date? { calculatePlagHamincha(alos120Zmanis(), tzeis120Zmanis()) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func plagHamincha120Minutes() -> Date? { calculatePlagHamincha(alos120(), tzeis120()) }
     public func alos60() -> Date? {
 		AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunrise, offset: -60 * AstronomicalCalendar.minuteMillis) }
@@ -45,8 +47,11 @@ public class ComplexZmanimCalendar: ZmanimCalendar, @unchecked Sendable {
     
     public func alos96Zmanis() -> Date? { zmanisBasedOffset(-1.6) }
     public func alos90() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunrise, offset: -90 * AstronomicalCalendar.minuteMillis) }
+    /// - Warning: This method should be used lechumra only since it returns a very early time, and if used lekula can result in doing mitzvos hayom too early. This warning is intended to alert developers of the danger of using it.
     public func alos120() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunrise, offset: -120 * AstronomicalCalendar.minuteMillis) }
+    /// - Warning: This method should be used lechumra only since it returns a very early time, and if used lekula can result in doing mitzvos hayom too early. This warning is intended to alert developers of the danger of using it.
     public func alos120Zmanis() -> Date? { zmanisBasedOffset(-2) }
+    /// - Warning: This method should be used lechumra only since it returns a very early time, and if used lekula can result in doing mitzvos hayom too early. This warning is intended to alert developers of the danger of using it.
     public func alos26Degrees() -> Date? { getSunriseOffsetByDegrees(offsetZenith: .z26Deg) }
     public func alos18Degrees() -> Date? { getSunriseOffsetByDegrees(offsetZenith: .astronomical) }
     public func alos19Degrees() -> Date? { getSunriseOffsetByDegrees(offsetZenith: .z19Deg) }
@@ -85,16 +90,27 @@ public class ComplexZmanimCalendar: ZmanimCalendar, @unchecked Sendable {
     public func minchaKetana16Point1Degrees() -> Date? { calculateMinchaKetana(alos16Point1Degrees(), tzeis16Point1Degrees()) }
     public func minchaKetana72Minutes() -> Date? { calculateMinchaKetana(alos72(), tzeis72()) }
     public func plagHamincha60Minutes() -> Date? { calculatePlagHamincha(alos60(), tzeis60()) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func plagHamincha72Minutes() -> Date? { calculatePlagHamincha(alos72(), tzeis72()) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func plagHamincha90Minutes() -> Date? { calculatePlagHamincha(alos90(), tzeis90()) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func plagHamincha96Minutes() -> Date? { calculatePlagHamincha(alos96(), tzeis96()) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func plagHamincha96MinutesZmanis() -> Date? { calculatePlagHamincha(alos96Zmanis(), tzeis96Zmanis()) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func plagHamincha90MinutesZmanis() -> Date? { calculatePlagHamincha(alos90Zmanis(), tzeis90Zmanis()) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func plagHamincha72MinutesZmanis() -> Date? { calculatePlagHamincha(alos72Zmanis(), tzeis72Zmanis()) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func plagHamincha16Point1Degrees() -> Date? { calculatePlagHamincha(alos16Point1Degrees(), tzeis16Point1Degrees()) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func plagHamincha19Point8Degrees() -> Date? { calculatePlagHamincha(alos19Point8Degrees(), tzeis19Point8Degrees()) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func plagHamincha26Degrees() -> Date? { calculatePlagHamincha(alos26Degrees(), tzeis26Degrees()) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func plagHamincha18Degrees() -> Date? { calculatePlagHamincha(alos18Degrees(), tzeis18Degrees()) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func plagAlosToSunset() -> Date? { calculatePlagHamincha(alos16Point1Degrees(), elevationAdjustedSunset) }
     public func tzeisGeonim3Point7Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z3_7) }
     public func tzeisGeonim3Point8Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z3_8) }
@@ -120,9 +136,12 @@ public class ComplexZmanimCalendar: ZmanimCalendar, @unchecked Sendable {
     public func tzeis90Zmanis() -> Date? { zmanisBasedOffset(1.5) }
     public func tzeis96Zmanis() -> Date? { zmanisBasedOffset(1.6) }
     public func tzeis90() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 90 * AstronomicalCalendar.minuteMillis) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func tzeis120() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 120 * AstronomicalCalendar.minuteMillis) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
     public func tzeis120Zmanis() -> Date? { zmanisBasedOffset(2.0) }
     public func tzeis16Point1Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z16_1) }
+    /// - Warning: This method should be used lechumra only since it returns a very late time, and if used lekula can result in chillul Shabbos etc. This warning is intended to alert developers of the danger of using it.
 	public func tzeis26Degrees() -> Date? {
 		getSunsetOffsetByDegrees(offsetZenith: .z26Deg)
 	}

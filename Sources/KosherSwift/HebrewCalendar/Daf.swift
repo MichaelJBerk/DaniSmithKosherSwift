@@ -144,6 +144,7 @@ public struct Daf: Equatable, Sendable {
         "No Daf Today"
     ]
     
+    /// - Warning: misspelled property name to be removed in a future version.
     static let masechtosYerushlmi = [
         "\u{05d1}\u{05e8}\u{05db}\u{05d5}\u{05ea}",
         "\u{05e4}\u{05d9}\u{05d0}\u{05d4}",
@@ -203,6 +204,7 @@ public struct Daf: Equatable, Sendable {
         Daf.masechtosBavli[masechtaNumber]
     }
     
+    /// - Warning: misspelled property name to be removed in a future version.
     var yerushlmiMasechtaTransliterated: String {
         Daf.masechtosYerushalmiTransliterated[masechtaNumber]
     }
