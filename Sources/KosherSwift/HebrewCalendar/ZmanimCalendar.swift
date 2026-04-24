@@ -125,6 +125,10 @@ public class ZmanimCalendar: AstronomicalCalendar, @unchecked Sendable {
         }
         return shaahZmanisBasedZman(dayStart, dayEnd, 9.5)
     }
+	
+	public func plagHamincha() -> Date? {
+		return calculatePlagHamincha(elevationAdjustedSunrise, elevationAdjustedSunset)
+	}
     
     public func calculatePlagHamincha(_ dayStart: Date?, _ dayEnd: Date?) -> Date? {
         guard let dayStart = dayStart, let dayEnd = dayEnd else {
