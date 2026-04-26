@@ -214,6 +214,6 @@ public struct Daf: Equatable, Sendable {
     }
 }
 
-public enum DafType: Sendable {
+public enum DafType: Sendable, Comparable, Codable {
     case bavli, yerushalmi
 }
