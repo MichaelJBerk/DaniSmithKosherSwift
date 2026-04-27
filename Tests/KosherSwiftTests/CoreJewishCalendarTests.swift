@@ -119,6 +119,27 @@ struct JewishCalendarTests: JewishCalendarTestProtocol {
 	// 	let cal = JewishCalendar(date: .init(year: 2025, month: 11, day: 19))
 	// 	#expect(cal.isTomorrowShabbosOrYomTov)
 	// }
+	
+	@Test
+	func testMonthlyTehillimNotEmpty() {
+		var cal = JewishCalendar(withJewishYear: 5786, andMonth: .tishrei, andDay: 1, isInIsrael: false)
+		while cal.year == 5786 {
+			#expect(cal.monthlyTehillim.isEmpty == false)
+			cal = cal.advanced(byAdding: .day, value: 1)
+		}
+	}
+	
+	@Test
+	func testMonthlyTehillimDay29() {
+		let cal1Iyar = JewishCalendar(withJewishYear: 5786, andMonth: .iyar, andDay: 1, isInIsrael: false)
+		#expect(cal1Iyar.monthlyTehillim == [1,2,3,4,5,6,7,8,9])
+		let cal29Iyar = JewishCalendar(withJewishYear: 5786, andMonth: .iyar, andDay: 29, isInIsrael: false)
+		#expect(cal29Iyar.monthlyTehillim == [140,141,142,143,144,145,146,147,148,149,150])
+		let cal29Sivan = JewishCalendar(withJewishYear: 5786, andMonth: .sivan, andDay: 29, isInIsrael: false)
+		#expect(cal29Sivan.monthlyTehillim == [140,141,142,143,144])
+		let cal30Sivan = JewishCalendar(withJewishYear: 5786, andMonth: .sivan, andDay: 30, isInIsrael: false)
+		#expect(cal30Sivan.monthlyTehillim == [145,146,147,148,149,150])
+	}
 
 }
 
