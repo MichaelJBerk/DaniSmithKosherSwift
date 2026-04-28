@@ -106,7 +106,7 @@ public class ZmanimCalendar: AstronomicalCalendar, @unchecked Sendable {
     
     // Helpers
     public func calculateLatestTefila(_ dayStart: Date?, _ dayEnd: Date?) -> Date? {
-        guard let shaahZmanis = getTemporalHour(dayStart: dayStart ?? seaLevelSunrise!, dayEnd: dayEnd ?? seaLevelSunset!) else {
+        guard let seaLevelSunset, let seaLevelSunrise, let shaahZmanis = getTemporalHour(dayStart: dayStart ?? seaLevelSunrise, dayEnd: dayEnd ?? seaLevelSunset) else {
             return nil
         }
         return AstronomicalCalendar.getTimeOffset(time: dayStart, offset: shaahZmanis * 4)
@@ -114,6 +114,9 @@ public class ZmanimCalendar: AstronomicalCalendar, @unchecked Sendable {
     
     public func calculateLatestZmanShema(_ dayStart: Date?, _ dayEnd: Date?) -> Date? {
         guard let dayStart = dayStart, let dayEnd = dayEnd else {
+            if seaLevelSunrise == nil || seaLevelSunset == nil {
+                return nil
+            }
             return calculateLatestZmanShema(seaLevelSunrise, seaLevelSunset)
         }
         return shaahZmanisBasedZman(dayStart, dayEnd, 3)
@@ -121,6 +124,9 @@ public class ZmanimCalendar: AstronomicalCalendar, @unchecked Sendable {
     
     public func calculateMinchaKetana(_ dayStart: Date?, _ dayEnd: Date?) -> Date? {
         guard let dayStart = dayStart, let dayEnd = dayEnd else {
+            if seaLevelSunrise == nil || seaLevelSunset == nil {
+                return nil
+            }
             return calculateMinchaKetana(seaLevelSunrise, seaLevelSunset)
         }
         return shaahZmanisBasedZman(dayStart, dayEnd, 9.5)
@@ -132,6 +138,9 @@ public class ZmanimCalendar: AstronomicalCalendar, @unchecked Sendable {
     
     public func calculatePlagHamincha(_ dayStart: Date?, _ dayEnd: Date?) -> Date? {
         guard let dayStart = dayStart, let dayEnd = dayEnd else {
+            if seaLevelSunrise == nil || seaLevelSunset == nil {
+                return nil
+            }
             return calculatePlagHamincha(seaLevelSunrise, seaLevelSunset)
         }
         return shaahZmanisBasedZman(dayStart, dayEnd, 10.75)
@@ -139,6 +148,9 @@ public class ZmanimCalendar: AstronomicalCalendar, @unchecked Sendable {
     
     public func calculateMinchaGedolah(_ dayStart: Date? = nil, _ dayEnd: Date? = nil) -> Date? {
         guard let dayStart = dayStart, let dayEnd = dayEnd else {
+            if seaLevelSunrise == nil || seaLevelSunset == nil {
+                return nil
+            }
             return calculateMinchaGedolah(seaLevelSunrise, seaLevelSunset)
         }
         return shaahZmanisBasedZman(dayStart, dayEnd, 6.5)
