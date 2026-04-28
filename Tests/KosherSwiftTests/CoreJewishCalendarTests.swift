@@ -140,6 +140,26 @@ struct JewishCalendarTests: JewishCalendarTestProtocol {
 		let cal30Sivan = JewishCalendar(withJewishYear: 5786, andMonth: .sivan, andDay: 30, isInIsrael: false)
 		#expect(cal30Sivan.monthlyTehillim == [145,146,147,148,149,150])
 	}
+	
+	@Test
+	func testFormattingMonthlyTehillim() async throws {
+		#expect(JewishCalendar(withJewishYear: 5786, andMonth: .iyar, andDay: 29).formatted(.tehillimCycle) == "140 - 150")
+		#expect(JewishCalendar(withJewishYear: 5786, andMonth: .sivan, andDay: 29).formatted(.tehillimCycle) == "140 - 144")
+		#expect(JewishCalendar(withJewishYear: 5786, andMonth: .sivan, andDay: 30).formatted(.tehillimCycle) == "145 - 150")
+		#expect(JewishCalendar(withJewishYear: 5786, andMonth: .iyar, andDay: 1).formatted(.tehillimCycle) == "1 - 9")
+		#expect(JewishCalendar(withJewishYear: 5786, andMonth: .iyar, andDay: 25).formatted(.tehillimCycle) == "119: 1 - 96")
+		#expect(JewishCalendar(withJewishYear: 5786, andMonth: .iyar, andDay: 26).formatted(.tehillimCycle) == "119: 97 - 176")
+	}
+	
+	@Test
+	func testFormattingMonthlyTehillimHebrew() {
+		#expect(JewishCalendar(withJewishYear: 5786, andMonth: .iyar, andDay: 29).formatted(.tehillimCycle.hebrew()) == "קמ - קנ")
+		#expect(JewishCalendar(withJewishYear: 5786, andMonth: .sivan, andDay: 29).formatted(.tehillimCycle.hebrew()) == "קמ - קמד")
+		#expect(JewishCalendar(withJewishYear: 5786, andMonth: .sivan, andDay: 30).formatted(.tehillimCycle.hebrew()) == "קמה - קנ")
+		#expect(JewishCalendar(withJewishYear: 5786, andMonth: .iyar, andDay: 1).formatted(.tehillimCycle.hebrew()) == "א - ט")
+		#expect(JewishCalendar(withJewishYear: 5786, andMonth: .iyar, andDay: 25).formatted(.tehillimCycle.hebrew()) == "קיט: א - צו")
+		#expect(JewishCalendar(withJewishYear: 5786, andMonth: .iyar, andDay: 26).formatted(.tehillimCycle.hebrew()) == "קיט: צז - קעו")
+	}
 
 }
 
