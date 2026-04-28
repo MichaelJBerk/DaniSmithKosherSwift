@@ -213,21 +213,27 @@ public class AstronomicalCalendar {
     
 	///A method that calculates a temporal (solar) hour based on the sunrise and sunset passed as parameters.
 	///
-	///If no parameters are passed, the method defaults to using ``seaLevelSunrise`` and ``seaLevelSunset``.
 	///An example of the use of this method would be the calculation of a elevation adjusted temporal hour by passing in sunrise and sunset as parameters.
 	///> Tip: The day from sea-level sunrise to sea-level sunset is split into 12 equal parts with each one being a temporal hour.
 	///
-	///- Parameter dayStart: The start of the day. Defaults to ``seaLevelSunrise``
-	///- Parameter dayEnd: The end of the day. Defaults to ``seaLevelSunset``
+	///- Parameter dayStart: The start of the day.
+	///- Parameter dayEnd: The end of the day.
 	///- Returns: the millisecond length of a temporal hour. If the calculation can't be computed, `nil` will be returned. See details on ``AstronomicalCalendar`` for more information.
     func getTemporalHour(dayStart: Date? = nil, dayEnd: Date? = nil) -> Double? {
-        let start = dayStart ?? seaLevelSunrise
-        let end = dayEnd ?? seaLevelSunset
+        let start = dayStart
+        let end = dayEnd
         
         guard let start = start, let end = end else { return nil }
         
         return Double((end.millisecondsSince1970 - start.millisecondsSince1970) / 12)
     }
+	
+	///A method that calculates a temporal (solar) hour based on ``seaLevelSunrise`` and ``seaLevelSunset``.
+	/// 
+	///- Returns: the millisecond length of a temporal hour. If the calculation can't be computed, `nil` will be returned. See details on ``AstronomicalCalendar`` for more information.
+	func getTemporalHour() -> Double? {
+		getTemporalHour(dayStart: seaLevelSunrise, dayEnd: seaLevelSunset)
+	}
 	
 	func getSunTransit() -> Date? {
 		guard let adjustedDate else {return nil}
