@@ -423,4 +423,13 @@ final class KosherSwiftTests: XCTestCase {
         let omer49Cal = JewishCalendar(withJewishYear: 5786, andMonth: .sivan, andDay: 5)
         XCTAssert(try formatter.formatOmer(jewishCalendar: omer49Cal) == "הַיּוֹם תִּשְׁעָה וְאַרְבָּעִים יוֹם לָעֹמֶר, שֶׁהֵם שִׁבְעָה שָׁבוּעוֹת:")
     }
+
+    func testPolarDayComplexZmanLogic() {
+        let date = Date(year: 2017, month: 6, day: 21)
+        let location = GeoLocation(lat: 69.6492, lng: 18.9553, timezone: .init(identifier: "Europe/Oslo")!, elevation: nil, name: "Tromso")
+        let cal = ZmanimCalendar(location: location, date: date)
+        let shema = cal.latestShemaGra()
+        XCTAssert(shema == nil)
+        
+    }
 }
