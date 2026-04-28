@@ -55,18 +55,13 @@ public class ZmanimCalendar: AstronomicalCalendar {
     
     // Helpers
     public func calculateLatestTefila(_ dayStart: Date?, _ dayEnd: Date?) -> Date? {
-        guard let seaLevelSunset, let seaLevelSunrise, let shaahZmanis = getTemporalHour(dayStart: dayStart ?? seaLevelSunrise, dayEnd: dayEnd ?? seaLevelSunset) else {
-            return nil
-        }
+        guard let dayStart, let dayEnd, let shaahZmanis = getTemporalHour(dayStart: dayStart, dayEnd: dayEnd) else {return nil}
         return AstronomicalCalendar.getTimeOffset(time: dayStart, offset: shaahZmanis * 4)
     }
     
     public func calculateLatestZmanShema(_ dayStart: Date?, _ dayEnd: Date?) -> Date? {
         guard let dayStart = dayStart, let dayEnd = dayEnd else {
-            if seaLevelSunrise == nil || seaLevelSunset == nil {
-                return nil
-            }
-            return calculateLatestZmanShema(seaLevelSunrise, seaLevelSunset)
+            return nil
         }
         return shaahZmanisBasedZman(dayStart, dayEnd, 3)
     }
