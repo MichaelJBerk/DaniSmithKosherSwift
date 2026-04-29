@@ -494,9 +494,6 @@ public struct HebrewDateFormatter {
     
 	/// Formats the [Daf Yomi](https://en.wikipedia.org/wiki/Daf_Yomi) in the format of "עירובין נ״ב" in Hebrew, or the transliterated format of "Eruvin 52".
 	/// 
-	///  @param daf the Daf to be formatted.
-	///  @return the formatted daf.
-	/// 
 	/// - Parameter daf: the Daf to be formatted
 	/// - Returns: the formatted Daf
     public func formatDafYomi(daf: Daf) throws -> String {

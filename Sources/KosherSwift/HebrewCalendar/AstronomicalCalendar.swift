@@ -69,7 +69,7 @@ public class AstronomicalCalendar {
 	///
 	/// If the calculation can't be computed such as in the Arctic Circle where there is at least one day a year where the sun does not rise, and one where it does not set, this will return `nil`. See details on ``AstronomicalCalendar`` for more information.
 	///
-	///The zenith used for the calculation uses geometric zenith of 90° plus ``AstronomicalCalculator/getElevationAdjustment(_:)``. This is adjusted by the ``AstronomicalCalculator`` to add approximately 50/60 of a degree to account for 34 archminutes of refraction and 16 archminutes for the sun's radius for a total of 90.83333°. See documentation for the specific implementation of the AstronomicalCalculator that you are using.
+	///The zenith used for the calculation uses geometric zenith of 90° plus the value from ``AstronomicalCalculator``'s `getElevationAdjustment(_:)` method. This is adjusted by the ``AstronomicalCalculator`` to add approximately 50/60 of a degree to account for 34 archminutes of refraction and 16 archminutes for the sun's radius for a total of 90.83333°. See documentation for the specific implementation of the AstronomicalCalculator that you are using.
 	///> Note: In certain cases the calculates sunset will occur before sunrise. This will typically happen when a timezone other than the local timezone is used (calculating Los Angeles sunset using a GMT timezone for example). In this case the sunset date will be incremented to the following date.
     public var sunset: Date? {
         let ret = getUtcSunset(zenith: Zenith.geometric.rawValue)

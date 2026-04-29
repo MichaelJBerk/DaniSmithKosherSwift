@@ -16,10 +16,6 @@ import Foundation
  - ``getUtcSunset(date:location:zenith:adjustForElevation:)``
  - ``getUtcSunrise(date:location:zenith:adjustForElevation:)``
  
- ### Calculating Adjustments
- - ``adjustZenith(zenith:elevation:)``
- - ``getElevationAdjustment(_:)``
- 
  */
 public protocol AstronomicalCalculator {
 	
