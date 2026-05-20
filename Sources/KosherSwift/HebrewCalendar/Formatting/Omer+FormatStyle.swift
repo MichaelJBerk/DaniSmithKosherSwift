@@ -18,6 +18,9 @@ import Foundation
 33.formatted(.omer(style: .long(nusach: .ashkenaz))) // "הַיּוֹם שְׁלֹשָׁה וּשְׁלֹשִׁים יוֹם, שֶׁהֵם אַרְבָּעָה שָׁבוּעוֹת וַחֲמִשָּׁה יָמִים לָעֹמֶר: "
 33.formatted(.omer(style: .long(nusach: .mizrach))) // "הַיּוֹם שְׁלֹשָׁה וּשְׁלֹשִׁים יוֹם לָעֹמֶר, שֶׁהֵם אַרְבָּעָה שָׁבוּעוֹת וַחֲמִשָּׁה יָמִים:"
 ```
+
+If the input value is not a day of the omer (i.e. it is not between 1 and 49), this will return an empty string.
+ 
 > Note: The data for the long Omer style is lazily loaded from disk the first time the instance accesses it. If you need the best performance possible, you may want to create a single ``OmerFormatStyle`` instance and modify that when needed.
 */
 public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hashable {
@@ -93,6 +96,9 @@ public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hasha
 	}
 
 	public func format(_ value: Int) -> String {
+		if value <= 0 || value > 49 {
+			return ""
+		}
 		switch style {
 		case .short(let hebrew, let hebrewOmerPrefix, let gematria):
 			var formatter = HebrewDateFormatter(hebrewFormat: hebrew,
