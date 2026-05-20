@@ -51,6 +51,18 @@ public class ZmanimCalendar: AstronomicalCalendar, @unchecked Sendable {
 	public func candleLighting() -> Date? {
 		return AstronomicalCalendar.getTimeOffset(time: seaLevelSunset, offset: -1 * candleLightingOffset * AstronomicalCalendar.minuteMillis)
 	}
+	/// A method to return candle lighting time, calculated as ``timeOffset`` minutes before ``AstronomicalCalendar/seaLevelSunset``
+	/// 
+	/// This will return the time for any day of the week, since it can be used to calculate candle lighting time for *Yom Tov* (mid-week holidays) as well. Elevation adjustments are intentionally not performed by this method, but you can calculate it by passing the elevation adjusted sunset to ``AstronomicalCalendar/getTimeOffset(time:offset:)``.
+	/// - Parameter timeOffset: the number of minutes before ``AstronomicalCalendar/seaLevelSunset`` when *Shabbos* or *Yom Tov* begins
+	/// - Returns: candle lighting time. If the calculation can't be computed such as in the Arctic Circle where there is at
+	/// least one day a year where the sun does not rise, and one where it does not set, `nil` will be returned. See detailed explanation on top of the `AstronomicalCalendar` documentation.
+	/// ## See Also
+	/// - ``AstronomicalCalendar/seaLevelSunset``
+	/// - ``candleLightingOffset``
+	public func candleLighting(timeOffset: Double) -> Date? {
+		return AstronomicalCalendar.getTimeOffset(time: seaLevelSunset, offset: -1 * timeOffset * AstronomicalCalendar.minuteMillis)
+	}
 	
 	/// A method to return the next candle lighting time
 	/// 
