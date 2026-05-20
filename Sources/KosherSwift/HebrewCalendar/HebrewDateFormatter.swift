@@ -33,6 +33,7 @@ public struct HebrewDateFormatter {
     /// true, the format תש״ף would be used.
     public let useFinalFormLetters: Bool
     
+	@available(*, deprecated, message: "Use OmerFormatStyle instead")
     public let longOmerFormat: Bool
     
     public let useShortHolidayFormat: Bool
@@ -46,6 +47,7 @@ public struct HebrewDateFormatter {
     static let _GERSHAYIM = "״"
     
     /// Hebrew Omer prefix. By default it is the letter ב, but can be set to ל (or any other prefix).
+	@available(*, deprecated, message: "Use OmerFormatStyle instead")
     public let hebrewOmerPrefix = "ב"
     
     ///day of Shabbos transliterated into Latin chars. The default uses Ashkenazi pronunciation "Shabbos".
@@ -433,7 +435,7 @@ public struct HebrewDateFormatter {
         "Tishri": "Tishrei"
     ]
     
-    @available(*, deprecated, message: "JewishDate.FormatStyle instead")
+    @available(*, deprecated, message: "Use JewishDate.FormatStyle instead")
     public func formatDate(_ jewishDate: any JewishDateRepresentable, pattern: String = "d MMMM, yyyy") -> String {
         let formatter = DateFormatter()
         
@@ -463,6 +465,7 @@ public struct HebrewDateFormatter {
     /// ## See Also
 	/// - ``hebrewFormat``
     /// - ``hebrewOmerPrefix``
+	@available(*, deprecated, message: "Use OmerFormatStyle instead")
     public func formatOmer(jewishCalendar: CoreJewishCalendar) throws -> String? {
         guard let omer = jewishCalendar.dayOfOmer else { return nil }
         return try formatOmer(day: omer)
@@ -478,6 +481,7 @@ public struct HebrewDateFormatter {
 	/// ## See Also
 	/// - ``hebrewFormat``
 	/// - ``hebrewOmerPrefix``
+	@available(*, deprecated, message: "Use OmerFormatStyle instead")
 	public func formatOmer(day: Int) throws -> String? {
 		if hebrewFormat {
 			return longOmerFormat
