@@ -217,11 +217,16 @@ public class NOAACalculator: AstronomicalCalculator {
 		let julianDay = (solarEvent == .noon) ? julianDay : julianDay + 0.5
 		let tnoon = getJulianCenturiesFromJulianDay(julianDay: julianDay + longitude / 360.0)
 		var equationOfTime = getEquationOfTime(tnoon)
-		let solNoonUTC = (longitude * 4) - equationOfTime
+		var solNoonUTC = (longitude * 4) - equationOfTime
 		
 		//second pass
-		let newt = getJulianCenturiesFromJulianDay(julianDay: julianDay + solNoonUTC / 1440.0)
-		equationOfTime = getEquationOfTime(newt)
+        var newt: Double = 0;
+        for _ in 0..<2 {
+            newt = getJulianCenturiesFromJulianDay(julianDay: julianDay + solNoonUTC / 1440.0)
+            equationOfTime = getEquationOfTime(newt)
+            solNoonUTC = (solarEvent == .noon ? 720 : 1440) + (longitude * 4) - equationOfTime
+        }
+		
 		return (solarEvent == .noon ? 720 : 1440) + (longitude * 4) - equationOfTime
 	}
     
