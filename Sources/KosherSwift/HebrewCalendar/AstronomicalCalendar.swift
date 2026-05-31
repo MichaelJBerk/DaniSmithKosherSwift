@@ -110,14 +110,14 @@ public class AstronomicalCalendar {
         return astronomicalCalculator.getUtcSunset(date: adjustedDate, location: location, zenith: zenith.rawValue, adjustForElevation: false)
     }
     
-	///A method that calculates a temporal (solar) hour based on the sunrise and sunset passed as parameters.
+	/// A method that calculates a temporal (solar) hour based on the sunrise and sunset passed as parameters.
 	///
-	///An example of the use of this method would be the calculation of a elevation adjusted temporal hour by passing in sunrise and sunset as parameters.
-	///> Tip: The day from sea-level sunrise to sea-level sunset is split into 12 equal parts with each one being a temporal hour.
+	/// An example of the use of this method would be the calculation of a elevation adjusted temporal hour by passing in sunrise and sunset as parameters.
+	/// > Tip: The day from sea-level sunrise to sea-level sunset is split into 12 equal parts with each one being a temporal hour.
 	///
-	///- Parameter dayStart: The start of the day.
-	///- Parameter dayEnd: The end of the day.
-	///- Returns: the millisecond length of a temporal hour. If the calculation can't be computed, `nil` will be returned. See details on ``AstronomicalCalendar`` for more information.
+	/// - Parameter dayStart: The start of the day.
+	/// - Parameter dayEnd: The end of the day.
+	/// - Returns: the millisecond length of a temporal hour. If the calculation can't be computed, `nil` will be returned. See details on ``AstronomicalCalendar`` for more information.
     func getTemporalHour(dayStart: Date? = nil, dayEnd: Date? = nil) -> Double? {
         let start = dayStart
         let end = dayEnd
@@ -193,7 +193,7 @@ public class AstronomicalCalendar {
         calculatedTime = calculatedTime * 60
         let seconds = Int(calculatedTime)
         calculatedTime -= Double(seconds)
-		
+
 		
 		// Check if a date transition has occurred, or is about to occur - this indicates the date of the event is
 		// actually not the target date, but the day prior or after
@@ -255,7 +255,7 @@ public class AstronomicalCalendar {
     }
     
     public func getLocalMeanTime(hours: Double) -> Date? {
-		AstronomicalCalendar.getTimeOffset(time: getDateFromTime(time: hours - Double(location.timezone.secondsFromGMT()) / AstronomicalCalendar.hourMillis, solarEvent: .sunrise), offset: -location.localMeanTimeOffset);
+		AstronomicalCalendar.getTimeOffset(time: getDateFromTime(time: hours - Double(location.timezone.secondsFromGMT()) / AstronomicalCalendar.hourMillis, solarEvent: .sunrise), offset: -location.localMeanTimeOffset)
     }
 }
 

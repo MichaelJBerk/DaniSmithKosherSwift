@@ -430,6 +430,5 @@ final class KosherSwiftTests: XCTestCase {
         let cal = ZmanimCalendar(location: location, date: date)
         let shema = cal.latestShemaGra()
         XCTAssert(shema == nil)
-        
     }
 }

@@ -123,9 +123,7 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     public func tzeis120() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 120 * AstronomicalCalendar.minuteMillis) }
     public func tzeis120Zmanis() -> Date? { zmanisBasedOffset(2.0) }
     public func tzeis16Point1Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z16_1) }
-	public func tzeis26Degrees() -> Date? {
-		getSunsetOffsetByDegrees(offsetZenith: .z26Deg)
-	}
+	public func tzeis26Degrees() -> Date? {getSunsetOffsetByDegrees(offsetZenith: .z26Deg)}
     public func tzeis18Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .astronomical) }
     public func latestTefila2HoursBeforeChatzos() -> Date? { AstronomicalCalendar.getTimeOffset(time: chatzos(), offset: -120 * AstronomicalCalendar.minuteMillis) }
     public func minchaGedola30Minutes() -> Date? { AstronomicalCalendar.getTimeOffset(time: chatzos(), offset: 30 * AstronomicalCalendar.minuteMillis) }
@@ -151,18 +149,10 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     public func tzeis60()  -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 60 * AstronomicalCalendar.minuteMillis) }
     public func tzeis19Point8Degrees() -> Date? { getSunsetOffsetByDegrees(offsetZenith: .z19_8) }
     public func tzeis96()  -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 96 * AstronomicalCalendar.minuteMillis) }
-	public func latestAchilasChametzGRA()  -> Date? {
-		isErevPesach ? latestTefilaGra() : nil
-	}
-	public func latestAchilasChametzMGA72Minutes() -> Date? {
-		isErevPesach ? latestTefilaMGA72Minutes() : nil
-	}
-	public func latestAchilasChametzMGA16Point1Degrees() -> Date? {
-		isErevPesach ? latestTefilaMGA16Point1Degrees() : nil
-	}
-	public func latestBiurChametzGRA()  -> Date? {
-		isErevPesach ? AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunrise, offset: shaahZmanisGra() != nil ? shaahZmanisGra()! * 5 : nil) : nil
-	}
+	public func latestAchilasChametzGRA()  -> Date? {isErevPesach ? latestTefilaGra() : nil}
+	public func latestAchilasChametzMGA72Minutes() -> Date? {isErevPesach ? latestTefilaMGA72Minutes() : nil}
+	public func latestAchilasChametzMGA16Point1Degrees() -> Date? {isErevPesach ? latestTefilaMGA16Point1Degrees() : nil}
+	public func latestBiurChametzGRA()  -> Date? {isErevPesach ? AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunrise, offset: shaahZmanisGra() != nil ? shaahZmanisGra()! * 5 : nil) : nil }
     public func latestBiurChametzMGA72Minutes()  -> Date? {
 		isErevPesach ? AstronomicalCalendar.getTimeOffset(time: alos72(), offset: shaahZmanisMga() != nil ? shaahZmanisMga()! * 5 : nil) : nil }
     public func latestBiurChametzMGA16Point1Degrees()  -> Date? { AstronomicalCalendar.getTimeOffset(time: alos16Point1Degrees(), offset: shaahZmanis16Point1Degrees() != nil ? shaahZmanis16Point1Degrees()! * 5 : nil) }
@@ -172,9 +162,7 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     public func alosBaalHatanya() -> Date? { getSunriseOffsetByDegrees(offsetZenith: .z16_9) }
     public func latestShemaBaalHatanya() -> Date? { calculateLatestZmanShema(sunriseBaalHatanya(), sunsetBaalHatanya()) }
     public func latestTefilaBaalHatanya() -> Date? { calculateLatestTefila(sunriseBaalHatanya(), sunsetBaalHatanya()) }
-	public func latestAchilasChametzBaalHatanya() -> Date? {
-		isErevPesach ? latestTefilaBaalHatanya() : nil
-	}
+	public func latestAchilasChametzBaalHatanya() -> Date? {isErevPesach ? latestTefilaBaalHatanya() : nil}
 	public func latestBiurChametzBaalHatanya()  -> Date? {
 		isErevPesach ? AstronomicalCalendar.getTimeOffset(time: sunriseBaalHatanya(), offset: shaahZmanisBaalHatanya() != nil ?  shaahZmanisBaalHatanya()! * 5 : nil) : nil
 	}
@@ -357,7 +345,6 @@ public class ComplexZmanimCalendar: ZmanimCalendar {
     }
 	
 	private var isErevPesach: Bool {
-		let cal = JewishCalendar(date: date)
-		return cal.month == .nissan && cal.day == 14
+		JewishCalendar(date: date).isErevPesach
 	}
 }
