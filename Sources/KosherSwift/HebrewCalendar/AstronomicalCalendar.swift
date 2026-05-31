@@ -173,7 +173,7 @@ public class AstronomicalCalendar {
         var calculatedTime = time
         
         var gregorianCalendar =  Calendar(identifier: .gregorian)
-		//we need to set the calendar to the location's time zone, or the calculations will be determined for the device's current time zone.
+		// We need to set the calendar to the location's time zone, or the calculations will be determined for the device's current time zone.
 		gregorianCalendar.timeZone = location.timezone
 		
 		let adjustedComponents = gregorianCalendar.dateComponents([.year, .month, .day, .hour, .minute, .second, .nanosecond], from: adjustedDate)
