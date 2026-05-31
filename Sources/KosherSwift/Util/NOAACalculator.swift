@@ -198,8 +198,9 @@ public class NOAACalculator: AstronomicalCalculator {
 	
 	public func getUTCNoon(date: Date, geoLocation: GeoLocation) -> Double {
 		let noon = getSolarNoonMidnightUTC(julianDay: Self.getJulianDay(dateTime: date, timeZone: geoLocation.timezone), longitude: -geoLocation.lng, solarEvent: .noon) / 60
-		return noon > 0 ? noon.truncatingRemainder(dividingBy: 24) : noon.truncatingRemainder(dividingBy: 24) + 24
-		
+		return noon > 0 
+            ? noon.truncatingRemainder(dividingBy: 24)
+            : noon.truncatingRemainder(dividingBy: 24) + 24
 	}
 	
 	/// Return the [Universal Coordinated Time](https://en.wikipedia.org/wiki/Universal_Coordinated_Time) (UTC) of the current day [solar noon](http://en.wikipedia.org/wiki/Noon#Solar_noon) or the the upcoming midnight (about 12 hours after solar noon) of the given day at the given location on earth.
