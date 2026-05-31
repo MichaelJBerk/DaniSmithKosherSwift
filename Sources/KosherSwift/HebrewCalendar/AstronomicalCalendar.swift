@@ -154,7 +154,6 @@ public class AstronomicalCalendar {
 	///   - dayEnd: the end of day for calculating the sun's transit. This can be sea level sunset, visual sunset (or any arbitrary end of day) passed to this method. Defaults to ``seaLevelSunset``
 	/// - Returns: the Date representing Sun's transit.  If the calculation can't be computed,  `nil` will be returned. See details on ``AstronomicalCalendar`` for more information.
     func getSunTransit(start: Date, end: Date) -> Date? {
-        
         let temporalHour = getTemporalHour(dayStart: start, dayEnd: end)
         guard let temporalHour = temporalHour else { return nil }
         
