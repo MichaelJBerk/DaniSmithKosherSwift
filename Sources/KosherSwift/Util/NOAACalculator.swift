@@ -143,7 +143,7 @@ public class NOAACalculator: AstronomicalCalculator {
 		calendar.timeZone = timeZone
         let components = calendar.dateComponents([.year, .month, .day], from: dateTime)
         var year = components.year!
-		// KosherJava adds 1 to this, but it seems to be due to an effect of java's Calendar implemention
+		// KosherJava adds 1 to this, but it seems to be due to an effect of java's Calendar implementation
         var month = components.month!
         let day = components.day!
 		if month <= 2 {
