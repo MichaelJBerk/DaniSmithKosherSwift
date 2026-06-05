@@ -129,8 +129,7 @@ public class NOAACalculator: AstronomicalCalculator {
 		let latRad = lat.radians
 		let sdRad = solarDec.radians
 
-		var hourAngle = (acos(cos(zenith.radians) / (cos(latRad) * cos(sdRad)) - tan(latRad) * tan(sdRad))
-		)
+		var hourAngle = acos(cos(zenith.radians) / (cos(latRad) * cos(sdRad)) - tan(latRad) * tan(sdRad))
 		if solarEvent == .sunset {
 			hourAngle = -hourAngle
 		}
