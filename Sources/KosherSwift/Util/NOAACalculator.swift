@@ -40,7 +40,9 @@ public class NOAACalculator: AstronomicalCalculator {
     private static func getSunGeometricMeanLongitude(_ julianCenturies: Double) -> Double {
         let longitude = 280.46646 + julianCenturies * (36000.76983 + 0.0003032 * julianCenturies)
 
-		return longitude > 0 ? longitude.truncatingRemainder(dividingBy: 360) : longitude.truncatingRemainder(dividingBy: 360) + 360
+		return longitude > 0
+				? longitude.truncatingRemainder(dividingBy: 360)
+				: longitude.truncatingRemainder(dividingBy: 360) + 360
     }
     
     private static func getSunGeometricMeanAnomaly(_ julianCenturies: Double) -> Double {
