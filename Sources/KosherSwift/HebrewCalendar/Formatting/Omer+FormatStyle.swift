@@ -40,7 +40,7 @@ public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hasha
 		///
 		///This method does nothing if the style is `long`
 		public func hebrew(_ value: Bool = true) -> Self {
-			if case let .short(hebrew, hebrewOmerPrefix, gematria) = self {
+			if case let .short(_, hebrewOmerPrefix, gematria) = self {
 				return .short(hebrew: true, hebrewOmerPrefix: hebrewOmerPrefix, gematria: gematria)
 			}
 			return self
@@ -50,7 +50,7 @@ public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hasha
 		///
 		///This method does nothing if the style is `long`
 		public func hebrewOmerPrefix(_ value: String) -> Self {
-			if case let .short(hebrew, hebrewOmerPrefix, gematria) = self {
+			if case let .short(hebrew, _, gematria) = self {
 				return .short(hebrew: hebrew, hebrewOmerPrefix: value, gematria: gematria)
 			}
 			return self
@@ -76,7 +76,7 @@ public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hasha
 			case .long(_):
 				return .long(nusach: value)
 			}
-			return .long(nusach: value)
+//			return .long(nusach: value)
 		}
 	}
 	
@@ -101,7 +101,7 @@ public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hasha
 		}
 		switch style {
 		case .short(let hebrew, let hebrewOmerPrefix, let gematria):
-			var formatter = HebrewDateFormatter(hebrewFormat: hebrew,
+			let formatter = HebrewDateFormatter(hebrewFormat: hebrew,
 												useGershGershayim: gematria.gershGershayim,
 												useFinalFormLetters: gematria.finalFormLetters)
 			if hebrew {

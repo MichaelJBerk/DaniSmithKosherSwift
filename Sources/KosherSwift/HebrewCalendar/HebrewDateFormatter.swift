@@ -33,7 +33,7 @@ public struct HebrewDateFormatter {
     /// true, the format תש״ף would be used.
     public let useFinalFormLetters: Bool
     
-	@available(*, deprecated, message: "Use OmerFormatStyle instead")
+//	@available(*, deprecated, message: "Use OmerFormatStyle instead")
     public let longOmerFormat: Bool
     
     public let useShortHolidayFormat: Bool
