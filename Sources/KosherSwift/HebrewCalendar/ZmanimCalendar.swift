@@ -53,7 +53,7 @@ public class ZmanimCalendar: AstronomicalCalendar {
     
     // Helpers
     public func calculateLatestTefila(_ dayStart: Date?, _ dayEnd: Date?) -> Date? {
-        guard let dayStart, let dayEnd, let shaahZmanis = getTemporalHour(dayStart: dayStart, dayEnd: dayEnd) else {return nil}
+        guard let dayStart, let dayEnd, let shaahZmanis = getTemporalHour(dayStart: dayStart, dayEnd: dayEnd) else { return nil }
         return AstronomicalCalendar.getTimeOffset(time: dayStart, offset: shaahZmanis * 4)
     }
     
