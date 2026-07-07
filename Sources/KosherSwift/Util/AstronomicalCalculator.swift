@@ -45,8 +45,7 @@ public protocol AstronomicalCalculator {
     
 	///Default initializer for the class
     init()
-	
-	
+
 	func getUTCNoon(date: Date, geoLocation: GeoLocation) -> Double
 }
 

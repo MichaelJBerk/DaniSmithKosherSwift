@@ -7,14 +7,14 @@
 
 import Foundation
 
-///A type of solar event that can be calculated
+/// A type of solar event that can be calculated
 enum SolarEvent {
-	///A solar event related to sunrise
+	/// A solar event related to sunrise
 	case sunrise
-	///A solar event related to sunset
+	/// A solar event related to sunset
 	case sunset
-	///A solar event related to noon
+	/// A solar event related to noon
 	case noon
-	///A solar event related to midnight
+	/// A solar event related to midnight
 	case midnight
 }

@@ -33,9 +33,7 @@ public class ZmanimCalendar: AstronomicalCalendar, @unchecked Sendable {
 	/// - ``Zenith/z16_1``
     public func alosHashachar() -> Date? { getSunriseOffsetByDegrees(offsetZenith: .z16_1) }
     public func alos72() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunrise, offset: -72 * ZmanimCalendar.minuteMillis) }
-	public func chatzos() -> Date? {
-		return getSunTransit()
-	}
+	public func chatzos() -> Date? { return getSunTransit() }
     public func latestShemaGra() -> Date? { calculateLatestZmanShema(elevationAdjustedSunrise, elevationAdjustedSunset) }
     public func latestShemaMga() -> Date? { calculateLatestZmanShema(alos72(), tzeis72()) }
     public func tzeis72() -> Date? { AstronomicalCalendar.getTimeOffset(time: elevationAdjustedSunset, offset: 72 * AstronomicalCalendar.minuteMillis) }
@@ -118,7 +116,7 @@ public class ZmanimCalendar: AstronomicalCalendar, @unchecked Sendable {
     
     // Helpers
     public func calculateLatestTefila(_ dayStart: Date?, _ dayEnd: Date?) -> Date? {
-        guard let dayStart, let dayEnd, let shaahZmanis = getTemporalHour(dayStart: dayStart, dayEnd: dayEnd) else {return nil}
+        guard let dayStart, let dayEnd, let shaahZmanis = getTemporalHour(dayStart: dayStart, dayEnd: dayEnd) else { return nil }
         return AstronomicalCalendar.getTimeOffset(time: dayStart, offset: shaahZmanis * 4)
     }
     
