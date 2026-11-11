@@ -15,7 +15,7 @@ import Foundation
 1.formatted(.omer(style: .short(hebrew: true, gematria: .init(gershGershayim: false)))) // "א בעומר"
 32.formatted(.omer(style: .short(hebrew: true, gematria: .init(gershGershayim: false)))) // "לב בעומר"
 32.formatted(.omer(style: .short(hebrew: true, gematria: .init(gershGershayim: true)))) // "ל״ב בעומר"
-33.formatted(.omer(style: .long(nusach: .ashkenaz))) // "הַיּוֹם שְׁלֹשָׁה וּשְׁלֹשִׁים יוֹם, שֶׁהֵם אַרְבָּעָה שָׁבוּעוֹת וַחֲמִשָּׁה יָמִים לָעֹמֶר: "
+33.formatted(.omer(style: .long(nusach: .ashkenaz))) // "הַיּוֹם שְׁלֹשָׁה וּשְׁלֹשִׁים יוֹם, שֶׁהֵם אַרְבָּעָה שָׁבוּעוֹת וַחֲמִשָּׁה יָמִים בָּעוֹמֶר: "
 33.formatted(.omer(style: .long(nusach: .mizrach))) // "הַיּוֹם שְׁלֹשָׁה וּשְׁלֹשִׁים יוֹם לָעֹמֶר, שֶׁהֵם אַרְבָּעָה שָׁבוּעוֹת וַחֲמִשָּׁה יָמִים:"
 ```
 
