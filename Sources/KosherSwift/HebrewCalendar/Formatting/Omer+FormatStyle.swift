@@ -17,6 +17,8 @@ import Foundation
 32.formatted(.omer(style: .short(hebrew: true, gematria: .init(gershGershayim: true)))) // "ל״ב בעומר"
 33.formatted(.omer(style: .long(nusach: .ashkenaz))) // "הַיּוֹם שְׁלֹשָׁה וּשְׁלֹשִׁים יוֹם, שֶׁהֵם אַרְבָּעָה שָׁבוּעוֹת וַחֲמִשָּׁה יָמִים בָּעוֹמֶר: "
 33.formatted(.omer(style: .long(nusach: .mizrach))) // "הַיּוֹם שְׁלֹשָׁה וּשְׁלֹשִׁים יוֹם לָעֹמֶר, שֶׁהֵם אַרְבָּעָה שָׁבוּעוֹת וַחֲמִשָּׁה יָמִים:"
+33.formatted(.omer(style: .kabbalah()) // "נהל הוד שבהוד אֱלֹהִים ו"
+33.formatted(.omer(style: .kabbalah(includeHTML: true))) //"<b>נהל</b> הוד שבהוד <b>אֱלֹהִים</b> ו"
 ```
 
 If the input value is not a day of the omer (i.e. it is not between 1 and 49), this will return an empty string.
@@ -35,10 +37,13 @@ public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hasha
 		///A long Omer, containing the full text for the omer day (i.e. "הַיּוֹם יוֹם אֶחָד לָעֹמֶר:")
 		///- Parameter nusach: The nusach of the Omer text
 		case long(nusach: OmerFormatStyle.Nusach)
+		///The Kabbalic Trait for the Omer
+		///- Parameter includeHTML: Determine if HTML tags should be included. Defaults to `false`.
+		case kabbalah(includeHTML: Bool = false)
 		
 		///Modifies the short Omer style to output in Hebrew.
 		///
-		///This method does nothing if the style is `long`
+		///This method only modifies the value if the style is `short`
 		public func hebrew(_ value: Bool = true) -> Self {
 			if case let .short(_, hebrewOmerPrefix, gematria) = self {
 				return .short(hebrew: true, hebrewOmerPrefix: hebrewOmerPrefix, gematria: gematria)
@@ -48,7 +53,7 @@ public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hasha
 		
 		///Modifies the hebrew omer prefix of the short Omer style.
 		///
-		///This method does nothing if the style is `long`
+		///This method only modifies the value if the style is `short`
 		public func hebrewOmerPrefix(_ value: String) -> Self {
 			if case let .short(hebrew, _, gematria) = self {
 				return .short(hebrew: hebrew, hebrewOmerPrefix: value, gematria: gematria)
@@ -58,7 +63,7 @@ public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hasha
 		
 		///Modifies the Gematria format of the short Omer style
 		///
-		///This method does nothing if the style is `long`
+		///This method only modifies the value if the style is `short`
 		public func gematriaFormat(_ value: GematriaFormat) -> Self {
 			if case let .short(hebrew, hebrewOmerPrefix, gematria) = self {
 				return .short(hebrew: hebrew, hebrewOmerPrefix: hebrewOmerPrefix, gematria: gematria)
@@ -68,15 +73,24 @@ public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hasha
 		
 		///Modifies the Nusach of the long Omer style
 		///
-		///This method does nothing if the style is `short`
+		///This method only modifies the value if the style is `short`
 		public func nusach(_ value: OmerFormatStyle.Nusach) -> Self {
 			switch self {
-			case .short(_,_,_):
+			case .short(_,_,_), .kabbalah:
 				return self
 			case .long(_):
 				return .long(nusach: value)
 			}
 //			return .long(nusach: value)
+		}
+		///Modifies the Kabbalistic Trait to include HTML tags.
+		/// 
+		///This method only modifies the value if the style is `kabbalah`
+		public func includeHTML(_ value: Bool = true) -> Self {
+			if case .kabbalah(_) = self {
+				return .kabbalah(includeHTML: value)
+			}
+			return self
 		}
 	}
 	
@@ -86,6 +100,7 @@ public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hasha
 		case mizrach
 		case sefard
 	}
+
 	///The Omer style to be used
 	var style: OmerStyle
 	
@@ -124,6 +139,12 @@ public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hasha
 			case .mizrach:
 				return data.mizrach
 			}
+		case .kabbalah(let includeHTML):
+			var text = longOmerData[value - 1].kabbalah
+			if !includeHTML {
+				text = text.replacingOccurrences(of: #"<[^>]*>"#, with: "", options: .regularExpression)
+			}
+			return text
 		}
 	}
 	

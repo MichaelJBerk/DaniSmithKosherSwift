@@ -43,6 +43,8 @@ struct JewishDateFormatterTests {
 		#expect(33.formatted(.omer(style: .long(nusach: .ashkenaz))) ==  "הַיּוֹם שְׁלֹשָׁה וּשְׁלֹשִׁים יוֹם, שֶׁהֵם אַרְבָּעָה שָׁבוּעוֹת וַחֲמִשָּׁה יָמִים בָּעוֹמֶר: ")
 		#expect(33.formatted(.omer(style: .long(nusach: .sefard))) ==  "הַיּוֹם שְׁלֹשָׁה וּשְׁלֹשִׁים יוֹם, שֶׁהֵם אַרְבָּעָה שָׁבוּעוֹת וַחֲמִשָּׁה יָמִים לָעוֹמֶר: ")
 		#expect(33.formatted(.omer(style: .long(nusach: .mizrach))) == "הַיּוֹם שְׁלֹשָׁה וּשְׁלֹשִׁים יוֹם לָעֹמֶר, שֶׁהֵם אַרְבָּעָה שָׁבוּעוֹת וַחֲמִשָּׁה יָמִים:")
+		#expect(33.formatted(.omer(style: .kabbalah(includeHTML: true))) == "<b>נהל</b> הוד שבהוד <b>אֱלֹהִים</b> ו")
+		#expect(33.formatted(.omer(style: .kabbalah())) == "נהל הוד שבהוד אֱלֹהִים ו")
 	}
 
 }
