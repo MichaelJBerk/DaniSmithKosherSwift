@@ -34,13 +34,14 @@ struct JewishDateFormatterTests {
 	}
 	
 	@Test func testOmerFormat() {
-		#expect(1.formatted(.omer(style: .long(nusach: .ashkenaz))) == "הַיּוֹם יוֹם אֶחָד לָעֹמֶר: ")
+		#expect(1.formatted(.omer(style: .long(nusach: .ashkenaz))) == "הַיּוֹם יוֹם אֶחָד בָּעוֹמֶר: ")
 		#expect(1.formatted(.omer(style: .short())) == "Omer 1")
 		#expect(1.formatted(.omer(style: .short(hebrew: true))) == "א׳ בעומר")
 		#expect(1.formatted(.omer(style: .short(hebrew: true, gematria: .init(gershGershayim: false)))) == "א בעומר")
 		#expect(32.formatted(.omer(style: .short(hebrew: true, gematria: .init(gershGershayim: false)))) == "לב בעומר")
 		#expect(32.formatted(.omer(style: .short(hebrew: true, gematria: .init(gershGershayim: true)))) == "ל״ב בעומר")
-		#expect(33.formatted(.omer(style: .long(nusach: .ashkenaz))) ==  "הַיּוֹם שְׁלֹשָׁה וּשְׁלֹשִׁים יוֹם, שֶׁהֵם אַרְבָּעָה שָׁבוּעוֹת וַחֲמִשָּׁה יָמִים לָעֹמֶר: ")
+		#expect(33.formatted(.omer(style: .long(nusach: .ashkenaz))) ==  "הַיּוֹם שְׁלֹשָׁה וּשְׁלֹשִׁים יוֹם, שֶׁהֵם אַרְבָּעָה שָׁבוּעוֹת וַחֲמִשָּׁה יָמִים בָּעוֹמֶר: ")
+		#expect(33.formatted(.omer(style: .long(nusach: .sefard))) ==  "הַיּוֹם שְׁלֹשָׁה וּשְׁלֹשִׁים יוֹם, שֶׁהֵם אַרְבָּעָה שָׁבוּעוֹת וַחֲמִשָּׁה יָמִים לָעוֹמֶר: ")
 		#expect(33.formatted(.omer(style: .long(nusach: .mizrach))) == "הַיּוֹם שְׁלֹשָׁה וּשְׁלֹשִׁים יוֹם לָעֹמֶר, שֶׁהֵם אַרְבָּעָה שָׁבוּעוֹת וַחֲמִשָּׁה יָמִים:")
 	}
 

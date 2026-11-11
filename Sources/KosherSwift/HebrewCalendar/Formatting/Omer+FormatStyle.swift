@@ -84,6 +84,7 @@ public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hasha
 	public enum Nusach: Codable {
 		case ashkenaz
 		case mizrach
+		case sefard
 	}
 	///The Omer style to be used
 	var style: OmerStyle
@@ -118,6 +119,8 @@ public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hasha
 			switch nusach {
 			case .ashkenaz:
 				return data.ashkenaz
+			case .sefard:
+				return data.sefard
 			case .mizrach:
 				return data.mizrach
 			}
@@ -135,6 +138,7 @@ public struct OmerFormatStyle: Foundation.FormatStyle, Codable, Equatable, Hasha
 struct OmerData: Codable, Equatable, Hashable {
 	var ashkenaz: String
 	var mizrach: String
+	var sefard: String
 	var kabbalah: String
 	
 	///Load Omer data from disk
